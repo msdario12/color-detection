@@ -55,14 +55,54 @@ imgFile.onload = () => {
 	avgColor.G = Math.round(Math.sqrt(avgColor.G / totalPixels));
 	avgColor.B = Math.round(Math.sqrt(avgColor.B / totalPixels));
 	// Asignamos el color al div para mostrar el color promedio
-	showColor.style.backgroundColor = `rgb(${avgColor.R}, ${avgColor.G}, ${avgColor.B})`;
+	const colorRGB = `${avgColor.R}, ${avgColor.G}, ${avgColor.B}`;
+	showColor.style.backgroundColor = `rgb(${colorRGB})`;
+	// Asigno una sombra a la imagen con este color
+	imgFile.style.boxShadow = `0px 0px 200px 75px rgba(${colorRGB}, 0.85)`;
 };
 
-// Creamos una funcion alternativa para obtener el color promedio
-
-const getAverageColor = (allColors, totalPixels) => {
-	const avgColor = {};
-	avgColor.R = Math.round(allColors.R / totalPixels);
-	avgColor.G = Math.round(allColors.G / totalPixels);
-	avgColor.B = Math.round(allColors.B / totalPixels);
-};
+// Creamos un array para mostrar imagenes aleatorias desde uplash cada 15 seg
+const searches = [
+	"beach sunset",
+	"mountain landscape",
+	"city skyline",
+	"abstract art",
+	"minimalist design",
+	"vintage car",
+	"food photography",
+	"animal portraits",
+	"flower arrangements",
+	"candid street photography",
+	"office workspace",
+	"technology gadgets",
+	"ocean waves",
+	"forest trail",
+	"colorful abstract",
+	"architecture detail",
+	"fashion editorial",
+	"black and white portrait",
+	"travel destinations",
+	"celestial objects",
+	"tropical paradise",
+	"pet photography",
+	"modern interior design",
+	"wildlife nature",
+	"macro photography",
+	"product mockups",
+	"music instruments",
+	"urban graffiti",
+	"waterfall landscapes",
+	"vintage objects",
+];
+// Tiempo en que cambia la imagen
+const time = 5 * 1000;
+// Cambiamos cada cierto tiempo
+const intervalId = setInterval(() => {
+    // Generamos un indice aleatorio del array de busquedas
+	const index = Math.floor(Math.random() * searches.length);
+    // Asignamos esa url como atributo al elemento img
+	imgFile.setAttribute(
+		"src",
+		`https://source.unsplash.com/random/?${searches[index]}`
+	);
+}, time);
