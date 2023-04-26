@@ -2,21 +2,31 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	color: whitesmoke;
 }
 
 body {
 	font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
 		Ubuntu;
-	min-width: 100vh;
+	min-height: 100vh;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-around;
 	flex-direction: column;
 	gap: 2rem;
+	background-color: black;
 }
 
 #showColor {
-	width: 200px;
-	height: 200px;
+	--dimension: 100px;
+	width: var(--dimension);
+	height: var(--dimension);
 	border: 2px solid black;
+	box-shadow: 0px 0px 78px 59px rgba(0, 0, 0, 0.1);
+}
+
+#img-1 {
+	max-height: 75vh;
+	object-fit: cover;
+	max-width: 75%;
 }
