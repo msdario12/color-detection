@@ -44,16 +44,25 @@ imgFile.onload = () => {
 	};
 	// Obtenemos el valor promedio de color de toda la imagen
 	for (let i = 0; i < colors.length - 1; i++) {
-		avgColor.R += colors[i].R;
-		avgColor.G += colors[i].G;
-		avgColor.B += colors[i].B;
+		avgColor.R += colors[i].R ** 2;
+		avgColor.G += colors[i].G ** 2;
+		avgColor.B += colors[i].B ** 2;
 	}
 	// Cantidad total de pixeles
 	const totalPixels = canvas.width * canvas.height;
 	// Obtenemos el promedio de cada uno de los canales
-	avgColor.R = Math.round(avgColor.R / totalPixels);
-	avgColor.G = Math.round(avgColor.G / totalPixels);
-	avgColor.B = Math.round(avgColor.B / totalPixels);
+	avgColor.R = Math.round(Math.sqrt(avgColor.R / totalPixels));
+	avgColor.G = Math.round(Math.sqrt(avgColor.G / totalPixels));
+	avgColor.B = Math.round(Math.sqrt(avgColor.B / totalPixels));
 	// Asignamos el color al div para mostrar el color promedio
 	showColor.style.backgroundColor = `rgb(${avgColor.R}, ${avgColor.G}, ${avgColor.B})`;
+};
+
+// Creamos una funcion alternativa para obtener el color promedio
+
+const getAverageColor = (allColors, totalPixels) => {
+	const avgColor = {};
+	avgColor.R = Math.round(allColors.R / totalPixels);
+	avgColor.G = Math.round(allColors.G / totalPixels);
+	avgColor.B = Math.round(allColors.B / totalPixels);
 };
