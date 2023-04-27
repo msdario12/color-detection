@@ -4,15 +4,12 @@
 const imgFile = document.getElementById("img-1");
 const showColor = document.getElementById("showColor");
 const newCanvas = document.getElementById("newCanvas");
-const src = imgFile.src;
 
 console.log(imgFile);
 
-// Creo el objeto imagen
-const img = new Image();
-
 // Funcion a ejecutar cuando imgFile se cargue
 imgFile.onload = () => {
+	// Limpieza de elementos en el DOM
 	showColor.innerHTML = "";
 	newCanvas.innerHTML = "";
 	// Creo el elemento "canvas" en memoria y lo asigno a una variable
@@ -31,6 +28,8 @@ imgFile.onload = () => {
 	// Creo el contexto para canvas
 	const ctxColor = canvasColor.getContext("2d", { willReadFrequently: true });
 	// !FIN CANVA COLORES
+	// Array para almacenar los resultados de avg-color en cada sector
+	const avgColors = [];
 
 	// Definimos la cantidad de divisiones en cada eje
 	const numDiv = 10;
@@ -62,22 +61,34 @@ imgFile.onload = () => {
 			// Llamamos a la funcion encargada de obtener el color promedio de la imagen
 			const avgColor = getAvgColor(colors, totalPixels);
 
-			// Asignamos el color al div para mostrar el color promedio
+			// Color promedio del sector que se esta analizando - (h, w)
 			const colorRGB = `${avgColor.R}, ${avgColor.G}, ${avgColor.B}`;
+			// Guardamos este valor en el array
+			avgColors.push({
+				x: h,
+				y: w,
+				colorRGB
+			})
 			// showColor.style.backgroundColor = `rgb(${colorRGB})`;
 
 			// !COLOR CANVA
-
-			ctxColor.font = "12px Arial";
-			ctxColor.strokeText(colorRGB, w * deltaW, h * deltaH - deltaH / 2);
-
+			
+			// Dibujar y pintar cada cuadrado con el color promedio
 			ctxColor.fillStyle = `rgb(${colorRGB})`;
 			ctxColor.fillRect(w * deltaW, h * deltaH, deltaW, deltaH);
+			// Insertar string del color en cada cuadrado del canvas
+			ctxColor.font = "12px Arial";
+			ctxColor.textAlign = "center";
+			ctxColor.strokeText(colorRGB, w * deltaW + deltaW/2, h * deltaH + deltaH / 2);	
+			// Montar el canvas en el DOM
 			newCanvas.appendChild(canvasColor);
 
 			// !COLOR CANVA
 		}
+
 	}
+	console.log(avgColors)
+
 	// Asigno una sombra a la imagen con este color
 	// imgFile.style.boxShadow = `0px 0px 50px 25px rgba(${colorRGB}, 0.85)`;
 };
@@ -100,6 +111,6 @@ const getAvgColor = (colors, totalPixels) => {
 	result.G = Math.round(Math.sqrt(result.G / totalPixels));
 	result.B = Math.round(Math.sqrt(result.B / totalPixels));
 
-	console.log(`AvgColor: ${result.R}, ${result.G}, ${result.B}`);
+	// console.log(`AvgColor: ${result.R}, ${result.G}, ${result.B}`);
 	return result;
 };
