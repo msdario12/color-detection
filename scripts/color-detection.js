@@ -32,7 +32,7 @@ imgFile.onload = () => {
 	const avgColors = [];
 
 	// Definimos la cantidad de divisiones en cada eje
-	const numDiv = 10;
+	const numDiv = 5;
 	const deltaW = canvas.width / numDiv;
 	const deltaH = canvas.height / numDiv;
 	// Iteramos 2 veces para recorrer el nuevo canvas discretizado
@@ -63,34 +63,42 @@ imgFile.onload = () => {
 
 			// Color promedio del sector que se esta analizando - (h, w)
 			const colorRGB = `${avgColor.R}, ${avgColor.G}, ${avgColor.B}`;
+			const colorHSL = `${RGBToHSL([avgColor.R, avgColor.G, avgColor.B]).HSL}`;
 			// Guardamos este valor en el array
 			avgColors.push({
-				x: h,
-				y: w,
-				colorRGB
-			})
+				x: w,
+				y: h,
+				RGB: [avgColor.R, avgColor.G, avgColor.B],
+			});
 			// showColor.style.backgroundColor = `rgb(${colorRGB})`;
 
 			// !COLOR CANVA
-			
+
 			// Dibujar y pintar cada cuadrado con el color promedio
 			ctxColor.fillStyle = `rgb(${colorRGB})`;
 			ctxColor.fillRect(w * deltaW, h * deltaH, deltaW, deltaH);
 			// Insertar string del color en cada cuadrado del canvas
 			ctxColor.font = "12px Arial";
 			ctxColor.textAlign = "center";
-			ctxColor.strokeText(colorRGB, w * deltaW + deltaW/2, h * deltaH + deltaH / 2);	
+			ctxColor.strokeText(
+				colorHSL,
+				w * deltaW + deltaW / 2,
+				h * deltaH + deltaH / 2
+			);
 			// Montar el canvas en el DOM
 			newCanvas.appendChild(canvasColor);
 
 			// !COLOR CANVA
 		}
-
 	}
-	console.log(avgColors)
+	// console.log(avgColors);
+	const primaryColor = getPrimaryColorHSL(avgColors)[0].base.HSL;
+	console.log(primaryColor);
 
-	// Asigno una sombra a la imagen con este color
-	// imgFile.style.boxShadow = `0px 0px 50px 25px rgba(${colorRGB}, 0.85)`;
+	// Asigno una sombra a la imagen con este color RGB
+	// imgFile.style.boxShadow = `0px 0px 50px 25px rgba(${rgbColor}, 0.85)`;
+	// Asigno una sombra a la imagen con este color RGB
+	imgFile.style.boxShadow = `0px 0px 100px 55px hsl(${primaryColor[0]}, ${primaryColor[1]}%, ${primaryColor[2]}%)`;
 };
 
 // Funcion que se encarga de obtener el color promedio
