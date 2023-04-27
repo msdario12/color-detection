@@ -54,21 +54,23 @@ imgFile.onload = () => {
 					R: dataColor[i],
 					G: dataColor[i + 1],
 					B: dataColor[i + 2],
-					A: dataColor[i + 3],
+					// A: dataColor[i + 3],
 				});
 			}
 			const totalPixels = deltaW * deltaH;
 			// Llamamos a la funcion encargada de obtener el color promedio de la imagen
 			const avgColor = getAvgColor(colors, totalPixels);
+			// Color promedio en HSL
+			const avgColorHSL = getAvgColorHSL(colors, totalPixels);
 
 			// Color promedio del sector que se esta analizando - (h, w)
 			const colorRGB = `${avgColor.R}, ${avgColor.G}, ${avgColor.B}`;
-			const colorHSL = `${RGBToHSL([avgColor.R, avgColor.G, avgColor.B]).HSL}`;
+			const colorHSL = `${avgColorHSL.H}, ${avgColorHSL.S}, ${avgColorHSL.L}`;
 			// Guardamos este valor en el array
 			avgColors.push({
 				x: w,
 				y: h,
-				RGB: [avgColor.R, avgColor.G, avgColor.B],
+				HSL: [avgColorHSL.H, avgColorHSL.S, avgColorHSL.L],
 			});
 			// showColor.style.backgroundColor = `rgb(${colorRGB})`;
 
@@ -93,32 +95,10 @@ imgFile.onload = () => {
 	}
 	// console.log(avgColors);
 	const primaryColor = getPrimaryColorHSL(avgColors)[0].base.HSL;
-	console.log(primaryColor);
+	console.log("HSL value of PC", primaryColor);
 
 	// Asigno una sombra a la imagen con este color RGB
 	// imgFile.style.boxShadow = `0px 0px 50px 25px rgba(${rgbColor}, 0.85)`;
 	// Asigno una sombra a la imagen con este color RGB
 	imgFile.style.boxShadow = `0px 0px 100px 55px hsl(${primaryColor[0]}, ${primaryColor[1]}%, ${primaryColor[2]}%)`;
-};
-
-// Funcion que se encarga de obtener el color promedio
-const getAvgColor = (colors, totalPixels) => {
-	let result = {
-		R: 0,
-		G: 0,
-		B: 0,
-	};
-	// Obtenemos el valor promedio de color de toda la imagen
-	for (let i = 0; i < colors.length; i++) {
-		result.R += colors[i].R ** 2;
-		result.G += colors[i].G ** 2;
-		result.B += colors[i].B ** 2;
-	}
-	// Obtenemos el promedio de cada uno de los canales
-	result.R = Math.round(Math.sqrt(result.R / totalPixels));
-	result.G = Math.round(Math.sqrt(result.G / totalPixels));
-	result.B = Math.round(Math.sqrt(result.B / totalPixels));
-
-	// console.log(`AvgColor: ${result.R}, ${result.G}, ${result.B}`);
-	return result;
 };

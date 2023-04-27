@@ -39,8 +39,8 @@ const getPrimaryColorHSL = (colorList) => {
 	const tolerance = 5;
 
 	// Convertimos los valores a HSL
-	const HSlColors = colorList.map((color) => RGBToHSL(color.RGB));
-	console.log(HSlColors);
+	const HSlColors = colorList;
+	// console.log(HSlColors);
 	for (let i = 0; i < HSlColors.length; i++) {
 		const Hc = HSlColors[i].HSL[0];
 		const Sc = HSlColors[i].HSL[1];
@@ -74,7 +74,7 @@ const getPrimaryColorHSL = (colorList) => {
 	// Ordeno el array en relacion a la cantidad de elementos de similarColors
 	// result.sort((a, b) => b.similarsColors.length - a.similarsColors.length);
 
-	console.log("1ero", result[0]);
+	console.log("1er PrimaryColor", result[0]);
 	// console.log("2do", result[1]);
 	// console.log("3ro", result[2]);
 
