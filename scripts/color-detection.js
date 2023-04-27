@@ -36,6 +36,9 @@ imgFile.onload = () => {
 	const numDiv = 5;
 	const deltaW = canvas.width / numDiv;
 	const deltaH = canvas.height / numDiv;
+	// Calculamos la escala entre las dimensiones naturales y renderizadas
+	const scale = imgFile.width / canvas.width;
+
 	// Iteramos 2 veces para recorrer el nuevo canvas discretizado
 	for (let h = 0; h < numDiv; h++) {
 		for (let w = 0; w < numDiv; w++) {
@@ -66,7 +69,7 @@ imgFile.onload = () => {
 
 			// Color promedio del sector que se esta analizando - (h, w)
 			const colorRGB = `${avgColor.R}, ${avgColor.G}, ${avgColor.B}`;
-			const colorHSL = `${avgColorHSL.H}, ${avgColorHSL.S}, ${avgColorHSL.L}`;
+			const colorHSL = `${avgColorHSL.H}, ${avgColorHSL.S}%, ${avgColorHSL.L}%`;
 			// Guardamos este valor en el array
 			avgColors.push({
 				x: w,
@@ -78,7 +81,7 @@ imgFile.onload = () => {
 			// !COLOR CANVA
 
 			// Dibujar y pintar cada cuadrado con el color promedio
-			ctxColor.fillStyle = `rgb(${colorRGB})`;
+			ctxColor.fillStyle = `hsl(${colorHSL})`;
 			ctxColor.fillRect(w * deltaW, h * deltaH, deltaW, deltaH);
 			// Insertar string del color en cada cuadrado del canvas
 			ctxColor.font = "12px Arial";
@@ -89,7 +92,7 @@ imgFile.onload = () => {
 				h * deltaH + deltaH / 2
 			);
 			// Montar el canvas en el DOM
-			const scale = imgFile.width / canvas.width;
+
 			canvasColor.style.scale = scale;
 			newCanvas.append(canvasColor);
 
