@@ -14,8 +14,9 @@ imgFile.onload = () => {
 	newCanvas.innerHTML = "";
 	// Creo el elemento "canvas" en memoria y lo asigno a una variable
 	const canvas = document.createElement("canvas");
-	canvas.width = imgFile.width;
-	canvas.height = imgFile.height;
+	// Asigno las dimensiones del canvas en funcion de las dimensiones de la imagen
+	canvas.width = imgFile.naturalWidth;
+	canvas.height = imgFile.naturalHeight;
 	// Creo el contexto para canvas
 	const ctx = canvas.getContext("2d", { willReadFrequently: true });
 	// Montamos la imagen en canvas
@@ -23,8 +24,8 @@ imgFile.onload = () => {
 
 	// ! CANVA PARA MOSTRAR COLORES
 	const canvasColor = document.createElement("canvas");
-	canvasColor.width = imgFile.width;
-	canvasColor.height = imgFile.height;
+	canvasColor.width = canvas.width;
+	canvasColor.height = canvas.height;
 	// Creo el contexto para canvas
 	const ctxColor = canvasColor.getContext("2d", { willReadFrequently: true });
 	// !FIN CANVA COLORES
@@ -88,7 +89,9 @@ imgFile.onload = () => {
 				h * deltaH + deltaH / 2
 			);
 			// Montar el canvas en el DOM
-			newCanvas.appendChild(canvasColor);
+			const scale = imgFile.width / canvas.width;
+			canvasColor.style.scale = scale;
+			newCanvas.append(canvasColor);
 
 			// !COLOR CANVA
 		}

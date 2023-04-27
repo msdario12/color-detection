@@ -72,7 +72,7 @@ const getPrimaryColorHSL = (colorList) => {
 	// Ordenamos el resultado en funcion de la saturacion del color, que es la posicion 1 del array.
 	result.sort((a, b) => b.similarsColors[1] - a.similarsColors[1]);
 	// Ordeno el array en relacion a la cantidad de elementos de similarColors
-	// result.sort((a, b) => b.similarsColors.length - a.similarsColors.length);
+	result.sort((a, b) => b.similarsColors.length - a.similarsColors.length);
 
 	console.log("1er PrimaryColor", result[0]);
 	// console.log("2do", result[1]);
