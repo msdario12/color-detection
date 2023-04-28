@@ -9,7 +9,30 @@
 	</head>
 	<body>
 		<h1>Detección de colores</h1>
+		<section class="config-section">
+			<h2>Cambiar de imagen</h2>
+			<button id="change-img">Cambiar imagen</button>
+			<h2>Seleccione el modo de color</h2>
 
+			<form action="">
+				<label for="rgb-mode">RGB</label>
+				<input type="radio" name="color-mode" id="rgb-mode" checked />
+				<label for="rgb-mode">HSL</label>
+				<input type="radio" name="color-mode" id="hsl-mode" />
+			</form>
+			<h2>Cantidad de divisiones</h2>
+
+			<label for="num-div">Seleccione la cantidad de divisiones: </label>
+			<select name="num-div" id="num-div">
+				<option value="2">2</option>
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="12">12</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+			</select>
+		</section>
 		<img
 			id="img-1"
 			src="https://source.unsplash.com/random/?city,night"
@@ -21,30 +44,7 @@
 		<div id="showColor">
 			<!-- Mostramos color promedio -->
 		</div>
-		<section class="config-section">
-			<h2>Cambiar de imagen</h2>
-			<button id="change-img">Cambiar imagen</button>
-			<h2>Seleccione el modo de color</h2>
 
-			<form action="">
-				<label for="rgb-mode">RGB</label>
-				<input type="radio" name="color-mode" id="rgb-mode" checked />
-				<label for="rgb-mode">HSL</label>
-				<input type="radio" name="color-mode" id="hsl-mode" />
-
-				<label for="num-div">Ingrese la cantidad de divisiones: </label>
-				<select name="num-div" id="num-div">
-					<option value="2">2</option>
-					<option value="5">5</option>
-					<option value="10">10</option>
-					<option value="12">12</option>
-					<option value="15">15</option>
-					<option value="20">20</option>
-					<option value="25">25</option>
-					♫
-				</select>
-			</form>
-		</section>
 		<script src="/scripts/rgb-to-hsl.js"></script>
 		<script src="/scripts/color-detection.js"></script>
 		<script src="/scripts/iterate-over-canvas.js"></script>

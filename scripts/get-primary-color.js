@@ -30,7 +30,10 @@ const getPrimaryColor = (colorList) => {
 			});
 		}
 	}
-	console.log("result dentro de primarycolor", result);
+	// Ordeno el array en relacion a la cantidad de elementos de similarColors
+	result.sort((a, b) => b.similarsColors.length - a.similarsColors.length);
+
+	console.log("1er PrimaryColor", result[0]);
 	return result;
 };
 
