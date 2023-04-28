@@ -32,9 +32,12 @@ const searches = [
 	"vintage objects",
 ];
 // Tiempo en que cambia la imagen
-const time = 60 * 1000;
+const time = 6 * 1000;
+// Obtenemos el boton para cambiar imagenes del dom
+const buttonChangeImage = document.getElementById("change-img");
 // Cambiamos cada cierto tiempo
-const intervalId = setInterval(() => {
+
+buttonChangeImage.onclick = () => {
 	// Generamos un indice aleatorio del array de busquedas
 	const index = Math.floor(Math.random() * searches.length);
 	// Asignamos esa url como atributo al elemento img
@@ -42,4 +45,4 @@ const intervalId = setInterval(() => {
 		"src",
 		`https://source.unsplash.com/random/?${searches[index]}`
 	);
-}, time);
+};

@@ -16,7 +16,5 @@ const RGBToHSL = (colorsArray) => {
 	const S =
 		100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0);
 	const L = (100 * (2 * l - s)) / 2;
-	return {
-		HSL: [Math.round(H), Math.round(S), Math.round(L)],
-	};
+	return [Math.round(H), Math.round(S), Math.round(L)];
 };

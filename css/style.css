@@ -5,6 +5,13 @@
 	color: whitesmoke;
 }
 
+input,
+option,
+select,
+button {
+	color: black;
+}
+
 body {
 	font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
 		Ubuntu;
@@ -12,9 +19,13 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	/* flex-direction: column; */
+	flex-direction: column;
 	gap: 2rem;
 	background-color: black;
+}
+
+.config-section {
+	color: black;
 }
 
 #showColor {

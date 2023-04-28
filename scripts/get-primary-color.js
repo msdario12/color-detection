@@ -1,7 +1,7 @@
 const getPrimaryColor = (colorList) => {
 	const result = [];
 	const tolerance = 5;
-
+	console.log("antes de primari colorlist", colorList);
 	for (let i = 0; i < colorList.length; i++) {
 		const Rc = colorList[i].RGB[0];
 		const Gc = colorList[i].RGB[1];
@@ -23,14 +23,14 @@ const getPrimaryColor = (colorList) => {
 				// colorList.splice(j, 1)
 			}
 		}
-		if (similarsColors.length > 3) {
+		if (similarsColors.length > 0) {
 			result.push({
 				base: colorList[i],
 				similarsColors,
 			});
 		}
 	}
-	console.log(result);
+	console.log("result dentro de primarycolor", result);
 	return result;
 };
 

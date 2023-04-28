@@ -7,9 +7,9 @@ const getAvgColor = (colors, totalPixels) => {
 	};
 	// Obtenemos el valor promedio de color de toda la imagen
 	for (let i = 0; i < colors.length; i++) {
-		result.R += colors[i].R ** 2;
-		result.G += colors[i].G ** 2;
-		result.B += colors[i].B ** 2;
+		result.R += colors[i][0] ** 2;
+		result.G += colors[i][1] ** 2;
+		result.B += colors[i][2] ** 2;
 	}
 	// Obtenemos el promedio de cada uno de los canales
 	result.R = Math.round(Math.sqrt(result.R / totalPixels));
@@ -21,27 +21,45 @@ const getAvgColor = (colors, totalPixels) => {
 };
 
 // Funcion que se encarga de obtener el color promedio HSL
-const getAvgColorHSL = (colors, totalPixels) => {
+const getAvgColorHSL = (colorsRGB, totalPixels) => {
 	let result = {
 		H: 0,
 		S: 0,
 		L: 0,
 	};
-	// Convertimos los valores a HSL
-	const HSlColors = colors.map((color) =>
-		RGBToHSL([color.R, color.G, color.B])
-	);
-	// Obtenemos el valor promedio de color de toda la imagen
-	for (let i = 0; i < HSlColors.length; i++) {
-		result.H += HSlColors[i].HSL[0] ** 2;
-		result.S += HSlColors[i].HSL[1] ** 2;
-		result.L += HSlColors[i].HSL[2] ** 2;
-	}
-	// Obtenemos el promedio de cada uno de los canales
-	result.H = Math.round(Math.sqrt(result.H / totalPixels));
-	result.S = Math.round(Math.sqrt(result.S / totalPixels));
-	result.L = Math.round(Math.sqrt(result.L / totalPixels));
+	let colors = [];
 
-	// console.log(`AvgColor: ${result.H}, ${result.S}, ${result.L}`);
+	colorsRGB.map((color) => {
+		colors.push(RGBToHSL(color));
+	});
+
+	const PI = Math.PI;
+
+	let sumX = 0.0;
+	let sumY = 0.0;
+	let sumSaturation = 0.0;
+	let sumLuminosity = 0.0;
+
+	for (let i = 0; i < colors.length; i++) {
+		const [hue, saturation, luminosity] = colors[i];
+
+		const radianHue = (hue / 180) * PI;
+		sumX += Math.cos(radianHue);
+		sumY += Math.sin(radianHue);
+		sumSaturation += saturation;
+		sumLuminosity += luminosity;
+	}
+
+	const averageHue = (Math.atan2(sumY, sumX) * 180) / PI;
+	const averageSaturation = sumSaturation / colors.length;
+	const averageLuminosity = sumLuminosity / colors.length;
+
+	result.H = Math.round(averageHue);
+	result.S = Math.round(averageSaturation);
+	result.L = Math.round(averageLuminosity);
+
+	// console.log(
+	// 	`Average Color: hsl(${averageHue}, ${averageSaturation}%, ${averageLuminosity}%)`
+	// );
 	return result;
 };
