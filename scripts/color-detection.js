@@ -3,10 +3,12 @@ let colorRGBstate = true;
 let colorHSLstate = false;
 let divisionQtyState = 2;
 let avgColors = [];
+let colorTolerance = 15;
 // Guardo los elementos radio del dom
 const rgbColorMode = document.getElementById("rgb-mode");
 const hslColorMode = document.getElementById("hsl-mode");
 const numDivSelect = document.getElementById("num-div");
+const toleranceSelect = document.getElementById("num-tol");
 
 // Cambio de estado al modo RGB
 rgbColorMode.addEventListener("change", (e) => {
@@ -24,6 +26,9 @@ hslColorMode.addEventListener("change", (e) => {
 numDivSelect.addEventListener("change", (e) => {
 	divisionQtyState = e.target.value;
 	console.log(divisionQtyState);
+});
+toleranceSelect.addEventListener("change", (e) => {
+	colorTolerance = e.target.value;
 });
 
 // Color detection
@@ -64,6 +69,11 @@ imgFile.onload = () => {
 		applyStyles(avgColors);
 	};
 	rgbColorMode.onchange = () => {
+		console.log("Cambia la cantidad de divisiones");
+		avgColors = iterateOverCanvas(canvas, canvasColor);
+		applyStyles(avgColors);
+	};
+	toleranceSelect.onchange = () => {
 		console.log("Cambia la cantidad de divisiones");
 		avgColors = iterateOverCanvas(canvas, canvasColor);
 		applyStyles(avgColors);

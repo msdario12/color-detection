@@ -20,6 +20,19 @@
 				<label for="rgb-mode">HSL</label>
 				<input type="radio" name="color-mode" id="hsl-mode" />
 			</form>
+			<h2>Tolerancia de seleccion de color</h2>
+			<label for="num-tol">Seleccione el valor de tolerancia</label>
+			<select name="num-tol" id="num-tol">
+				<option value="2">2%</option>
+				<option value="5">5%</option>
+				<option value="10">10%</option>
+				<option value="12">12%</option>
+				<option value="15" selected>15%</option>
+				<option value="20">20%</option>
+				<option value="25">25%</option>
+				<option value="30">30%</option>
+				<option value="40">40%</option>
+			</select>
 			<h2>Cantidad de divisiones</h2>
 
 			<label for="num-div">Seleccione la cantidad de divisiones: </label>
@@ -33,6 +46,9 @@
 				<option value="25">25</option>
 			</select>
 		</section>
+		<div id="showColor">
+			<!-- Mostramos color promedio -->
+		</div>
 		<img
 			id="img-1"
 			src="https://source.unsplash.com/random/?city,night"
@@ -40,9 +56,6 @@
 			crossorigin="anonymous" />
 		<div id="newCanvas">
 			<!-- insert canva -->
-		</div>
-		<div id="showColor">
-			<!-- Mostramos color promedio -->
 		</div>
 
 		<script src="/scripts/rgb-to-hsl.js"></script>
