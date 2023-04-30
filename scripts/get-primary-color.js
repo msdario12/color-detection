@@ -1,10 +1,6 @@
-// Creamos nuevo canvas para los colores primarios
-// const primaryColorsCanvas = document.createElement('canvas')
-// const ctxPrimaryColors = primaryColorsCanvas.getContext('2d')
-// primaryColorsCanvas.width = '300px'
-// primaryColorsCanvas.height = '600px'
-
 const getPrimaryColor = (colorList) => {
+	// colorList = [...,{RGB:[R, G, B], HSL:[H, S, L]}, ...]
+	showColor.innerHTML = '';
 	let result = [];
 	const percentage = colorTolerance;
 	const tolerance = (percentage / 100) * 255;
@@ -16,7 +12,7 @@ const getPrimaryColor = (colorList) => {
 
 		let similarsColors = [];
 
-		similarsColors.push(colorList[i].RGB);
+		similarsColors.push({ RGB: colorList[i].RGB });
 
 		for (let j = i; j < colorList.length; j++) {
 			const R = colorList[j].RGB[0];
@@ -28,14 +24,14 @@ const getPrimaryColor = (colorList) => {
 			const blueCompare = Bc - tolerance <= B && Bc + tolerance >= B;
 
 			if (redCompare && greenCompare && blueCompare) {
-				similarsColors.push(colorList[j].RGB);
+				similarsColors.push({ RGB: colorList[j].RGB });
 				colorList.splice(j, 1);
 				j = 0;
 			}
 		}
 
 		result.push({
-			base: colorList[i] ? colorList[i] : similarsColors[0],
+			base: similarsColors[0],
 			similarsColors,
 		});
 		colorList.splice(i, 1);
@@ -44,7 +40,7 @@ const getPrimaryColor = (colorList) => {
 	result.sort((a, b) => b.similarsColors.length - a.similarsColors.length);
 
 	// console.log("resultado de primary", result[0]);
-	showColor.innerHTML = "";
+	showColor.innerHTML = '';
 	// Iteramos el array de resultado para crear un div por cada base color
 	result.forEach((baseAndSimilarColorObj) => {
 		// Color promedio de la lista de colores similares
@@ -67,14 +63,14 @@ const getPrimaryColor = (colorList) => {
 		showColor.insertBefore(divWithBaseColorBG, null);
 	});
 	// console.log("Total repeticiones", totalReps);
-	console.log("1er PrimaryColor", result[0]);
+	// console.log('1er PrimaryColor', result[0]);
 	return result;
 };
 
 const getPrimaryColorHSL = (colorList) => {
 	let result = [];
 	const percentage = colorTolerance;
-	const toleranceH = (percentage / 100) * 360;
+	const toleranceH = (percentage / 100) * 360 * 1.1;
 	const tolerance = percentage;
 
 	// Convertimos los valores a HSL
@@ -87,6 +83,8 @@ const getPrimaryColorHSL = (colorList) => {
 
 		let similarsColors = [];
 
+		similarsColors.push({ HSL: colorList[i].HSL });
+
 		for (let j = i; j < HSlColors.length; j++) {
 			const H = HSlColors[j].HSL[0];
 			const S = HSlColors[j].HSL[1];
@@ -97,34 +95,32 @@ const getPrimaryColorHSL = (colorList) => {
 			const LCompare = Lc - tolerance <= L && Lc + tolerance >= L;
 
 			if (HCompare && SCompare && LCompare) {
-				similarsColors.push(HSlColors[j].HSL);
+				similarsColors.push({ HSL: HSlColors[j].HSL });
 				HSlColors.splice(j, 1);
 				j = 0;
 			}
 		}
 		result.push({
-			base: HSlColors[i] ? HSlColors[i] : similarsColors[0],
+			base: similarsColors[0],
 			similarsColors,
 		});
 		HSlColors.splice(i, 1);
 	}
-	// Ordenamos el resultado en funcion de la saturacion del color, que es la posicion 1 del array.
-	// result.sort((a, b) => b.similarsColors[1] - a.similarsColors[1]);
 	// Ordeno el array en relacion a la cantidad de elementos de similarColors
 	result.sort((a, b) => b.similarsColors.length - a.similarsColors.length);
+	showColor.innerHTML = '';
 	// Iteramos el array de resultado para crear un div por cada base color
 	result.forEach((baseAndSimilarColorObj) => {
-		// // Color promedio de la lista de colores similares
-		// const avgBaseColor = getAvgColorHSL(
-		// 	baseAndSimilarColorObj.similarsColors,
-		// 	baseAndSimilarColorObj.similarsColors.length
-		// );
-		// // Reemplazamos el color base con este promedio
-		// baseAndSimilarColorObj.base.RGB = [
-		// 	avgBaseColor.H,
-		// 	avgBaseColor.S,
-		// 	avgBaseColor.L,
-		// ];
+		const avgBaseColor = getAvgColorHSL(
+			baseAndSimilarColorObj.similarsColors,
+			baseAndSimilarColorObj.similarsColors.length
+		);
+		// Reemplazamos el color base con este promedio
+		baseAndSimilarColorObj.base.HSL = [
+			avgBaseColor.H,
+			avgBaseColor.S,
+			avgBaseColor.L,
+		];
 
 		const divWithBaseColorBG = createDivWithBgColor(
 			baseAndSimilarColorObj.base
@@ -133,18 +129,15 @@ const getPrimaryColorHSL = (colorList) => {
 		// Inserto el div en el elemento #showColor del DOM
 		showColor.insertBefore(divWithBaseColorBG, null);
 	});
-	console.log("1er PrimaryColor", result[0]);
-	// console.log("2do", result[1]);
-	// console.log("3ro", result[2]);
-
+	// console.log('1er PrimaryColor', result[0]);
 	return result;
 };
 
 const createDivWithBgColor = (baseColor) => {
 	// Creamos el div encargado de mostrar el color
-	const divColor = document.createElement("div");
+	const divColor = document.createElement('div');
 	// Div que contiene el texto dentro del color
-	const textDiv = document.createElement("div");
+	const textDiv = document.createElement('div');
 	// Abreviatura de codigo para estilos del divColor y text
 	const style = divColor.style;
 	const textStyle = textDiv.style;
@@ -169,14 +162,14 @@ const createDivWithBgColor = (baseColor) => {
 	}
 
 	// Condicion para definir si el texto es oscuro o claro en funcion de la L
-	L > 50 ? (textStyle.color = "black") : (textStyle.color = "white");
+	L > 50 ? (textStyle.color = 'black') : (textStyle.color = 'white');
 	// Definicion de estilos del div de color
-	style.textAlign = "center";
-	style.display = "flex";
-	style.justifyContent = "center";
-	style.alignItems = "center";
+	style.textAlign = 'center';
+	style.display = 'flex';
+	style.justifyContent = 'center';
+	style.alignItems = 'center';
 	divColor.appendChild(textDiv);
-	style.width = style.height = "100px";
+	style.width = style.height = '100px';
 
 	return divColor;
 };

@@ -1,15 +1,19 @@
 // Funcion que se encarga de obtener el color promedio RGB
 const getAvgColor = (colors, totalPixels) => {
+	// colors = [...,{RGB:[R, G, B], HSL:[H, S, L]}, ...]
 	let result = {
 		R: 0,
 		G: 0,
 		B: 0,
 	};
 	// Obtenemos el valor promedio de color de toda la imagen
+	// console.log(colors[colors.length - 1].RGB[0]);
 	for (let i = 0; i < colors.length; i++) {
-		result.R += colors[i][0] ** 2;
-		result.G += colors[i][1] ** 2;
-		result.B += colors[i][2] ** 2;
+		if (colors[i].RGB) {
+			result.R += colors[i].RGB[0] ** 2;
+			result.G += colors[i].RGB[1] ** 2;
+			result.B += colors[i].RGB[2] ** 2;
+		}
 	}
 	// Obtenemos el promedio de cada uno de los canales
 	result.R = Math.round(Math.sqrt(result.R / totalPixels));
@@ -21,17 +25,14 @@ const getAvgColor = (colors, totalPixels) => {
 };
 
 // Funcion que se encarga de obtener el color promedio HSL
-const getAvgColorHSL = (colorsRGB, totalPixels) => {
+const getAvgColorHSL = (colors, totalPixels) => {
+	// colors = [...,{RGB:[R, G, B], HSL:[H, S, L]}, ...]
+
 	let result = {
 		H: 0,
 		S: 0,
 		L: 0,
 	};
-	let colors = [];
-
-	colorsRGB.map((color) => {
-		colors.push(RGBToHSL(color));
-	});
 
 	const PI = Math.PI;
 
@@ -41,7 +42,7 @@ const getAvgColorHSL = (colorsRGB, totalPixels) => {
 	let sumLuminosity = 0.0;
 
 	for (let i = 0; i < colors.length; i++) {
-		const [hue, saturation, luminosity] = colors[i];
+		const [hue, saturation, luminosity] = colors[i].HSL;
 
 		const radianHue = (hue / 180) * PI;
 		sumX += Math.cos(radianHue);

@@ -13,7 +13,7 @@ button {
 }
 
 body {
-	font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+	font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto,
 		Ubuntu;
 	min-height: 100vh;
 	display: flex;
@@ -26,6 +26,25 @@ body {
 
 .config-section {
 	color: black;
+}
+
+#loader {
+	display: none; /* Inicialmente oculto */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semi-transparente */
+	z-index: 9999; /* Asegura que esté por encima de otros elementos */
+	text-align: center;
+	color: #fff;
+	font-size: 24px;
+	padding-top: 50vh; /* Centra verticalmente el texto */
+}
+
+.showLoader {
+	display: block !important;
 }
 
 #showColor {
