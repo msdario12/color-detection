@@ -43,7 +43,6 @@ console.log(imgFile);
 // Funcion a ejecutar cuando imgFile se cargue
 imgFile.onload = () => {
 	// Limpieza de elementos en el DOM
-	showColor.innerHTML = "";
 	newCanvas.innerHTML = "";
 	// Creo el elemento "canvas" en memoria y lo asigno a una variable
 	const canvas = document.createElement("canvas");

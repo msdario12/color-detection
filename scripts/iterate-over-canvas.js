@@ -1,4 +1,6 @@
 const iterateOverCanvas = (canvas, canvasColor) => {
+	showColor.innerHTML = "";
+
 	// Asigno las dimensiones del canvas en funcion de las dimensiones de la imagen
 	canvas.width = imgFile.naturalWidth;
 	canvas.height = imgFile.naturalHeight;
