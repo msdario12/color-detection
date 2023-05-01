@@ -60,8 +60,11 @@ imgFile.onload = async () => {
 		colorRGBstate = false;
 		colorHSLstate = true;
 		console.log('Cambia a modo HSL');
-		avgColors = await iterateOverCanvasWorker(canvas, canvasColor);
-		applyStyles(avgColors);
+
+		requestAnimationFrame(async () => {
+			avgColors = await iterateOverCanvasWorker(canvas, canvasColor);
+			applyStyles(avgColors);
+		});
 	};
 	rgbColorMode.onchange = async (e) => {
 		showLoader(loader);
