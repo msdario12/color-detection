@@ -31,14 +31,14 @@ console.log(imgFile);
 
 showLoader(loader);
 // Funcion a ejecutar cuando imgFile se cargue
-imgFile.onload = () => {
+imgFile.onload = async () => {
 	// Limpieza de elementos en el DOM
 	newCanvas.innerHTML = '';
 	// Creo el elemento "canvas" en memoria y lo asigno a una variable
 	const canvas = document.createElement('canvas');
 	const canvasColor = document.createElement('canvas');
 	// Iteramos cobre el canvas para obtener el array de datos
-	avgColors = iterateOverCanvas(canvas, canvasColor);
+	avgColors = await iterateOverCanvasWorker(canvas, canvasColor);
 	// Aplicamos estilos para mostrar colores
 	applyStyles(avgColors);
 	hideLoader(loader);
@@ -46,29 +46,36 @@ imgFile.onload = () => {
 
 	numDivSelect.onchange = (e) => {
 		showLoader(loader);
-		divisionQtyState = e.target.value;
-		avgColors = iterateOverCanvas(canvas, canvasColor);
-		console.log('Cambia la cantidad de divisiones');
-		applyStyles(avgColors);
+		requestAnimationFrame(async () => {
+			divisionQtyState = e.target.value;
+			avgColors = await iterateOverCanvas(canvas, canvasColor);
+			console.log('Cambia la cantidad de divisiones');
+			requestAnimationFrame(async () => {
+				await applyStyles(avgColors);
+			});
+		});
 	};
-	hslColorMode.onchange = (e) => {
+	hslColorMode.onchange = async (e) => {
+		showLoader(loader);
 		colorRGBstate = false;
 		colorHSLstate = true;
 		console.log('Cambia a modo HSL');
-		avgColors = iterateOverCanvas(canvas, canvasColor);
+		avgColors = await iterateOverCanvas(canvas, canvasColor);
 		applyStyles(avgColors);
 	};
-	rgbColorMode.onchange = (e) => {
+	rgbColorMode.onchange = async (e) => {
+		showLoader(loader);
+
 		colorRGBstate = true;
 		colorHSLstate = false;
 		console.log('Cambia a modo RGB');
-		avgColors = iterateOverCanvas(canvas, canvasColor);
+		avgColors = await iterateOverCanvas(canvas, canvasColor);
 		applyStyles(avgColors);
 	};
-	toleranceSelect.onchange = (e) => {
+	toleranceSelect.onchange = async (e) => {
 		colorTolerance = e.target.value;
 		console.log('Cambia la tolerancia');
-		avgColors = iterateOverCanvas(canvas, canvasColor);
+		avgColors = await iterateOverCanvas(canvas, canvasColor);
 		applyStyles(avgColors);
 	};
 };
@@ -77,12 +84,12 @@ const applyStyles = async (avgColors) => {
 	let primaryColor;
 	if (colorRGBstate) {
 		let rawPrimaryColor = await getPrimaryColor(avgColors);
-		primaryColor = await rawPrimaryColor[0].base.RGB;
+		primaryColor = rawPrimaryColor[0].base.RGB;
 		// console.log('RGB value of PC', primaryColor);
 	}
 	if (colorHSLstate) {
 		let rawPrimaryColor = await getPrimaryColorHSL(avgColors);
-		primaryColor = await rawPrimaryColor[0].base.HSL;
+		primaryColor = rawPrimaryColor[0].base.HSL;
 		// console.log('HSL value of PC', primaryColor);
 	}
 	hideLoader(loader);

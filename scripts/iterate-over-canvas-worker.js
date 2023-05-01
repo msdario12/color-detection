@@ -1,4 +1,15 @@
-const iterateOverCanvas = async (canvas, canvasColor) => {
+const worker = new Worker('./scripts/worker.js');
+worker.addEventListener(
+	'message',
+	function (e) {
+		console.log('Worker said: ', e.data);
+	},
+	false
+);
+
+worker.postMessage('Hello World'); // Send data to our worker.
+
+const iterateOverCanvasWorker = async (canvas, canvasColor) => {
 	showColor.innerHTML = '';
 	// Dimensiones del canvas de la imagen referidas a los valores naturales de la img
 	canvas.width = imgFile.naturalWidth;

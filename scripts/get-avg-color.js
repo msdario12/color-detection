@@ -1,5 +1,5 @@
 // Funcion que se encarga de obtener el color promedio RGB
-const getAvgColor = (colors, totalPixels) => {
+const getAvgColor = async (colors, totalPixels) => {
 	// colors = [...,{RGB:[R, G, B], HSL:[H, S, L]}, ...]
 	let result = {
 		R: 0,
@@ -25,7 +25,7 @@ const getAvgColor = (colors, totalPixels) => {
 };
 
 // Funcion que se encarga de obtener el color promedio HSL
-const getAvgColorHSL = (colors, totalPixels) => {
+const getAvgColorHSL = async (colors, totalPixels) => {
 	// colors = [...,{RGB:[R, G, B], HSL:[H, S, L]}, ...]
 
 	let result = {

@@ -1,4 +1,4 @@
-const getPrimaryColor = (colorList) => {
+const getPrimaryColor = async (colorList) => {
 	// colorList = [...,{RGB:[R, G, B], HSL:[H, S, L]}, ...]
 	showColor.innerHTML = '';
 	let result = [];
@@ -42,9 +42,9 @@ const getPrimaryColor = (colorList) => {
 	// console.log("resultado de primary", result[0]);
 	showColor.innerHTML = '';
 	// Iteramos el array de resultado para crear un div por cada base color
-	result.forEach((baseAndSimilarColorObj) => {
+	result.forEach(async (baseAndSimilarColorObj) => {
 		// Color promedio de la lista de colores similares
-		const avgBaseColor = getAvgColor(
+		const avgBaseColor = await getAvgColor(
 			baseAndSimilarColorObj.similarsColors,
 			baseAndSimilarColorObj.similarsColors.length
 		);
@@ -67,7 +67,7 @@ const getPrimaryColor = (colorList) => {
 	return result;
 };
 
-const getPrimaryColorHSL = (colorList) => {
+const getPrimaryColorHSL = async (colorList) => {
 	let result = [];
 	const percentage = colorTolerance;
 	const toleranceH = (percentage / 100) * 360 * 1.1;
@@ -110,8 +110,8 @@ const getPrimaryColorHSL = (colorList) => {
 	result.sort((a, b) => b.similarsColors.length - a.similarsColors.length);
 	showColor.innerHTML = '';
 	// Iteramos el array de resultado para crear un div por cada base color
-	result.forEach((baseAndSimilarColorObj) => {
-		const avgBaseColor = getAvgColorHSL(
+	result.forEach(async (baseAndSimilarColorObj) => {
+		const avgBaseColor = await getAvgColorHSL(
 			baseAndSimilarColorObj.similarsColors,
 			baseAndSimilarColorObj.similarsColors.length
 		);
