@@ -121,7 +121,10 @@ const iterateOverCanvasWorker = async (canvas, canvasColor) => {
 		const deltaHScale = deltaH / scaleH;
 
 		let stringRGB, stringHSL;
-		for (let i = 0; i < allColors.length; i++) {
+
+		let renderPromises = [];
+
+		async function asyncRenderColors(allColors, i) {
 			if (colorRGBstate) {
 				let arrayRGB = allColors[i][0].RGB;
 				stringRGB = allColors[i][0].stringRGB;
@@ -156,6 +159,12 @@ const iterateOverCanvasWorker = async (canvas, canvasColor) => {
 			// Montar el canvas en el DOM
 			newCanvas.append(canvasColor);
 		}
+
+		for (let i = 0; i < allColors.length; i++) {
+			renderPromises.push(asyncRenderColors(allColors, i));
+		}
+
+		Promise.all(renderPromises);
 	}
 
 	for (let h = 0; h < numDiv; h++) {
