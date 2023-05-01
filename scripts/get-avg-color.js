@@ -52,8 +52,8 @@ const getAvgColorHSL = async (colors, totalPixels) => {
 	}
 
 	const averageHue = (Math.atan2(sumY, sumX) * 180) / PI;
-	const averageSaturation = sumSaturation / colors.length;
-	const averageLuminosity = sumLuminosity / colors.length;
+	const averageSaturation = sumSaturation / totalPixels;
+	const averageLuminosity = sumLuminosity / totalPixels;
 
 	result.H = Math.round(averageHue);
 	result.S = Math.round(averageSaturation);

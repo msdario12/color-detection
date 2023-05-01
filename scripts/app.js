@@ -48,7 +48,7 @@ imgFile.onload = async () => {
 		showLoader(loader);
 		requestAnimationFrame(async () => {
 			divisionQtyState = e.target.value;
-			avgColors = await iterateOverCanvas(canvas, canvasColor);
+			avgColors = await iterateOverCanvasWorker(canvas, canvasColor);
 			console.log('Cambia la cantidad de divisiones');
 			requestAnimationFrame(async () => {
 				await applyStyles(avgColors);
@@ -60,7 +60,7 @@ imgFile.onload = async () => {
 		colorRGBstate = false;
 		colorHSLstate = true;
 		console.log('Cambia a modo HSL');
-		avgColors = await iterateOverCanvas(canvas, canvasColor);
+		avgColors = await iterateOverCanvasWorker(canvas, canvasColor);
 		applyStyles(avgColors);
 	};
 	rgbColorMode.onchange = async (e) => {
@@ -69,13 +69,13 @@ imgFile.onload = async () => {
 		colorRGBstate = true;
 		colorHSLstate = false;
 		console.log('Cambia a modo RGB');
-		avgColors = await iterateOverCanvas(canvas, canvasColor);
+		avgColors = await iterateOverCanvasWorker(canvas, canvasColor);
 		applyStyles(avgColors);
 	};
 	toleranceSelect.onchange = async (e) => {
 		colorTolerance = e.target.value;
 		console.log('Cambia la tolerancia');
-		avgColors = await iterateOverCanvas(canvas, canvasColor);
+		avgColors = await iterateOverCanvasWorker(canvas, canvasColor);
 		applyStyles(avgColors);
 	};
 };
@@ -84,12 +84,16 @@ const applyStyles = async (avgColors) => {
 	let primaryColor;
 	if (colorRGBstate) {
 		let rawPrimaryColor = await getPrimaryColor(avgColors);
-		primaryColor = rawPrimaryColor[0].base.RGB;
+		primaryColor = await rawPrimaryColor[0].base.RGB;
 		// console.log('RGB value of PC', primaryColor);
 	}
 	if (colorHSLstate) {
 		let rawPrimaryColor = await getPrimaryColorHSL(avgColors);
-		primaryColor = rawPrimaryColor[0].base.HSL;
+		try {
+			primaryColor = rawPrimaryColor[0].base.HSL;
+		} catch (error) {
+			console.log('Error un applyStyles', error);
+		}
 		// console.log('HSL value of PC', primaryColor);
 	}
 	hideLoader(loader);
