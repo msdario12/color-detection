@@ -59,8 +59,14 @@ body {
 	gap: 2px;
 }
 
-#img-1 {
+#worker-img {
 	max-height: 75vh;
 	object-fit: cover;
 	max-width: 75%;
+}
+
+#img-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

@@ -34,17 +34,16 @@ const searches = [
 // Tiempo en que cambia la imagen
 const time = 6 * 1000;
 // Obtenemos el boton para cambiar imagenes del dom
-const buttonChangeImage = document.getElementById('change-img');
 // Cambiamos cada cierto tiempo
 
-buttonChangeImage.onclick = () => {
-	showLoader(loader);
+// buttonChangeImage.onclick = () => {
+// 	showLoader(loader);
 
-	// Generamos un indice aleatorio del array de busquedas
-	const index = Math.floor(Math.random() * searches.length);
-	// Asignamos esa url como atributo al elemento img
-	imgFile.setAttribute(
-		'src',
-		`https://source.unsplash.com/random/?${searches[index]}`
-	);
-};
+// 	// Generamos un indice aleatorio del array de busquedas
+// 	const index = Math.floor(Math.random() * searches.length);
+// 	// Asignamos esa url como atributo al elemento img
+// 	imgFile.setAttribute(
+// 		'src',
+// 		`https://source.unsplash.com/random/?${searches[index]}`
+// 	);
+// };
