@@ -1,14 +1,17 @@
-// Defino estados globales
+// Defino estados iniciales de inputs
 let colorRGBstate = true;
 let colorHSLstate = false;
-let divisionQtyState = 10;
+let divisionQtyState = 2;
 let avgColors = [];
 let colorTolerance = 15;
+
+// Variables globales
 let imgRenderWidth = 0;
 let imgRenderHeight = 0;
 let naturalWidthImg = 0;
 let naturalHeightImg = 0;
 let setNewImage = true;
+let ifWorkerOnline = true;
 // Guardo los elementos radio del dom
 const rgbColorMode = document.getElementById('rgb-mode');
 const hslColorMode = document.getElementById('hsl-mode');
@@ -29,56 +32,50 @@ const hideLoader = (loader) => {
 // Color detection
 
 // Obtener elementos del dom
-const imgFile = document.getElementById('img-1');
 const showColor = document.getElementById('showColor');
 const newCanvas = document.getElementById('newCanvas');
 
-console.log(imgFile);
-
-const imgFromWorker = document.createElement('img');
-
-const canvasColor = document.createElement('canvas');
+const canvasColor = document.getElementById('canvas-color');
 const ctxColor = canvasColor.getContext('2d', { willReadFrequently: true });
 
-async function asyncRenderColors(allColors, i) {
+// canvasColor.width = 300;
+// canvasColor.height = 300;
+
+async function renderPixelColor(color) {
 	if (colorRGBstate) {
-		let arrayRGB = allColors[i].fillColor.RGBArray;
-		stringRGB = allColors[i].fillColor.fillStyle;
+		stringRGB = color.fillColor.fillStyle;
 		ctxColor.fillStyle = stringRGB;
 	}
 	if (colorHSLstate) {
-		let arrayHSL = allColors[i].fillColor.HSLArray;
-		stringHSL = allColors[i].fillColor.fillStyle;
+		stringHSL = color.fillColor.fillStyle;
 		ctxColor.fillStyle = stringHSL;
 	}
 
 	const scaleW = naturalWidthImg / imgRenderWidth;
 	const scaleH = naturalHeightImg / imgRenderHeight;
 
-	let { wIndex, hIndex, deltaW, deltaH } = allColors[i].drawRectangle;
+	let { wIndex, hIndex, deltaW, deltaH } = color.drawRectangle;
 	deltaW /= scaleW;
 	deltaH /= scaleH;
 	// Insertar string del color en cada cuadrado del canvas
 	ctxColor.fillRect(wIndex * deltaW, hIndex * deltaH, deltaW, deltaH);
 
-	if (allColors[i].drawText) {
+	if (color.drawText) {
 		ctxColor.font = '12px Arial';
 		ctxColor.textAlign = 'center';
 
 		ctxColor.strokeText(
-			allColors[i].drawText.textColor,
-			allColors[i].drawText.wPos,
-			allColors[i].drawText.hPos
+			color.drawText.textColor,
+			color.drawText.wPos,
+			color.drawText.hPos
 		);
 	}
-	// Montar el canvas que contiene los pixeles con colores en el DOM
-	newCanvas.append(canvasColor);
 }
 
 showLoader(loader);
-const worker = new Worker('./scripts/offScreenCanvas.js');
 
-// const offScreenCanvas = canvas.transferControlToOffscreen();
+let worker = new Worker('./scripts/offScreenCanvas.js');
+
 function callWorker() {
 	worker.postMessage(
 		{
@@ -95,63 +92,66 @@ function callWorker() {
 }
 // Llamada con valores inciales para la primera carga
 callWorker();
-worker.onmessage = async (event) => {
-	if (event.data.avgColors) {
-		const avgColors = event.data.avgColors;
-		let arrayForPrimaryColors = [];
 
-		imgRenderHeight = imgFromWorker.height;
-		imgRenderWidth = imgFromWorker.width;
-
-		canvasColor.width = imgRenderWidth;
-		canvasColor.height = imgRenderHeight;
-
-		// console.log(imgRenderHeight, imgRenderWidth);
-		for (let i = 0; i < avgColors.length; i++) {
-			await asyncRenderColors(avgColors, i);
-			arrayForPrimaryColors.push({
-				RGB: avgColors[i].fillColor.RGBArray,
-				HSL: avgColors[i].fillColor.HSLArray,
-			});
-		}
-		// console.log('inprmyari', arrayForPrimaryColors);
-
-		await applyStyles(arrayForPrimaryColors);
-
-		return;
+function formatAvgColorsList(avgColors) {
+	let arrayForPrimaryColors = [];
+	for (let i = 0; i < avgColors.length; i++) {
+		arrayForPrimaryColors.push({
+			RGB: avgColors[i].fillColor.RGBArray,
+			HSL: avgColors[i].fillColor.HSLArray,
+		});
 	}
-	// console.log('data', event.data);
-	const urlImage = await event.data.urlImage;
-	naturalWidthImg = event.data.w;
-	naturalHeightImg = event.data.h;
-	// console.log('Respuesta de canvas', urlImage);
+	return arrayForPrimaryColors;
+}
 
-	const modifiedDataBuffer = await event.data.data;
-	const modifiedData = new Uint8ClampedArray(modifiedDataBuffer);
-	const newCanvas = document.createElement('canvas');
-	// Obtener el contexto 2D del canvas en el DOM
-	const context = newCanvas.getContext('2d');
+function createImgFromWorker(url) {
+	document.getElementById('img-container').innerHTML = '';
 
-	newCanvas.width = naturalWidthImg;
-	newCanvas.height = naturalHeightImg;
+	const imgFromWorker = document.createElement('img');
 
-	// Crear una nueva ImageData a partir de los datos recibidos
-	const newImageData = new ImageData(
-		modifiedData,
-		naturalWidthImg,
-		naturalHeightImg
-	);
-	// Establecer los datos modificados en el canvas del DOM
-	context.putImageData(newImageData, 0, 0);
-	// Montar canvas que contiene la imagen
-	// document.body.append(newCanvas);
-	// const imgFromWorker = document.getElementById('worker-img');
 	imgFromWorker.setAttribute('id', 'worker-img');
-	imgFromWorker.setAttribute('src', urlImage);
+	imgFromWorker.setAttribute('src', url);
 
 	document.getElementById('img-container').append(imgFromWorker);
-	// console.dir(imgFromWorker);
+
+	setTimeout(() => {
+		imgRenderHeight = imgFromWorker.height;
+		imgRenderWidth = imgFromWorker.width;
+		console.log(imgRenderHeight);
+	}, 200);
+}
+
+worker.onmessage = async (event) => {
+	console.log('Recibido en MainThread', event.data);
+
+	if (event.data.urlImage) {
+		console.log('Create img');
+		const urlImage = event.data.urlImage;
+
+		naturalWidthImg = event.data.w;
+		naturalHeightImg = event.data.h;
+
+		newCanvas.width = naturalWidthImg;
+		newCanvas.height = naturalHeightImg;
+
+		createImgFromWorker(urlImage);
+	}
+
+	if (event.data.avgColors) {
+		console.log('Render pixels');
+
+		const avgColors = event.data.avgColors;
+		canvasColor.width = imgRenderWidth;
+		canvasColor.height = imgRenderHeight;
+		avgColors.forEach((color) => renderPixelColor(color));
+
+		const arrayForPrimaryColors = formatAvgColorsList(avgColors);
+
+		applyStyles(arrayForPrimaryColors);
+	}
+	// newCanvas.append(canvasColor);
 };
+
 numDivSelect.onchange = (e) => {
 	showLoader(loader);
 	divisionQtyState = e.target.value;
@@ -179,28 +179,10 @@ toleranceSelect.onchange = async (e) => {
 };
 buttonChangeImage.onclick = (e) => {
 	showLoader(loader);
-
 	setNewImage = true;
 	callWorker();
 };
-// Funcion a ejecutar cuando imgFile se cargue
-imgFile.onload = async () => {
-	// Limpieza de elementos en el DOM
-	newCanvas.innerHTML = '';
-	// Creo el elemento "canvas" en memoria y lo asigno a una variable
-	const canvas = document.createElement('canvas');
 
-	// Iteramos cobre el canvas para obtener el array de datos
-	// ! s
-
-	// avgColors = await iterateOverCanvasWorker(canvas, canvasColor);
-
-	// ! s
-	// Aplicamos estilos para mostrar colores
-	// applyStyles(avgColors);
-	// hideLoader(loader);
-	// Reescaneamos el canvas sucede un cambio
-};
 // Definicion de funcion para aplicar estilos
 
 async function applyStyles(avgColors) {
@@ -209,7 +191,6 @@ async function applyStyles(avgColors) {
 	if (colorRGBstate) {
 		let rawPrimaryColor = await getPrimaryColor(avgColors);
 		primaryColor = rawPrimaryColor[0].base.RGB;
-		// console.log('RGB value of PC', primaryColor);
 	}
 	if (colorHSLstate) {
 		let rawPrimaryColor = await getPrimaryColorHSL(avgColors);
@@ -218,7 +199,6 @@ async function applyStyles(avgColors) {
 		} catch (error) {
 			console.log('Error un applyStyles', error);
 		}
-		// console.log('HSL value of PC', primaryColor);
 	}
 	// Asigno una sombra a la imagen con este color RGB
 	// imgFile.style.boxShadow = `0px 0px 50px 25px rgba(${rgbColor}, 0.85)`;
