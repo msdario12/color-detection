@@ -117,8 +117,8 @@ function createImgFromWorker(url) {
 	setTimeout(() => {
 		imgRenderHeight = imgFromWorker.height;
 		imgRenderWidth = imgFromWorker.width;
-		console.log(imgRenderHeight);
-	}, 200);
+		console.log(`render-img: w:${imgRenderWidth} h:${imgRenderHeight}`);
+	}, 100);
 }
 
 worker.onmessage = async (event) => {
