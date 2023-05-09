@@ -1,11 +1,9 @@
 const getPrimaryColor = async (colorList) => {
 	// colorList = [...,{RGB:[R, G, B], HSL:[H, S, L]}, ...]
-	// showColor.innerHTML = '';
 	let result = [];
-	let promises = [];
 	const percentage = colorTolerance;
 	const tolerance = (percentage / 100) * 255;
-	let totalReps = 0;
+	// let totalReps = 0;
 	async function asyncCompare(i, colorList, similarsColors, Rc, Gc, Bc) {
 		for (let j = i; j < colorList.length; j++) {
 			const R = colorList[j].RGB[0];
@@ -33,9 +31,7 @@ const getPrimaryColor = async (colorList) => {
 
 		similarsColors.push({ RGB: colorList[i].RGB });
 
-		promises.push(asyncCompare(i, colorList, similarsColors, Rc, Gc, Bc));
-
-		Promise.all(promises);
+		asyncCompare(i, colorList, similarsColors, Rc, Gc, Bc);
 
 		result.push({
 			base: similarsColors[0],
@@ -46,7 +42,7 @@ const getPrimaryColor = async (colorList) => {
 	// Ordeno el array en relacion a la cantidad de elementos de similarColors
 	result.sort((a, b) => b.similarsColors.length - a.similarsColors.length);
 	let divPromises = [];
-	// console.log("resultado de primary", result[0]);
+
 	showColor.innerHTML = '';
 	// Iteramos el array de resultado para crear un div por cada base color
 	result.forEach(async (baseAndSimilarColorObj) => {
@@ -62,20 +58,11 @@ const getPrimaryColor = async (colorList) => {
 			avgBaseColor.B,
 		];
 
-		// const divWithBaseColorBG = createDivWithBgColor(
-		// 	baseAndSimilarColorObj.base
-		// );
-
 		divPromises.push(createDivWithBgColor(baseAndSimilarColorObj.base));
-
-		// Inserto el div en el elemento #showColor del DOM
-		// showColor.insertBefore(divWithBaseColorBG, null);
 	});
 
-	// Promise.allSettled(divPromises);
+	Promise.allSettled(divPromises);
 
-	// console.log("Total repeticiones", totalReps);
-	// console.log('1er PrimaryColor', result[0]);
 	return result;
 };
 
@@ -87,7 +74,6 @@ const getPrimaryColorHSL = async (colorList) => {
 
 	// Convertimos los valores a HSL
 	const HSlColors = colorList;
-	// console.log(HSlColors);
 	for (let i = 0; i < HSlColors.length; i++) {
 		const Hc = HSlColors[i].HSL[0];
 		const Sc = HSlColors[i].HSL[1];
@@ -135,16 +121,11 @@ const getPrimaryColorHSL = async (colorList) => {
 			avgBaseColor.L,
 		];
 
-		// const divWithBaseColorBG = await createDivWithBgColor(
-		// 	baseAndSimilarColorObj.base
-		// );
-
 		divPromises.push(createDivWithBgColor(baseAndSimilarColorObj.base));
-
-		// Inserto el div en el elemento #showColor del DOM
-		// showColor.insertBefore(divWithBaseColorBG, null);
 	});
-	// console.log('1er PrimaryColor', result[0]);
+
+	Promise.allSettled(divPromises);
+
 	return result;
 };
 

@@ -8,8 +8,6 @@ async function fetchRandomImg() {
 }
 
 function readPixelData(dataColor) {
-	let response;
-	let imgBitMap, urlImage;
 	let colors = [];
 	// Obtenemos los valores de R,G,B y A de cada pixel, saltando de a 4 elementos
 

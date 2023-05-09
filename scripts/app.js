@@ -71,6 +71,7 @@ async function renderPixelColor(color) {
 		);
 	}
 }
+let start = Date.now();
 
 showLoader(loader);
 
@@ -207,5 +208,7 @@ async function applyStyles(avgColors) {
 		? `rgb(${primaryColor[0]}, ${primaryColor[1]}, ${primaryColor[2]})`
 		: `hsl(${primaryColor[0]}, ${primaryColor[1]}%, ${primaryColor[2]}%)`;
 	// imgFile.style.boxShadow = `0px 0px 100px 55px ${stringColorStyle}`;
+	let timeTaken = Date.now() - start;
+	console.log('Total time taken : ' + timeTaken + ' milliseconds');
 	hideLoader(loader);
 }
