@@ -154,11 +154,13 @@ worker.onmessage = async (event) => {
 };
 
 numDivSelect.onchange = (e) => {
+	start = Date.now();
 	showLoader(loader);
 	divisionQtyState = e.target.value;
 	callWorker();
 };
 hslColorMode.onchange = async (e) => {
+	start = Date.now();
 	showLoader(loader);
 	colorRGBstate = false;
 	colorHSLstate = true;
@@ -166,6 +168,7 @@ hslColorMode.onchange = async (e) => {
 	callWorker();
 };
 rgbColorMode.onchange = async (e) => {
+	start = Date.now();
 	showLoader(loader);
 	colorRGBstate = true;
 	colorHSLstate = false;
@@ -173,12 +176,14 @@ rgbColorMode.onchange = async (e) => {
 	callWorker();
 };
 toleranceSelect.onchange = async (e) => {
+	start = Date.now();
 	showLoader(loader);
 	colorTolerance = e.target.value;
 	console.log('Cambia la tolerancia');
 	callWorker();
 };
 buttonChangeImage.onclick = (e) => {
+	start = Date.now();
 	showLoader(loader);
 	setNewImage = true;
 	callWorker();
