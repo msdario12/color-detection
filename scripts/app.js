@@ -5,7 +5,6 @@ import {
 	getPrimaryColor,
 	getPrimaryColorHSL,
 } from './get-primary-color.js';
-// const RGBToHSL = require('./rgb-to-hsl.js');
 // Defino estados iniciales de inputs
 let colorRGBstate = true;
 let colorHSLstate = false;

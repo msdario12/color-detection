@@ -18,5 +18,3 @@ function RGBToHSL(colorsArray) {
 	const L = (100 * (2 * l - s)) / 2;
 	return [Math.round(H), Math.round(S), Math.round(L)];
 }
-
-module.exports = RGBToHSL;
