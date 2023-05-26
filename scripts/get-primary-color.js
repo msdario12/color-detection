@@ -1,4 +1,4 @@
-const getPrimaryColor = async (colorList) => {
+export const getPrimaryColor = async (colorList) => {
 	// colorList = [...,{RGB:[R, G, B], HSL:[H, S, L]}, ...]
 	let result = [];
 	const percentage = colorTolerance;
@@ -66,7 +66,7 @@ const getPrimaryColor = async (colorList) => {
 	return result;
 };
 
-const getPrimaryColorHSL = async (colorList) => {
+export const getPrimaryColorHSL = async (colorList) => {
 	let result = [];
 	const percentage = colorTolerance;
 	const toleranceH = (percentage / 100) * 360 * 1.1;
@@ -129,7 +129,7 @@ const getPrimaryColorHSL = async (colorList) => {
 	return result;
 };
 
-const createDivWithBgColor = async (baseColor) => {
+export const createDivWithBgColor = async (baseColor) => {
 	// Creamos el div encargado de mostrar el color
 	const divColor = document.createElement('div');
 	// Div que contiene el texto dentro del color
