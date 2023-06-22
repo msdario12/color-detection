@@ -1,10 +1,15 @@
 import FormConfig from './form/FormConfig';
 import { useRef, useState } from 'react';
 
-export default function ConfigSection(props) {
-	const { setColorMode, setColorTolerance, setDivsQty } = props;
+export default function ConfigSection() {
+	const [colorMode, setColorMode] = useState('RGB');
+	const [divsQty, setDivsQty] = useState(2);
+	const [colorTolerance, setColorTolerance] = useState(20);
+
 	const [imgUrl, setImgUrl] = useState('');
-	const workerRef = useRef(new Worker('../src/workers/worker.js'));
+	const workerRef = useRef(
+		new Worker('../src/workers/worker.js', { type: 'module' })
+	);
 	const worker = workerRef.current;
 
 	function handleSubmit(e) {
@@ -17,11 +22,18 @@ export default function ConfigSection(props) {
 	}
 
 	function handleChangeImage() {
-		// Send msg to webworker with req
-		worker.postMessage('nashe');
+		// Send message to web worker to get a new image
+		worker.postMessage({
+			msg: 'fetch-new-image',
+			params: {
+				colorMode,
+				divsQty,
+				colorTolerance,
+			},
+		});
 		// Await response from worker
 		worker.onmessage = (e) => {
-			console.log(e.data.url);
+			// Set a new image in DOM
 			setImgUrl(e.data.url);
 		};
 	}
@@ -29,6 +41,9 @@ export default function ConfigSection(props) {
 	return (
 		<section className='config-section'>
 			<h2>Cambiar de imagen</h2>
+			<p>
+				State {colorMode}, {divsQty}, {colorTolerance}
+			</p>
 			<button id='change-img' onClick={handleChangeImage}>
 				Cambiar imagen
 			</button>
