@@ -1,17 +1,11 @@
 import FormConfig from './form/FormConfig';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 export default function ConfigSection(props) {
 	const { setColorMode, setColorTolerance, setDivsQty } = props;
-
+	const [imgUrl, setImgUrl] = useState('');
 	const workerRef = useRef(new Worker('../src/workers/worker.js'));
 	const worker = workerRef.current;
-
-	worker.postMessage(10);
-
-	worker.onmessage = (e) => {
-		console.log('en react' + e.data);
-	};
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -24,7 +18,12 @@ export default function ConfigSection(props) {
 
 	function handleChangeImage() {
 		// Send msg to webworker with req
+		worker.postMessage('nashe');
 		// Await response from worker
+		worker.onmessage = (e) => {
+			console.log(e.data.url);
+			setImgUrl(e.data.url);
+		};
 	}
 
 	return (
@@ -40,7 +39,7 @@ export default function ConfigSection(props) {
 			<div id='toShowLoader'></div>
 			<div id='showColor'></div>
 			<div id='img-container'></div>
-			<img id='worker-img' data-src='' alt='' />
+			<img id='worker-img' src={imgUrl} data-src='' alt='' />
 			<div id='newCanvas'>
 				<canvas id='canvas-color'></canvas>
 			</div>
