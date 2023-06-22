@@ -5,7 +5,7 @@ async function fetchRandomImg() {
 	const response = await fetch('https://source.unsplash.com/random/?$cat');
 	const arrayBuffer = await response.arrayBuffer();
 	const blob = new Blob([arrayBuffer]);
-	return { img: createImageBitmap(blob), res: response };
+	return { img: await createImageBitmap(blob), res: response };
 }
 
 async function readImgData(
@@ -15,6 +15,7 @@ async function readImgData(
 	colorHSLstate,
 	divisionQtyState
 ) {
+	console.log(imgBitMap);
 	const canvas = new OffscreenCanvas(imgBitMap.width, imgBitMap.height);
 	const ctx = canvas.getContext('2d', { willReadFrequently: true });
 	// Dimensiones del canvas de la imagen referidas a los valores naturales de la img
@@ -69,12 +70,38 @@ async function readImgData(
 }
 // Register a callback to process messages from the parent
 self.onmessage = (e) => {
+	let colorHSLstate, colorRGBstate, imgBitMap;
+	const { divsQty, colorMode } = e.data.params;
+	if (colorMode === 'RGB') {
+		colorHSLstate = false;
+		colorRGBstate = true;
+	}
+	if (colorMode === 'HSL') {
+		colorHSLstate = true;
+		colorRGBstate = false;
+	}
+
 	switch (e.data.msg) {
 		case 'fetch-new-image':
-			fetchRandomImg().then(({ res }) => self.postMessage({ url: res.url }));
+			fetchRandomImg()
+				.then(({ res, img }) => {
+					imgBitMap = img;
+					self.postMessage({ url: res.url });
+				})
+				.then(() =>
+					readImgData(
+						imgBitMap,
+						divsQty,
+						colorRGBstate,
+						colorHSLstate,
+						divsQty
+					).then((res) => self.postMessage({ avgColors: res }))
+				);
+
 			break;
 
 		default:
+			readImgData();
 			break;
 	}
 };

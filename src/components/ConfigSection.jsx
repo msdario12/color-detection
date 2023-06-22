@@ -34,7 +34,12 @@ export default function ConfigSection() {
 		// Await response from worker
 		worker.onmessage = (e) => {
 			// Set a new image in DOM
-			setImgUrl(e.data.url);
+			if (e.data.url) {
+				setImgUrl(e.data.url);
+			}
+			if (e.data.avgColors) {
+				console.log(e.data.avgColors);
+			}
 		};
 	}
 
