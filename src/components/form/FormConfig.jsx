@@ -2,6 +2,7 @@ function FormConfig(props) {
 	const { handleSubmit } = props;
 	return (
 		<form onSubmit={handleSubmit}>
+			<h2>Seleccione el modo de color</h2>
 			<label htmlFor='rgb-mode'>RGB</label>
 			<input type='radio' value='RGB' name='colorMode' id='rgb-mode' />
 			<label htmlFor='rgb-mode'>HSL</label>

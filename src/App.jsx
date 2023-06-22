@@ -18,14 +18,7 @@ function App() {
 				setColorTolerance={setColorTolerance}
 				hola={'god'}
 			/>
-			<div id='loader'>Cargando Imagen...</div>
-			<div id='toShowLoader'></div>
-			<div id='showColor'></div>
-			<div id='img-container'></div>
-			<img id='worker-img' data-src='' alt='' />
-			<div id='newCanvas'>
-				<canvas id='canvas-color'></canvas>
-			</div>
+			
 		</>
 	);
 }
