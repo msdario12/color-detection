@@ -7,9 +7,11 @@ export default function ConfigSection() {
 	const [colorTolerance, setColorTolerance] = useState(20);
 
 	const [imgUrl, setImgUrl] = useState('');
+	// Reference for worker
 	const workerRef = useRef(
 		new Worker('../src/workers/worker.js', { type: 'module' })
 	);
+	// Get the current state of worker, and save in a variable
 	const worker = workerRef.current;
 
 	function handleSubmit(e) {
