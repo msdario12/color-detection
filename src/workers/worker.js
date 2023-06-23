@@ -86,7 +86,9 @@ self.onmessage = (e) => {
 			fetchRandomImg()
 				.then(({ res, img }) => {
 					imgBitMap = img;
-					self.postMessage({ url: res.url });
+					self.postMessage({
+						url: res.url,
+					});
 				})
 				.then(() =>
 					readImgData(

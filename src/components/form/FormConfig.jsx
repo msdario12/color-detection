@@ -4,7 +4,7 @@ function FormConfig(props) {
 		<form onSubmit={handleSubmit}>
 			<h2>Seleccione el modo de color</h2>
 			<label htmlFor='rgb-mode'>RGB</label>
-			<input type='radio' value='RGB' name='colorMode' id='rgb-mode' />
+			<input selected type='radio' value='RGB' name='colorMode' id='rgb-mode' />
 			<label htmlFor='rgb-mode'>HSL</label>
 			<input type='radio' value='HSL' name='colorMode' id='hsl-mode' />
 			<h2>Tolerancia de selección de color</h2>
