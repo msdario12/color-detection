@@ -1,8 +1,12 @@
-export default function InputToleranceColor() {
+export default function InputToleranceColor(props) {
+	const { handleChange } = props;
 	return (
 		<div>
 			<label htmlFor='num-tol'>Seleccione el valor de tolerancia</label>
-			<select name='colorTolerance' id='num-tol'>
+			<select
+				onChange={(e) => handleChange(e.target.value)}
+				name='colorTolerance'
+				id='num-tol'>
 				<option value='2'>2%</option>
 				<option value='5'>5%</option>
 				<option value='10'>10%</option>
