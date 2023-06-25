@@ -18,7 +18,7 @@ export default function ConfigSection() {
 	const [isLoading, setIsLoading] = useState(false);
 
 	// Reference for worker
-	const imgRef = useRef(null);
+	const imgRef = useRef();
 	const workerRef = useRef(
 		new Worker('../src/workers/worker.js', { type: 'module' })
 	);
@@ -26,14 +26,19 @@ export default function ConfigSection() {
 	// Get the current state of worker, and save in a variable
 	const img = imgRef.current;
 	const worker = workerRef.current;
-
-	function postMessageToWorker(msg, params) {
-		setIsLoading(true);
-		worker.postMessage({
-			msg,
-			params,
-		});
-	}
+	// For change size img when windows is resizing
+	useLayoutEffect(() => {
+		function updateSize() {
+			setTimeout(() => {
+				setImgSizes({
+					naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
+					renderSize: { w: img.width, h: img.height },
+				});
+			}, 275);
+		}
+		window.addEventListener('resize', updateSize);
+		return () => window.removeEventListener('resize', updateSize);
+	}, [img]);
 
 	useEffect(() => {
 		if (!imgUrl) {
@@ -44,25 +49,18 @@ export default function ConfigSection() {
 		postMessageToWorker('calculate-pixels', { colorMode, divsQty });
 	}, [colorMode, divsQty, imgSizes]);
 
+	function postMessageToWorker(msg, params) {
+		setIsLoading(true);
+		worker.postMessage({
+			msg,
+			params,
+		});
+	}
+
 	function handleChangeImage() {
 		// Send message to web worker to get a new image
 		postMessageToWorker('fetch-new-image', { colorMode, divsQty });
 	}
-
-	// For change size img when windows is resizing
-	useLayoutEffect(() => {
-		function updateSize() {
-			setImgSizes({
-				naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
-				renderSize: { w: img.width, h: img.height },
-			});
-		}
-		
-		console.log('RunlayoutEffect');
-		window.addEventListener('resize', updateSize);
-
-		return () => window.removeEventListener('resize', updateSize);
-	}, []);
 
 	worker.onmessage = (e) => {
 		// Set a new image in DOM

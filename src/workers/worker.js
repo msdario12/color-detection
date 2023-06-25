@@ -17,7 +17,6 @@ async function readImgData(
 	colorHSLstate,
 	divisionQtyState
 ) {
-	console.log(imgBitMap);
 	const canvas = new OffscreenCanvas(imgBitMap.width, imgBitMap.height);
 	const ctx = canvas.getContext('2d', { willReadFrequently: true });
 	// Dimensiones del canvas de la imagen referidas a los valores naturales de la img
