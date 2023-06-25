@@ -1,4 +1,3 @@
-import useWindowsSize from '../hooks/useWindowsSize';
 import RenderPixelColors from './RenderPixelColors';
 import RenderPrimaryColors from './RenderPrimaryColors';
 import FormConfig from './form/FormConfig';
@@ -18,8 +17,6 @@ export default function ConfigSection() {
 
 	const [isLoading, setIsLoading] = useState(false);
 
-	const [windowSize, setWindowSize] = useState([0, 0]);
-
 	// Reference for worker
 	const imgRef = useRef();
 	const workerRef = useRef(
@@ -27,8 +24,8 @@ export default function ConfigSection() {
 	);
 
 	// Get the current state of worker, and save in a variable
-	const worker = workerRef.current;
 	const img = imgRef.current;
+	const worker = workerRef.current;
 
 	function postMessageToWorker(msg, params) {
 		setIsLoading(true);
@@ -72,13 +69,15 @@ export default function ConfigSection() {
 				naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
 				renderSize: { w: img.width, h: img.height },
 			});
-			setWindowSize([window.innerWidth, window.innerHeight]);
 		}
-		window.addEventListener('resize', updateSize);
+		if (imgUrl) {
+			console.log('RunlayoutEffect');
+			window.addEventListener('resize', updateSize);
+		}
 		return () => window.removeEventListener('resize', updateSize);
 	}, [img]);
 
-	function handleLoadImg(e) {
+	function handleLoadImg() {
 		setImgSizes({
 			naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
 			renderSize: { w: img.width, h: img.height },
@@ -96,7 +95,7 @@ export default function ConfigSection() {
 				Cambiar imagen
 			</button>
 
-			{isLoading ? 'Cargando' : ''}
+			{isLoading ? 'Cargando...' : ''}
 
 			<FormConfig
 				setColorTolerance={setColorTolerance}
@@ -113,15 +112,13 @@ export default function ConfigSection() {
 						imgSizes={imgSizes}
 					/>
 				) : (
-					'Esperando datos matriz'
+					'Esperando datos matriz...'
 				)}
 				<img
-					ref={imgRef}
-					id='worker-img'
 					onLoad={handleLoadImg}
 					src={imgUrl}
-					data-src=''
-					alt=''
+					ref={imgRef}
+					alt='Img to get analize'
 				/>
 			</div>
 
@@ -135,7 +132,7 @@ export default function ConfigSection() {
 				'Esperando datos color primario'
 			)}
 
-			<div className={isLoading && 'showLoader'} id='loader'>
+			<div className={isLoading ? 'showLoader' : undefined} id='loader'>
 				Cargando...
 			</div>
 			<div id='toShowLoader'></div>

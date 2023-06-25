@@ -12,7 +12,7 @@ export default function InputModeColor(props) {
 				id='rgb-mode'
 				checked={colorMode === 'RGB'}
 			/>
-			<label htmlFor='rgb-mode'>HSL</label>
+			<label htmlFor='hsl-mode'>HSL</label>
 			<input
 				onChange={(e) => handleChange(e.target.value)}
 				type='radio'

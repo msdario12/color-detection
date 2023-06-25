@@ -37,17 +37,19 @@ export default function RenderPrimaryColors(props) {
 
 	return (
 		<div>
-			<h2>Colors</h2>
-			{colorList
-				? colorList.map((color, idx) => (
-						<IndividualPrimaryColor
-							key={'C' + idx}
-							colorMode={colorMode}
-							color={color}
-						/>
-						// eslint-disable-next-line no-mixed-spaces-and-tabs
-				  ))
-				: 'Esperando datos de colores'}
+			<h2 className='text-4xl'>Colors</h2>
+			<div className='flex'>
+				{colorList
+					? colorList.map((color, idx) => (
+							<IndividualPrimaryColor
+								key={'C' + idx}
+								colorMode={colorMode}
+								color={color}
+							/>
+							// eslint-disable-next-line no-mixed-spaces-and-tabs
+					  ))
+					: 'Esperando datos de colores'}
+			</div>
 		</div>
 	);
 }
