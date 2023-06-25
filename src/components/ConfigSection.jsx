@@ -42,15 +42,6 @@ export default function ConfigSection() {
 		});
 	}, [colorMode, divsQty]);
 
-	function handleSubmit(e) {
-		e.preventDefault();
-		console.log('submit!');
-		const form = Object.fromEntries(new FormData(e.target));
-		setColorMode(form.colorMode);
-		setDivsQty(form.divsQty);
-		setColorTolerance(form.colorTolerance);
-	}
-
 	function handleChangeImage() {
 		// Send message to web worker to get a new image
 		worker.postMessage({
@@ -92,7 +83,6 @@ export default function ConfigSection() {
 			</button>
 
 			<FormConfig
-				handleSubmit={handleSubmit}
 				setColorTolerance={setColorTolerance}
 				setDivsQty={setDivsQty}
 				colorMode={colorMode}

@@ -32,7 +32,7 @@ export default function RenderPrimaryColors(props) {
 				setColorList(res)
 			);
 		}
-	}, [avgColors]);
+	}, [avgColors, colorTolerance]);
 	console.log(colorList);
 
 	return (
