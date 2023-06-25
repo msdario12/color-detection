@@ -40,7 +40,6 @@ export default function ConfigSection() {
 			params: {
 				colorMode,
 				divsQty,
-				colorTolerance,
 			},
 		});
 		// Await response from worker
