@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 export default function InputModeColor(props) {
 	const { handleChange, colorMode } = props;
 
