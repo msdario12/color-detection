@@ -18,7 +18,7 @@ export default function ConfigSection() {
 	const [isLoading, setIsLoading] = useState(false);
 
 	// Reference for worker
-	const imgRef = useRef();
+	const imgRef = useRef(null);
 	const workerRef = useRef(
 		new Worker('../src/workers/worker.js', { type: 'module' })
 	);
@@ -49,19 +49,6 @@ export default function ConfigSection() {
 		postMessageToWorker('fetch-new-image', { colorMode, divsQty });
 	}
 
-	worker.onmessage = (e) => {
-		// Set a new image in DOM
-		if (e.data.url) {
-			const data = e.data;
-			setImgUrl(data.url);
-		}
-		if (e.data.avgColors) {
-			console.log(e.data.avgColors);
-			setAvgColors(e.data.avgColors);
-		}
-		setIsLoading(false);
-	};
-
 	// For change size img when windows is resizing
 	useLayoutEffect(() => {
 		function updateSize() {
@@ -70,12 +57,23 @@ export default function ConfigSection() {
 				renderSize: { w: img.width, h: img.height },
 			});
 		}
-		if (imgUrl) {
-			console.log('RunlayoutEffect');
-			window.addEventListener('resize', updateSize);
-		}
+		
+		console.log('RunlayoutEffect');
+		window.addEventListener('resize', updateSize);
+
 		return () => window.removeEventListener('resize', updateSize);
-	}, [img]);
+	}, []);
+
+	worker.onmessage = (e) => {
+		// Set a new image in DOM
+		if (e.data.url) {
+			setImgUrl(e.data.url);
+		}
+		if (e.data.avgColors) {
+			setAvgColors(e.data.avgColors);
+		}
+		setIsLoading(false);
+	};
 
 	function handleLoadImg() {
 		setImgSizes({
