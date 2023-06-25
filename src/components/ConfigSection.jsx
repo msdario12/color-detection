@@ -45,7 +45,7 @@ export default function ConfigSection() {
 			return;
 		}
 		postMessageToWorker('calculate-pixels', { colorMode, divsQty });
-	}, [colorMode, divsQty]);
+	}, [colorMode, divsQty, imgSizes]);
 
 	function handleChangeImage() {
 		// Send message to web worker to get a new image
@@ -65,6 +65,7 @@ export default function ConfigSection() {
 		setIsLoading(false);
 	};
 
+	// For change size img when windows is resizing
 	useLayoutEffect(() => {
 		function updateSize() {
 			setImgSizes({
