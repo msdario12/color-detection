@@ -14,6 +14,8 @@ export default function ConfigSection() {
 		naturalSize: { w: 0, h: 0 },
 		renderSize: { w: 0, h: 0 },
 	});
+
+	const [isLoading, setIsLoading] = useState(false);
 	// Reference for worker
 	const workerRef = useRef(
 		new Worker('../src/workers/worker.js', { type: 'module' })
@@ -22,36 +24,28 @@ export default function ConfigSection() {
 	// Get the current state of worker, and save in a variable
 	const worker = workerRef.current;
 
+	function postMessageToWorker(msg, params) {
+		setIsLoading(true);
+		worker.postMessage({
+			msg,
+			params,
+		});
+	}
+
 	useEffect(() => {
 		if (!imgUrl) {
-			worker.postMessage({
-				msg: 'fetch-new-image',
-				params: {
-					colorMode,
-					divsQty,
-				},
-			});
+			postMessageToWorker('fetch-new-image', { colorMode, divsQty });
+
 			return;
 		}
-		worker.postMessage({
-			msg: 'calculate-pixels',
-			params: {
-				colorMode,
-				divsQty,
-			},
-		});
+		postMessageToWorker('calculate-pixels', { colorMode, divsQty });
 	}, [colorMode, divsQty]);
 
 	function handleChangeImage() {
 		// Send message to web worker to get a new image
-		worker.postMessage({
-			msg: 'fetch-new-image',
-			params: {
-				colorMode,
-				divsQty,
-			},
-		});
+		postMessageToWorker('fetch-new-image', { colorMode, divsQty });
 	}
+
 	worker.onmessage = (e) => {
 		// Set a new image in DOM
 		if (e.data.url) {
@@ -62,6 +56,7 @@ export default function ConfigSection() {
 			console.log(e.data.avgColors);
 			setAvgColors(e.data.avgColors);
 		}
+		setIsLoading(false);
 	};
 
 	function handleLoadImg(e) {
@@ -76,11 +71,14 @@ export default function ConfigSection() {
 		<section className='config-section'>
 			<h2>Cambiar de imagen</h2>
 			<p>
-				State {colorMode}, {divsQty}, {colorTolerance}
+				State {colorMode}, {divsQty}, {colorTolerance},
+				{isLoading ? 'CARGANDO' : 'LISTO'},
 			</p>
 			<button id='change-img' onClick={handleChangeImage}>
 				Cambiar imagen
 			</button>
+
+			{isLoading ? 'Cargando' : ''}
 
 			<FormConfig
 				setColorTolerance={setColorTolerance}
@@ -108,6 +106,7 @@ export default function ConfigSection() {
 			) : (
 				'Esperando datos color primario'
 			)}
+
 			<img
 				id='worker-img'
 				onLoad={handleLoadImg}
@@ -116,7 +115,9 @@ export default function ConfigSection() {
 				alt=''
 			/>
 
-			<div id='loader'>Cargando Imagen...</div>
+			<div className={isLoading && 'showLoader'} id='loader'>
+				Cargando...
+			</div>
 			<div id='toShowLoader'></div>
 			<div id='showColor'></div>
 			<div id='img-container'></div>
