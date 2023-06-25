@@ -6,7 +6,7 @@ function App() {
 		<>
 			<h1 className='text-3xl font-bold underline'>Detección de colores</h1>
 
-			<ConfigSection />
+			<ConfigSection className='container mx-auto' />
 		</>
 	);
 }

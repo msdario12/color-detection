@@ -68,7 +68,7 @@ export default function ConfigSection() {
 	}
 
 	return (
-		<section className='config-section'>
+		<section className='config-section lg:container mx-auto px-4'>
 			<h2>Cambiar de imagen</h2>
 			<p>
 				State {colorMode}, {divsQty}, {colorTolerance},
@@ -87,15 +87,24 @@ export default function ConfigSection() {
 				setColorMode={setColorMode}
 			/>
 
-			{avgColors.length > 0 ? (
-				<RenderPixelColors
-					avgColors={avgColors}
-					colorMode={colorMode}
-					imgSizes={imgSizes}
+			<div className='md:columns-2'>
+				{avgColors.length > 0 ? (
+					<RenderPixelColors
+						avgColors={avgColors}
+						colorMode={colorMode}
+						imgSizes={imgSizes}
+					/>
+				) : (
+					'Esperando datos matriz'
+				)}
+				<img
+					id='worker-img'
+					onLoad={handleLoadImg}
+					src={imgUrl}
+					data-src=''
+					alt=''
 				/>
-			) : (
-				'Esperando datos matriz'
-			)}
+			</div>
 
 			{avgColors.length > 0 ? (
 				<RenderPrimaryColors
@@ -106,14 +115,6 @@ export default function ConfigSection() {
 			) : (
 				'Esperando datos color primario'
 			)}
-
-			<img
-				id='worker-img'
-				onLoad={handleLoadImg}
-				src={imgUrl}
-				data-src=''
-				alt=''
-			/>
 
 			<div className={isLoading && 'showLoader'} id='loader'>
 				Cargando...
