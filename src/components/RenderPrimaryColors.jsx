@@ -45,6 +45,7 @@ export default function RenderPrimaryColors(props) {
 							colorMode={colorMode}
 							color={color}
 						/>
+						// eslint-disable-next-line no-mixed-spaces-and-tabs
 				  ))
 				: 'Esperando datos de colores'}
 		</div>
