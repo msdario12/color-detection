@@ -60,7 +60,7 @@ const getPrimaryColor = async (colorList, colorTolerance) => {
 
 	Promise.allSettled(divPromises);
 
-	const formatResult = result.map((color) => color.base);
+	const formatResult = result.map((color) => color.base.RGB);
 
 	return formatResult;
 };

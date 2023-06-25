@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import getPrimaryColor from '../utils/getPrimaryColor';
 import getPrimaryColorHSL from '../utils/getPrimaryColorHSL';
+import IndividualPrimaryColor from './IndividualPrimaryColor';
 
 function formatAvgColorsList(avgColors) {
 	let arrayForPrimaryColors = [];
@@ -35,6 +36,17 @@ export default function RenderPrimaryColors(props) {
 	console.log(colorList);
 
 	return (
-		<div>Colors</div>
+		<div>
+			<h2>Colors</h2>
+			{colorList
+				? colorList.map((color, idx) => (
+						<IndividualPrimaryColor
+							key={'C' + idx}
+							colorMode={colorMode}
+							color={color}
+						/>
+				  ))
+				: 'Esperando datos de colores'}
+		</div>
 	);
 }
