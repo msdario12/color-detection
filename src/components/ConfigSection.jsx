@@ -42,19 +42,18 @@ export default function ConfigSection() {
 				divsQty,
 			},
 		});
-		// Await response from worker
-		worker.onmessage = (e) => {
-			// Set a new image in DOM
-			if (e.data.url) {
-				const data = e.data;
-				setImgUrl(data.url);
-			}
-			if (e.data.avgColors) {
-				console.log(e.data.avgColors);
-				setAvgColors(e.data.avgColors);
-			}
-		};
 	}
+	worker.onmessage = (e) => {
+		// Set a new image in DOM
+		if (e.data.url) {
+			const data = e.data;
+			setImgUrl(data.url);
+		}
+		if (e.data.avgColors) {
+			console.log(e.data.avgColors);
+			setAvgColors(e.data.avgColors);
+		}
+	};
 
 	function handleLoadImg(e) {
 		const img = e.target;
@@ -74,7 +73,13 @@ export default function ConfigSection() {
 				Cambiar imagen
 			</button>
 
-			<FormConfig handleSubmit={handleSubmit} />
+			<FormConfig
+				handleSubmit={handleSubmit}
+				setColorTolerance={setColorTolerance}
+				setDivsQty={setDivsQty}
+				colorMode={colorMode}
+				setColorMode={setColorMode}
+			/>
 
 			{avgColors.length > 0 ? (
 				<RenderPixelColors
