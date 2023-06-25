@@ -12,7 +12,6 @@ export default function Canvas(props) {
 		canvas.height = imgSizes.renderSize.h;
 
 		const ctxColor = canvas.getContext('2d', { willReadFrequently: true });
-		//Our first draw
 
 		avgColors.map((color) => {
 			if (colorRGBstate) {

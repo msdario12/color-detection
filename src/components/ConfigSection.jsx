@@ -1,4 +1,5 @@
 import RenderPixelColors from './RenderPixelColors';
+import RenderPrimaryColors from './RenderPrimaryColors';
 import FormConfig from './form/FormConfig';
 import { useRef, useState } from 'react';
 
@@ -76,20 +77,25 @@ export default function ConfigSection() {
 
 			<FormConfig handleSubmit={handleSubmit} />
 
-			{avgColors ? (
+			{avgColors.length > 0 ? (
 				<RenderPixelColors
 					avgColors={avgColors}
 					colorMode={colorMode}
 					imgSizes={imgSizes}
 				/>
 			) : (
-				'Esperando datos'
+				'Esperando datos matriz'
 			)}
 
-			<div id='loader'>Cargando Imagen...</div>
-			<div id='toShowLoader'></div>
-			<div id='showColor'></div>
-			<div id='img-container'></div>
+			{avgColors.length > 0 ? (
+				<RenderPrimaryColors
+					avgColors={avgColors}
+					colorMode={colorMode}
+					colorTolerance={colorTolerance}
+				/>
+			) : (
+				'Esperando datos color primario'
+			)}
 			<img
 				id='worker-img'
 				onLoad={handleLoadImg}
@@ -97,6 +103,11 @@ export default function ConfigSection() {
 				data-src=''
 				alt=''
 			/>
+
+			<div id='loader'>Cargando Imagen...</div>
+			<div id='toShowLoader'></div>
+			<div id='showColor'></div>
+			<div id='img-container'></div>
 		</section>
 	);
 }
