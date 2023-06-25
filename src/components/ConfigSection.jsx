@@ -1,7 +1,8 @@
+import useWindowsSize from '../hooks/useWindowsSize';
 import RenderPixelColors from './RenderPixelColors';
 import RenderPrimaryColors from './RenderPrimaryColors';
 import FormConfig from './form/FormConfig';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 export default function ConfigSection() {
 	const [colorMode, setColorMode] = useState('RGB');
@@ -16,13 +17,18 @@ export default function ConfigSection() {
 	});
 
 	const [isLoading, setIsLoading] = useState(false);
+
+	const [windowSize, setWindowSize] = useState([0, 0]);
+
 	// Reference for worker
+	const imgRef = useRef();
 	const workerRef = useRef(
 		new Worker('../src/workers/worker.js', { type: 'module' })
 	);
 
 	// Get the current state of worker, and save in a variable
 	const worker = workerRef.current;
+	const img = imgRef.current;
 
 	function postMessageToWorker(msg, params) {
 		setIsLoading(true);
@@ -59,8 +65,19 @@ export default function ConfigSection() {
 		setIsLoading(false);
 	};
 
+	useLayoutEffect(() => {
+		function updateSize() {
+			setImgSizes({
+				naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
+				renderSize: { w: img.width, h: img.height },
+			});
+			setWindowSize([window.innerWidth, window.innerHeight]);
+		}
+		window.addEventListener('resize', updateSize);
+		return () => window.removeEventListener('resize', updateSize);
+	}, [img]);
+
 	function handleLoadImg(e) {
-		const img = e.target;
 		setImgSizes({
 			naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
 			renderSize: { w: img.width, h: img.height },
@@ -98,6 +115,7 @@ export default function ConfigSection() {
 					'Esperando datos matriz'
 				)}
 				<img
+					ref={imgRef}
 					id='worker-img'
 					onLoad={handleLoadImg}
 					src={imgUrl}
