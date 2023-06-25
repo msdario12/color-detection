@@ -1,16 +1,14 @@
 import RenderPixelColors from './RenderPixelColors';
 import RenderPrimaryColors from './RenderPrimaryColors';
 import FormConfig from './form/FormConfig';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function ConfigSection() {
 	const [colorMode, setColorMode] = useState('RGB');
 	const [divsQty, setDivsQty] = useState(2);
 	const [colorTolerance, setColorTolerance] = useState(20);
 
-	const [imgUrl, setImgUrl] = useState(
-		'https://source.unsplash.com/random/?$cat'
-	);
+	const [imgUrl, setImgUrl] = useState('');
 	const [avgColors, setAvgColors] = useState([]);
 	const [imgSizes, setImgSizes] = useState({
 		naturalSize: { w: 0, h: 0 },
@@ -23,6 +21,26 @@ export default function ConfigSection() {
 
 	// Get the current state of worker, and save in a variable
 	const worker = workerRef.current;
+
+	useEffect(() => {
+		if (!imgUrl) {
+			worker.postMessage({
+				msg: 'fetch-new-image',
+				params: {
+					colorMode,
+					divsQty,
+				},
+			});
+			return;
+		}
+		worker.postMessage({
+			msg: 'calculate-pixels',
+			params: {
+				colorMode,
+				divsQty,
+			},
+		});
+	}, [colorMode, divsQty]);
 
 	function handleSubmit(e) {
 		e.preventDefault();

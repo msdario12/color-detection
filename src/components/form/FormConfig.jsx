@@ -14,8 +14,6 @@ function FormConfig(props) {
 
 			<h2>Cantidad de divisiones</h2>
 			<InputDivQuantity handleChange={setDivsQty} />
-
-			<button>Confirmar Cambios</button>
 		</form>
 	);
 }
