@@ -8,22 +8,23 @@ function createStringColor(color, colorMode) {
 }
 
 export default function IndividualPrimaryColor(props) {
-	const { color, colorMode } = props;
+	const { color, colorMode, divsQty } = props;
 	const dimension = '175px';
 	const divStyle = {
 		height: dimension,
 		width: dimension,
 		backgroundColor: createStringColor(color, colorMode),
 	};
+	const percentage = Math.round(
+		(Number(color.similarColors.length) / Number(divsQty ** 2)) * 100
+	);
 	return (
 		<div className='text-center'>
 			<div
 				style={divStyle}
 				className='flex justify-center items-center flex-col'>
 				<h3>{createStringColor(color, colorMode)}</h3>
-				<p>
-					Pixeles similares {color.similarColors && color.similarColors.length}
-				</p>
+				<p>Participación {percentage}%</p>
 			</div>
 		</div>
 	);

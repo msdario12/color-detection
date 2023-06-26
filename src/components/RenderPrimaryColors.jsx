@@ -15,7 +15,7 @@ function formatAvgColorsList(avgColors) {
 }
 
 export default function RenderPrimaryColors(props) {
-	const { avgColors, colorMode, colorTolerance } = props;
+	const { avgColors, colorMode, colorTolerance, divsQty } = props;
 	const [colorList, setColorList] = useState([]);
 
 	useEffect(() => {
@@ -41,12 +41,13 @@ export default function RenderPrimaryColors(props) {
 	console.log(colorList);
 
 	return (
-		<div>
-			<h2 className='text-4xl'>Colors</h2>
-			<div className='flex gap-5 flex-wrap'>
+		<div className='my-10'>
+			<h2 className='text-4xl mb-5'>Colors</h2>
+			<div className='flex gap-5 flex-wrap justify-center'>
 				{colorList.length > 0 &&
 					colorList.map((color, idx) => (
 						<IndividualPrimaryColor
+							divsQty={divsQty}
 							key={'C' + idx}
 							colorMode={colorMode}
 							color={color}

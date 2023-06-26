@@ -34,7 +34,7 @@ export default function ConfigSection() {
 			params,
 		});
 	}
-	
+
 	useEffect(() => {
 		if (!imgUrl) {
 			console.log('Getting first image');
@@ -57,8 +57,6 @@ export default function ConfigSection() {
 		window.addEventListener('resize', updateSize);
 		return () => window.removeEventListener('resize', updateSize);
 	}, [img]);
-
-	
 
 	function handleChangeImage() {
 		// Send message to web worker to get a new image
@@ -104,6 +102,17 @@ export default function ConfigSection() {
 				setColorMode={setColorMode}
 			/>
 
+			{avgColors.length > 0 ? (
+				<RenderPrimaryColors
+					divsQty={divsQty}
+					avgColors={avgColors}
+					colorMode={colorMode}
+					colorTolerance={colorTolerance}
+				/>
+			) : (
+				'Esperando datos color primario'
+			)}
+
 			<div className='md:columns-2'>
 				{avgColors.length > 0 ? (
 					<RenderPixelColors
@@ -121,16 +130,6 @@ export default function ConfigSection() {
 					alt='Img to get analize'
 				/>
 			</div>
-
-			{avgColors.length > 0 ? (
-				<RenderPrimaryColors
-					avgColors={avgColors}
-					colorMode={colorMode}
-					colorTolerance={colorTolerance}
-				/>
-			) : (
-				'Esperando datos color primario'
-			)}
 
 			<div className={isLoading ? 'showLoader' : undefined} id='loader'>
 				Cargando...
