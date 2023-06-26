@@ -9,7 +9,6 @@ function createStringColor(color, colorMode) {
 
 export default function IndividualPrimaryColor(props) {
 	const { color, colorMode } = props;
-	console.log(color);
 	const dimension = '175px';
 	const divStyle = {
 		height: dimension,
@@ -18,8 +17,13 @@ export default function IndividualPrimaryColor(props) {
 	};
 	return (
 		<div className='text-center'>
-			<div style={divStyle} className='flex justify-center items-center'>
+			<div
+				style={divStyle}
+				className='flex justify-center items-center flex-col'>
 				<h3>{createStringColor(color, colorMode)}</h3>
+				<p>
+					Pixeles similares {color.similarColors && color.similarColors.length}
+				</p>
 			</div>
 		</div>
 	);
