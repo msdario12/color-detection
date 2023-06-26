@@ -48,7 +48,7 @@ const getPrimaryColorHSL = async (colorList, colorTolerance) => {
 			baseAndSimilarColorObj.similarsColors,
 			baseAndSimilarColorObj.similarsColors.length
 		);
-		delete baseAndSimilarColorObj.similarColors;
+
 		// Reemplazamos el color base con este promedio
 		baseAndSimilarColorObj.base.HSL = [
 			avgBaseColor.H,
@@ -59,9 +59,10 @@ const getPrimaryColorHSL = async (colorList, colorTolerance) => {
 
 	Promise.allSettled(divPromises);
 
-	const formatResult = result.map((color) => color.base.HSL);
+	// const formatResult = result.map((color) => color.base.HSL);
+	console.log(result);
 
-	return formatResult;
+	return result;
 };
 
 export default getPrimaryColorHSL;

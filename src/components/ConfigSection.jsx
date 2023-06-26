@@ -34,6 +34,16 @@ export default function ConfigSection() {
 			params,
 		});
 	}
+	
+	useEffect(() => {
+		if (!imgUrl) {
+			console.log('Getting first image');
+			postMessageToWorker('fetch-new-image', { colorMode, divsQty });
+			return;
+		}
+		postMessageToWorker('calculate-pixels', { colorMode, divsQty });
+	}, [colorMode, divsQty, imgSizes]);
+
 	// For change size img when windows is resizing
 	useLayoutEffect(() => {
 		function updateSize() {
@@ -48,14 +58,7 @@ export default function ConfigSection() {
 		return () => window.removeEventListener('resize', updateSize);
 	}, [img]);
 
-	useEffect(() => {
-		if (!imgUrl) {
-			console.log('Getting first image');
-			postMessageToWorker('fetch-new-image', { colorMode, divsQty });
-			return;
-		}
-		postMessageToWorker('calculate-pixels', { colorMode, divsQty });
-	}, [colorMode, divsQty, imgSizes]);
+	
 
 	function handleChangeImage() {
 		// Send message to web worker to get a new image
@@ -66,6 +69,7 @@ export default function ConfigSection() {
 		// Set a new image in DOM
 		if (e.data.url) {
 			setImgUrl(e.data.url);
+			console.log(e.data.url);
 		}
 		if (e.data.avgColors) {
 			setAvgColors(e.data.avgColors);

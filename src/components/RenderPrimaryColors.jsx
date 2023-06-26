@@ -17,38 +17,42 @@ function formatAvgColorsList(avgColors) {
 export default function RenderPrimaryColors(props) {
 	const { avgColors, colorMode, colorTolerance } = props;
 	const [colorList, setColorList] = useState([]);
-	const arrayForPrimaryColors = formatAvgColorsList(avgColors);
 
 	useEffect(() => {
+		const arrayForPrimaryColors = formatAvgColorsList(avgColors);
+		setColorList([]);
 		if (colorMode === 'RGB') {
 			// let rawPrimaryColor = await getPrimaryColor(arrayForPrimaryColors);
 			// setColorList(rawPrimaryColor[0].base.RGB);
-			getPrimaryColor(arrayForPrimaryColors, colorTolerance).then((res) =>
-				setColorList(res)
-			);
+			getPrimaryColor(arrayForPrimaryColors, colorTolerance).then((res) => {
+				{
+					setColorList(res);
+				}
+			});
+			return;
 		}
 		if (colorMode === 'HSL') {
-			getPrimaryColorHSL(arrayForPrimaryColors, colorTolerance).then((res) =>
-				setColorList(res)
-			);
+			getPrimaryColorHSL(arrayForPrimaryColors, colorTolerance).then((res) => {
+				setColorList(res);
+			});
 		}
 	}, [avgColors, colorTolerance]);
+
 	console.log(colorList);
 
 	return (
 		<div>
 			<h2 className='text-4xl'>Colors</h2>
 			<div className='flex gap-5 flex-wrap'>
-				{colorList
-					? colorList.map((color, idx) => (
-							<IndividualPrimaryColor
-								key={'C' + idx}
-								colorMode={colorMode}
-								color={color}
-							/>
-							// eslint-disable-next-line no-mixed-spaces-and-tabs
-					  ))
-					: 'Esperando datos de colores'}
+				{colorList.length > 0 &&
+					colorList.map((color, idx) => (
+						<IndividualPrimaryColor
+							key={'C' + idx}
+							colorMode={colorMode}
+							color={color}
+						/>
+						// eslint-disable-next-line no-mixed-spaces-and-tabs
+					))}
 			</div>
 		</div>
 	);

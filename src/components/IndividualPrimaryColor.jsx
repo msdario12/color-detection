@@ -1,14 +1,15 @@
 function createStringColor(color, colorMode) {
-	if (colorMode === 'RGB') {
-		return `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+	if (colorMode === 'RGB' && color.base.RGB) {
+		return `rgb(${color.base.RGB[0]}, ${color.base.RGB[1]}, ${color.base.RGB[2]})`;
 	}
-	if (colorMode === 'HSL') {
-		return `hsl(${color[0]}, ${color[1]}%, ${color[2]}%)`;
+	if (colorMode === 'HSL' && color.base.HSL) {
+		return `hsl(${color.base.HSL[0]}, ${color.base.HSL[1]}%, ${color.base.HSL[2]}%)`;
 	}
 }
 
 export default function IndividualPrimaryColor(props) {
 	const { color, colorMode } = props;
+	console.log(color);
 	const dimension = '175px';
 	const divStyle = {
 		height: dimension,

@@ -52,7 +52,6 @@ const getPrimaryColor = async (colorList, colorTolerance) => {
 			baseAndSimilarColorObj.similarColors,
 			baseAndSimilarColorObj.similarColors.length
 		);
-		delete baseAndSimilarColorObj.similarColors;
 
 		// Reemplazamos el color base con este promedio
 		baseAndSimilarColorObj = [avgBaseColor.R, avgBaseColor.G, avgBaseColor.B];
@@ -60,9 +59,9 @@ const getPrimaryColor = async (colorList, colorTolerance) => {
 
 	Promise.allSettled(divPromises);
 
-	const formatResult = result.map((color) => color.base.RGB);
+	// const formatResult = result.map((color) => color.base.RGB);
 
-	return formatResult;
+	return result;
 };
 
 export default getPrimaryColor;
