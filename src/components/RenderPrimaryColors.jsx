@@ -38,7 +38,7 @@ export default function RenderPrimaryColors(props) {
 	return (
 		<div>
 			<h2 className='text-4xl'>Colors</h2>
-			<div className='flex'>
+			<div className='flex gap-5 flex-wrap'>
 				{colorList
 					? colorList.map((color, idx) => (
 							<IndividualPrimaryColor

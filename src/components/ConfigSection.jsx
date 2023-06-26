@@ -26,6 +26,14 @@ export default function ConfigSection() {
 	// Get the current state of worker, and save in a variable
 	const img = imgRef.current;
 	const worker = workerRef.current;
+
+	function postMessageToWorker(msg, params) {
+		setIsLoading(true);
+		worker.postMessage({
+			msg,
+			params,
+		});
+	}
 	// For change size img when windows is resizing
 	useLayoutEffect(() => {
 		function updateSize() {
@@ -42,20 +50,12 @@ export default function ConfigSection() {
 
 	useEffect(() => {
 		if (!imgUrl) {
+			console.log('Getting first image');
 			postMessageToWorker('fetch-new-image', { colorMode, divsQty });
-
 			return;
 		}
 		postMessageToWorker('calculate-pixels', { colorMode, divsQty });
 	}, [colorMode, divsQty, imgSizes]);
-
-	function postMessageToWorker(msg, params) {
-		setIsLoading(true);
-		worker.postMessage({
-			msg,
-			params,
-		});
-	}
 
 	function handleChangeImage() {
 		// Send message to web worker to get a new image

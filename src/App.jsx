@@ -6,9 +6,8 @@ function App() {
 	return (
 		<>
 			<h1 className='text-3xl font-bold underline'>Detección de colores</h1>
-			<React.StrictMode>
-				<ConfigSection className='container mx-auto' />
-			</React.StrictMode>
+
+			<ConfigSection className='container mx-auto' />
 		</>
 	);
 }

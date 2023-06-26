@@ -15,6 +15,7 @@ export default function InputDivQuantity(props) {
 				<option value='20'>20</option>
 				<option value='25'>25</option>
 				<option value='75'>75</option>
+				<option value='125'>125</option>
 			</select>
 		</div>
 	);

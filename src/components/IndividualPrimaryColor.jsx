@@ -9,16 +9,17 @@ function createStringColor(color, colorMode) {
 
 export default function IndividualPrimaryColor(props) {
 	const { color, colorMode } = props;
-
+	const dimension = '175px';
 	const divStyle = {
-		width: '100px',
-		height: '100px',
+		height: dimension,
+		width: dimension,
 		backgroundColor: createStringColor(color, colorMode),
 	};
 	return (
-		<div>
-			<h3>{createStringColor(color, colorMode)}</h3>
-			<div style={divStyle}></div>
+		<div className='text-center'>
+			<div style={divStyle} className='flex justify-center items-center'>
+				<h3>{createStringColor(color, colorMode)}</h3>
+			</div>
 		</div>
 	);
 }
