@@ -10,7 +10,7 @@ function createStringColor(color, colorMode) {
 }
 
 function getColorTextBasedInBackground(color, colorMode) {
-	if (colorMode === 'RGB') {
+	if (colorMode === 'RGB' && color.base.RGB) {
 		const rgb = color.base.RGB;
 		const umbral = 125;
 		const contrastColor = Math.round(
@@ -20,6 +20,16 @@ function getColorTextBasedInBackground(color, colorMode) {
 			return 'white';
 		} else {
 			return 'black';
+		}
+	}
+	if (colorMode === 'HSL' && color.base.HSL) {
+		const hsl = color.base.HSL;
+		console.log(hsl);
+		const umbral = 60;
+		if (hsl[2] >= umbral) {
+			return 'black';
+		} else {
+			return 'white';
 		}
 	}
 }
