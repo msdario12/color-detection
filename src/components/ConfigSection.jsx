@@ -12,7 +12,7 @@ export default function ConfigSection() {
 	const [colorTolerance, setColorTolerance] = useState(20);
 
 	const { imgSizes, handleLoadImg, imgRef } = useImageSize();
-	const { avgColors, isLoading, handleChangeImage, imgUrl } =
+	const { avgColors, isLoading, handleChangeImage, imgUrl, time } =
 		useWorkerAvgColors(colorMode, divsQty, imgSizes);
 
 	return (
@@ -35,7 +35,13 @@ export default function ConfigSection() {
 				setColorMode={setColorMode}
 			/>
 
-			{!isLoading && <InformationOfCalculations imgSizes={imgSizes} />}
+			{!isLoading && (
+				<InformationOfCalculations
+					imgSizes={imgSizes}
+					divsQty={divsQty}
+					time={time}
+				/>
+			)}
 
 			{avgColors.length > 0 ? (
 				<RenderPrimaryColors

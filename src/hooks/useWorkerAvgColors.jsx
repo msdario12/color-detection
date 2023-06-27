@@ -5,6 +5,10 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 	const [avgColors, setAvgColors] = useState([]);
 	const [imgBitMap, setImgBitMap] = useState({});
 	const [handleChangeImage, setHandleChangeImage] = useState({});
+	const [time, setTime] = useState({
+		fetchImg: { start: 0, end: 0 },
+		getAvgColors: { start: 0, end: 0 },
+	});
 
 	const [isLoading, setIsLoading] = useState(false);
 	// Reference for worker
@@ -29,16 +33,27 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 		console.log('dentro de effect');
 		if (!imgUrl) {
 			console.log('Getting first image');
+			setTime({
+				...time,
+				fetchImg: { ...time.fetchImg, start: new Date().getTime() },
+			});
 			postMessageToWorker('fetch-new-image', { colorMode, divsQty }, worker);
 			worker.onmessage = (e) => {
 				// Set a new image in DOM
 				if (e.data.url) {
 					setImgUrl(e.data.url);
 					setImgBitMap(e.data.imgBitMap);
-					console.log(e.data.url);
+					setTime({
+						...time,
+						fetchImg: { ...time.fetchImg, end: new Date().getTime() },
+					});
 				}
 				if (e.data.avgColors) {
 					setAvgColors(e.data.avgColors);
+					setTime({
+						...time,
+						getAvgColors: { ...time.fetchImg, end: new Date().getTime() },
+					});
 				}
 				setIsLoading(false);
 			};
@@ -46,6 +61,10 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 				worker.terminate();
 			};
 		}
+		setTime({
+			...time,
+			getAvgColors: { ...time.fetchImg, start: new Date().getTime() },
+		});
 		postMessageToWorker(
 			'calculate-pixels',
 			{ colorMode, divsQty, imgBitMap },
@@ -80,5 +99,6 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 		isLoading,
 		handleChangeImage,
 		imgUrl,
+		time,
 	};
 }
