@@ -3,6 +3,43 @@ import RenderPrimaryColors from './RenderPrimaryColors';
 import FormConfig from './form/FormConfig';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
+function useImageSize() {
+	const imgRef = useRef();
+	const img = imgRef.current;
+
+	const [imgSizes, setImgSizes] = useState({
+		naturalSize: { w: 0, h: 0 },
+		renderSize: { w: 0, h: 0 },
+	});
+
+	// For change size img when windows is resizing
+	useLayoutEffect(() => {
+		function updateSize() {
+			setTimeout(() => {
+				setImgSizes({
+					naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
+					renderSize: { w: img.width, h: img.height },
+				});
+			}, 275);
+		}
+		window.addEventListener('resize', updateSize);
+		return () => window.removeEventListener('resize', updateSize);
+	}, [img]);
+
+	function handleLoadImg() {
+		setImgSizes({
+			naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
+			renderSize: { w: img.width, h: img.height },
+		});
+	}
+
+	return {
+		imgSizes,
+		handleLoadImg,
+		imgRef,
+	};
+}
+
 export default function ConfigSection() {
 	const [colorMode, setColorMode] = useState('RGB');
 	const [divsQty, setDivsQty] = useState(2);
@@ -10,21 +47,17 @@ export default function ConfigSection() {
 
 	const [imgUrl, setImgUrl] = useState('');
 	const [avgColors, setAvgColors] = useState([]);
-	const [imgSizes, setImgSizes] = useState({
-		naturalSize: { w: 0, h: 0 },
-		renderSize: { w: 0, h: 0 },
-	});
 
 	const [isLoading, setIsLoading] = useState(false);
 
+	const { imgSizes, handleLoadImg, imgRef } = useImageSize();
+
 	// Reference for worker
-	const imgRef = useRef();
 	const workerRef = useRef(
 		new Worker('../src/workers/worker.js', { type: 'module' })
 	);
 
 	// Get the current state of worker, and save in a variable
-	const img = imgRef.current;
 	const worker = workerRef.current;
 
 	function postMessageToWorker(msg, params) {
@@ -44,20 +77,6 @@ export default function ConfigSection() {
 		postMessageToWorker('calculate-pixels', { colorMode, divsQty });
 	}, [colorMode, divsQty, imgSizes]);
 
-	// For change size img when windows is resizing
-	useLayoutEffect(() => {
-		function updateSize() {
-			setTimeout(() => {
-				setImgSizes({
-					naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
-					renderSize: { w: img.width, h: img.height },
-				});
-			}, 275);
-		}
-		window.addEventListener('resize', updateSize);
-		return () => window.removeEventListener('resize', updateSize);
-	}, [img]);
-
 	function handleChangeImage() {
 		// Send message to web worker to get a new image
 		postMessageToWorker('fetch-new-image', { colorMode, divsQty });
@@ -74,13 +93,6 @@ export default function ConfigSection() {
 		}
 		setIsLoading(false);
 	};
-
-	function handleLoadImg() {
-		setImgSizes({
-			naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
-			renderSize: { w: img.width, h: img.height },
-		});
-	}
 
 	return (
 		<section className='config-section lg:container mx-auto px-4'>
