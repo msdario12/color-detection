@@ -14,7 +14,7 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 		const worker = new Worker('../src/workers/worker.js', { type: 'module' });
 		workerRef.current = worker;
 		setHandleChangeImage({
-			func: () =>
+			func: () => {
 				postMessageToWorker(
 					'fetch-new-image',
 					{
@@ -22,7 +22,9 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 						divsQty,
 					},
 					worker
-				),
+				);
+				setImgUrl();
+			},
 		});
 		console.log('dentro de effect');
 		if (!imgUrl) {
@@ -62,7 +64,7 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 		return () => {
 			worker.terminate();
 		};
-	}, [colorMode, divsQty, imgSizes]);
+	}, [colorMode, divsQty, imgSizes, imgBitMap, imgUrl]);
 
 	function postMessageToWorker(msg, params, worker) {
 		console.log('Sending ', msg);
