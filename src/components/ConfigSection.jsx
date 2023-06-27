@@ -4,6 +4,7 @@ import FormConfig from './form/FormConfig';
 import useImageSize from '../hooks/useImageSize';
 import useWorkerAvgColors from '../hooks/useWorkerAvgColors';
 import { useState } from 'react';
+import InformationOfCalculations from './InformationOfCalculations';
 
 export default function ConfigSection() {
 	const [colorMode, setColorMode] = useState('RGB');
@@ -33,6 +34,8 @@ export default function ConfigSection() {
 				colorMode={colorMode}
 				setColorMode={setColorMode}
 			/>
+
+			{!isLoading && <InformationOfCalculations imgSizes={imgSizes} />}
 
 			{avgColors.length > 0 ? (
 				<RenderPrimaryColors
