@@ -7,6 +7,10 @@ export default function useWorkerPrimaryColors(
 ) {
 	const [colorList, setColorList] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
+	const [timeColorPrimary, setTimeColorPrimary] = useState({
+		start: 0,
+		end: 0,
+	});
 
 	const workerRef = useRef();
 
@@ -29,6 +33,8 @@ export default function useWorkerPrimaryColors(
 			if (e.data.primaryColor) {
 				setColorList(e.data.primaryColor);
 				setIsLoading(false);
+
+				setTimeColorPrimary({ start: e.data.time.start, end: e.data.time.end });
 			}
 		};
 		return () => {
@@ -39,5 +45,6 @@ export default function useWorkerPrimaryColors(
 	return {
 		colorList,
 		isLoading,
+		timeColorPrimary,
 	};
 }

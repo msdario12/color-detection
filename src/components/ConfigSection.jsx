@@ -11,6 +11,11 @@ export default function ConfigSection() {
 	const [divsQty, setDivsQty] = useState(2);
 	const [colorTolerance, setColorTolerance] = useState(20);
 
+	const [timeColorPrimary, setTimeColorPrimary] = useState({
+		start: 0,
+		end: 0,
+	});
+
 	const { imgSizes, handleLoadImg, imgRef } = useImageSize();
 	const { avgColors, isLoading, handleChangeImage, imgUrl, time } =
 		useWorkerAvgColors(colorMode, divsQty, imgSizes);
@@ -36,6 +41,7 @@ export default function ConfigSection() {
 			/>
 
 			<InformationOfCalculations
+				timeColorPrimary={timeColorPrimary}
 				imgSizes={imgSizes}
 				divsQty={divsQty}
 				time={time}
@@ -47,6 +53,7 @@ export default function ConfigSection() {
 					avgColors={avgColors}
 					colorMode={colorMode}
 					colorTolerance={colorTolerance}
+					setTimeColorPrimary={setTimeColorPrimary}
 				/>
 			) : (
 				'Esperando datos color primario'

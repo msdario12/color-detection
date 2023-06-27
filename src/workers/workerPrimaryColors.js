@@ -16,19 +16,22 @@ self.onmessage = (e) => {
 	if (e.data.msg === 'get-primary-colors') {
 		const { avgColors, colorMode, colorTolerance } = e.data;
 		const arrayForPrimaryColors = formatAvgColorsList(avgColors);
+		const start = new Date();
 		if (colorMode === 'RGB') {
 			// let rawPrimaryColor = await getPrimaryColor(arrayForPrimaryColors);
 			// setColorList(rawPrimaryColor[0].base.RGB);
-			getPrimaryColor(arrayForPrimaryColors, colorTolerance).then((res) =>
-				self.postMessage({ primaryColor: res })
-			);
+			getPrimaryColor(arrayForPrimaryColors, colorTolerance).then((res) => {
+				const end = new Date();
+				self.postMessage({ primaryColor: res, time: { start, end } });
+			});
 			return;
 		}
 
 		if (colorMode === 'HSL') {
-			getPrimaryColorHSL(arrayForPrimaryColors, colorTolerance).then((res) =>
-				self.postMessage({ primaryColor: res })
-			);
+			getPrimaryColorHSL(arrayForPrimaryColors, colorTolerance).then((res) => {
+				const end = new Date();
+				self.postMessage({ primaryColor: res, time: { start, end } });
+			});
 			return;
 		}
 	}

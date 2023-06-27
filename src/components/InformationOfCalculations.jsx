@@ -4,7 +4,7 @@ function calculateElapsedTimeInMs(time1, time2) {
 }
 
 export default function InformationOfCalculations(props) {
-	const { imgSizes, divsQty, time } = props;
+	const { imgSizes, divsQty, time, timeColorPrimary } = props;
 	const totalPixels = imgSizes.naturalSize.h * imgSizes.naturalSize.w;
 	const colorPixels = parseFloat(divsQty * divsQty);
 	const elapsedTimeFetch = calculateElapsedTimeInMs(
@@ -14,6 +14,10 @@ export default function InformationOfCalculations(props) {
 	const elapsedTimeAvgColors = calculateElapsedTimeInMs(
 		time.getAvgColors.start,
 		time.getAvgColors.end
+	);
+	const elapsedTimePrimaryColors = calculateElapsedTimeInMs(
+		timeColorPrimary.start,
+		timeColorPrimary.end
 	);
 
 	return (
@@ -25,6 +29,10 @@ export default function InformationOfCalculations(props) {
 			<p>
 				Tiempo en calcular los colors:{' '}
 				{elapsedTimeAvgColors.toLocaleString('es')}ms
+			</p>
+			<p>
+				Tiempo en calcular los colores primarios:{' '}
+				{elapsedTimePrimaryColors.toLocaleString('es')}ms
 			</p>
 			<h2 className='text-xl font-bold'>Datos de los cálculos</h2>
 			<p>Ancho de imagen original: {imgSizes.naturalSize.w}px</p>
