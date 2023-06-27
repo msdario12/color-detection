@@ -13,7 +13,6 @@ function formatAvgColorsList(avgColors) {
 }
 
 self.onmessage = (e) => {
-
 	if (e.data.msg === 'get-primary-colors') {
 		const { avgColors, colorMode, colorTolerance } = e.data;
 		const arrayForPrimaryColors = formatAvgColorsList(avgColors);
