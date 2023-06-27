@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import InformationOfCalculations from './InformationOfCalculations';
 import createStringColor from '../utils/createStringColor';
 
+
 export default function ConfigSection() {
 	const [colorMode, setColorMode] = useState('RGB');
 	const [divsQty, setDivsQty] = useState(2);
