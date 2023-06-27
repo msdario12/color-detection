@@ -35,13 +35,11 @@ export default function ConfigSection() {
 				setColorMode={setColorMode}
 			/>
 
-			{!isLoading && (
-				<InformationOfCalculations
-					imgSizes={imgSizes}
-					divsQty={divsQty}
-					time={time}
-				/>
-			)}
+			<InformationOfCalculations
+				imgSizes={imgSizes}
+				divsQty={divsQty}
+				time={time}
+			/>
 
 			{avgColors.length > 0 ? (
 				<RenderPrimaryColors

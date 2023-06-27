@@ -71,6 +71,7 @@ async function readImgData(
 	}
 	return avgColors;
 }
+
 // Register a callback to process messages from the parent
 self.onmessage = (e) => {
 	console.log('Received in worker', e.data.msg);
@@ -87,26 +88,34 @@ self.onmessage = (e) => {
 
 	switch (e.data.msg) {
 		case 'fetch-new-image':
-			fetchRandomImg().then(({ res, img }) => {
-				self.postMessage({
-					url: res.url,
-					imgBitMap: img,
+			{
+				const start = new Date();
+				fetchRandomImg().then(({ res, img }) => {
+					const end = new Date();
+					self.postMessage({
+						url: res.url,
+						imgBitMap: img,
+						time: { start, end },
+					});
 				});
-			});
+			}
 
 			break;
 		case 'calculate-pixels':
-			readImgData(
-				imgBitMap,
-				divsQty,
-				colorRGBstate,
-				colorHSLstate,
-				divsQty
-			).then((avgColors) => {
-				console.log('enviando avgColors');
-
-				self.postMessage({ avgColors: avgColors });
-			});
+			{
+				const start = new Date();
+				readImgData(
+					imgBitMap,
+					divsQty,
+					colorRGBstate,
+					colorHSLstate,
+					divsQty
+				).then((avgColors) => {
+					console.log('enviando avgColors');
+					const end = new Date();
+					self.postMessage({ avgColors: avgColors, time: { start, end } });
+				});
+			}
 			break;
 
 		default:

@@ -18,46 +18,48 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 		const worker = new Worker('../src/workers/worker.js', { type: 'module' });
 		workerRef.current = worker;
 
-		console.log('setFunction');
-		setHandleChangeImage({
-			func: () => {
-				setImgUrl();
-				setImgBitMap();
-				console.log('get-new-img');
-				postMessageToWorker(
-					'fetch-new-image',
-					{ colorMode, divsQty },
-					worker
-				).then((res) => {
-					setImgUrl(res.url);
-					setImgBitMap(res.imgBitMap);
-					setTime({
-						...time,
-						fetchImg: { ...time.fetchImg, end: new Date().getTime() },
-					});
-				});
-			},
-		});
-
-		if (!imgUrl) {
-			console.log('Getting first image');
-			setTime({
-				...time,
-				fetchImg: { ...time.fetchImg, start: new Date().getTime() },
-			});
+		const getNewImgFromWorker = () => {
 			postMessageToWorker(
 				'fetch-new-image',
 				{ colorMode, divsQty },
 				worker
 			).then((res) => {
-				console.log(res);
-				setImgUrl(res.url);
-				setImgBitMap(res.imgBitMap);
 				setTime({
 					...time,
-					fetchImg: { ...time.fetchImg, end: new Date().getTime() },
+					fetchImg: { start: res.time.start, end: res.time.end },
 				});
+				setImgUrl(res.url);
+				setImgBitMap(res.imgBitMap);
 			});
+		};
+
+		const getCalculationsFromWorker = () => {
+			postMessageToWorker(
+				'calculate-pixels',
+				{ colorMode, divsQty, imgBitMap },
+				worker
+			).then((res) => {
+				setTime({
+					...time,
+					getAvgColors: { start: res.time.start, end: res.time.end },
+				});
+				setAvgColors(res.avgColors);
+			});
+		};
+
+		setHandleChangeImage({
+			func: () => {
+				setImgUrl();
+				setImgBitMap();
+				console.log('get-new-img');
+				getNewImgFromWorker();
+			},
+		});
+
+		if (!imgUrl) {
+			console.log('Getting first image');
+
+			getNewImgFromWorker();
 
 			return;
 		}
@@ -65,15 +67,7 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 		console.log('loading?', isLoading);
 
 		if (imgBitMap && !isLoading) {
-			setTime({
-				...time,
-				getAvgColors: { ...time.fetchImg, start: new Date().getTime() },
-			});
-			postMessageToWorker(
-				'calculate-pixels',
-				{ colorMode, divsQty, imgBitMap },
-				worker
-			).then((res) => setAvgColors(res.avgColors));
+			getCalculationsFromWorker();
 			return;
 		}
 		return () => worker.terminate();

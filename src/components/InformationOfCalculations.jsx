@@ -1,6 +1,6 @@
 function calculateElapsedTimeInMs(time1, time2) {
-	const date = new Date(time1 - time2);
-	return date.getMilliseconds();
+	const date = new Date(time2 - time1);
+	return date.getTime();
 }
 
 export default function InformationOfCalculations(props) {
