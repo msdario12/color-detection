@@ -21,7 +21,7 @@ export default function ConfigSection() {
 				State {colorMode}, {divsQty}, {colorTolerance},
 				{isLoading ? 'CARGANDO' : 'LISTO'},
 			</p>
-			<button id='change-img' onClick={handleChangeImage}>
+			<button id='change-img' onClick={handleChangeImage.func}>
 				Cambiar imagen
 			</button>
 

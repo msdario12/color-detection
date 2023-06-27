@@ -8,14 +8,16 @@ export default function useWorkerPrimaryColors(
 	const [colorList, setColorList] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const workerRef = useRef(
-		new Worker('../src/workers/workerPrimaryColors.js', { type: 'module' })
-	);
+	const workerRef = useRef();
 
 	// Get the current state of worker, and save in a variable
-	const worker = workerRef.current;
 
 	useEffect(() => {
+		const worker = new Worker('../src/workers/workerPrimaryColors.js', {
+			type: 'module',
+		});
+		workerRef.current = worker;
+
 		setIsLoading(true);
 		worker.postMessage({
 			msg: 'get-primary-colors',
@@ -23,14 +25,17 @@ export default function useWorkerPrimaryColors(
 			colorMode,
 			colorTolerance,
 		});
+		worker.onmessage = (e) => {
+			if (e.data.primaryColor) {
+				setColorList(e.data.primaryColor);
+				setIsLoading(false);
+			}
+		};
+		return () => {
+			worker.terminate();
+		};
 	}, [avgColors, colorMode, colorTolerance]);
 
-	worker.onmessage = (e) => {
-		if (e.data.primaryColor) {
-			setColorList(e.data.primaryColor);
-			setIsLoading(false);
-		}
-	};
 	return {
 		colorList,
 		isLoading,
