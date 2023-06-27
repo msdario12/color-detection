@@ -73,6 +73,7 @@ async function readImgData(
 }
 // Register a callback to process messages from the parent
 self.onmessage = (e) => {
+	console.log('Received in worker', e.data.msg);
 	const { divsQty, colorMode, imgBitMap } = e.data.params;
 	let colorHSLstate, colorRGBstate;
 	if (colorMode === 'RGB') {
@@ -86,19 +87,12 @@ self.onmessage = (e) => {
 
 	switch (e.data.msg) {
 		case 'fetch-new-image':
-			fetchRandomImg()
-				.then(({ res, img }) => {
-					self.postMessage({
-						url: res.url,
-						imgBitMap: img,
-					});
-					return img;
-				})
-				.then((img) =>
-					readImgData(img, divsQty, colorRGBstate, colorHSLstate, divsQty).then(
-						(res) => self.postMessage({ avgColors: res })
-					)
-				);
+			fetchRandomImg().then(({ res, img }) => {
+				self.postMessage({
+					url: res.url,
+					imgBitMap: img,
+				});
+			});
 
 			break;
 		case 'calculate-pixels':
@@ -108,8 +102,11 @@ self.onmessage = (e) => {
 				colorRGBstate,
 				colorHSLstate,
 				divsQty
-			).then((res) => self.postMessage({ avgColors: res }));
+			).then((avgColors) => {
+				console.log('enviando avgColors');
 
+				self.postMessage({ avgColors: avgColors });
+			});
 			break;
 
 		default:

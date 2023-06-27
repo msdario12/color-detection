@@ -24,7 +24,6 @@ function getColorTextBasedInBackground(color, colorMode) {
 	}
 	if (colorMode === 'HSL' && color.base.HSL) {
 		const hsl = color.base.HSL;
-		console.log(hsl);
 		const umbral = 60;
 		if (hsl[2] >= umbral) {
 			return 'black';
