@@ -3,21 +3,26 @@ import useWorkerPrimaryColors from '../hooks/useWorkerPrimaryColors';
 import { useEffect } from 'react';
 
 export default function RenderPrimaryColors(props) {
-	const { avgColors, colorMode, colorTolerance, divsQty, setTimeColorPrimary } =
-		props;
+	const {
+		avgColors,
+		colorMode,
+		colorTolerance,
+		divsQty,
+		setTimeColorPrimary,
+		setColorPrimaryList,
+	} = props;
 	const { colorList, isLoading, timeColorPrimary } = useWorkerPrimaryColors(
 		avgColors,
 		colorMode,
 		colorTolerance
 	);
-	useEffect(
-		() =>
-			setTimeColorPrimary({
-				start: timeColorPrimary.start,
-				end: timeColorPrimary.end,
-			}),
-		[timeColorPrimary]
-	);
+	useEffect(() => {
+		setTimeColorPrimary({
+			start: timeColorPrimary.start,
+			end: timeColorPrimary.end,
+		});
+		setColorPrimaryList(colorList);
+	}, [timeColorPrimary, colorList]);
 
 	return (
 		<div className='my-10'>

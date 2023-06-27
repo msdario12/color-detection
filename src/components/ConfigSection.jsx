@@ -3,8 +3,9 @@ import RenderPrimaryColors from './RenderPrimaryColors';
 import FormConfig from './form/FormConfig';
 import useImageSize from '../hooks/useImageSize';
 import useWorkerAvgColors from '../hooks/useWorkerAvgColors';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import InformationOfCalculations from './InformationOfCalculations';
+import createStringColor from '../utils/createStringColor';
 
 export default function ConfigSection() {
 	const [colorMode, setColorMode] = useState('RGB');
@@ -15,10 +16,22 @@ export default function ConfigSection() {
 		start: 0,
 		end: 0,
 	});
+	const [colorPrimaryList, setColorPrimaryList] = useState([]);
+	const [imgStyle, setImgStyle] = useState({});
 
 	const { imgSizes, handleLoadImg, imgRef } = useImageSize();
 	const { avgColors, isLoading, handleChangeImage, imgUrl, time } =
 		useWorkerAvgColors(colorMode, divsQty, imgSizes);
+
+	useEffect(() => {
+		if (colorPrimaryList.length > 0) {
+			const color = createStringColor(colorPrimaryList[0], colorMode);
+			const imgStyle = {
+				boxShadow: `0px 0px 75px 15px ${color}`,
+			};
+			setImgStyle(imgStyle);
+		}
+	}, [colorPrimaryList]);
 
 	return (
 		<section className='config-section lg:container mx-auto px-4'>
@@ -54,12 +67,13 @@ export default function ConfigSection() {
 					colorMode={colorMode}
 					colorTolerance={colorTolerance}
 					setTimeColorPrimary={setTimeColorPrimary}
+					setColorPrimaryList={setColorPrimaryList}
 				/>
 			) : (
 				'Esperando datos color primario'
 			)}
 
-			<div className='md:columns-2'>
+			<div style={imgStyle} className='md:columns-2 p-2'>
 				{avgColors.length > 0 ? (
 					<RenderPixelColors
 						avgColors={avgColors}
