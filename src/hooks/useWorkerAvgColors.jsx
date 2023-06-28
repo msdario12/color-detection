@@ -17,7 +17,7 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 	useEffect(() => {
 		const worker = new Worker('../src/workers/worker.js', { type: 'module' });
 		workerRef.current = worker;
-
+		console.log(imgBitMap);
 		const getNewImgFromWorker = () => {
 			postMessageToWorker(
 				'fetch-new-image',
@@ -71,7 +71,7 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 			return;
 		}
 		return () => worker.terminate();
-	}, [colorMode, divsQty, imgSizes, imgBitMap, imgUrl]);
+	}, [colorMode, divsQty, imgSizes, imgBitMap]);
 
 	function postMessageToWorker(msg, params, intWork) {
 		console.log('Sending ', msg, intWork);
@@ -103,6 +103,8 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 		isLoading,
 		handleChangeImage,
 		imgUrl,
+		setImgUrl,
 		time,
+		setImgBitMap,
 	};
 }

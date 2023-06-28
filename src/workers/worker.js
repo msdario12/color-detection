@@ -4,10 +4,11 @@ import createDataForPixel from '../utils/createDataForPixel';
 
 // Function to fetch a random img from web
 async function fetchRandomImg() {
-	const response = await fetch('https://source.unsplash.com/random/?$house');
+	const response = await fetch('https://source.unsplash.com/random/?$cars');
 	const arrayBuffer = await response.arrayBuffer();
 	const blob = new Blob([arrayBuffer]);
-	return { img: await createImageBitmap(blob), res: response };
+	const imgBit = await createImageBitmap(blob);
+	return { img: imgBit, res: response };
 }
 
 async function readImgData(

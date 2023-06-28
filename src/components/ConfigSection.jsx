@@ -6,7 +6,7 @@ import useWorkerAvgColors from '../hooks/useWorkerAvgColors';
 import { useEffect, useState } from 'react';
 import InformationOfCalculations from './InformationOfCalculations';
 import createStringColor from '../utils/createStringColor';
-
+import UploadImg from './UploadImg';
 
 export default function ConfigSection() {
 	const [colorMode, setColorMode] = useState('RGB');
@@ -21,8 +21,15 @@ export default function ConfigSection() {
 	const [imgStyle, setImgStyle] = useState({});
 
 	const { imgSizes, handleLoadImg, imgRef } = useImageSize();
-	const { avgColors, isLoading, handleChangeImage, imgUrl, time } =
-		useWorkerAvgColors(colorMode, divsQty, imgSizes);
+	const {
+		avgColors,
+		isLoading,
+		handleChangeImage,
+		imgUrl,
+		setImgUrl,
+		time,
+		setImgBitMap,
+	} = useWorkerAvgColors(colorMode, divsQty, imgSizes);
 
 	useEffect(() => {
 		if (colorPrimaryList.length > 0) {
@@ -46,6 +53,8 @@ export default function ConfigSection() {
 			</button>
 
 			{isLoading ? 'Cargando...' : ''}
+
+			<UploadImg setImgUrl={setImgUrl} setImgBitMap={setImgBitMap} />
 
 			<FormConfig
 				setColorTolerance={setColorTolerance}
