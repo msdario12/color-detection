@@ -1,8 +1,8 @@
 export default function InputModeColor(props) {
-	const { handleChange, colorMode } = props;
+	const { handleChange, colorMode, className } = props;
 
 	return (
-		<div>
+		<div className={className}>
 			<label htmlFor='rgb-mode'>RGB</label>
 			<input
 				onChange={(e) => handleChange(e.target.value)}
