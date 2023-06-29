@@ -11,7 +11,6 @@ export default function ImageGallery(props) {
 
 	function handleClick(e) {
 		const selectedFile = e.target;
-		console.log(typeof selectedFile);
 		loadImg(selectedFile);
 	}
 	return (

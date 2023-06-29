@@ -1,6 +1,6 @@
 export default function useLoadLocalImage(setImgBitMap, setImgUrl) {
 	function loadImg(file) {
-		if (typeof file === 'object') {
+		if (file.localName === 'img') {
 			createImageBitmap(file)
 				.then((res) => setImgBitMap(res))
 				.then(() => setImgUrl(file.src));
