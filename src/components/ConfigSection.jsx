@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import InformationOfCalculations from './InformationOfCalculations';
 import createStringColor from '../utils/createStringColor';
 import UploadImg from './UploadImg';
+import ImageGallery from './ImageGallery';
 
 export default function ConfigSection() {
 	const [colorMode, setColorMode] = useState('RGB');
@@ -43,6 +44,8 @@ export default function ConfigSection() {
 
 	return (
 		<section className='config-section lg:container mx-auto px-4'>
+			<h2 className='text-xl font-bold underline'>Selecciona una imagen</h2>
+			<ImageGallery className=' grid grid-cols-2 lg:grid-cols-4 gap-3 my-5' />
 			<h2>Cambiar de imagen</h2>
 			<p>
 				State {colorMode}, {divsQty}, {colorTolerance},
