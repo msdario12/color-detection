@@ -45,7 +45,11 @@ export default function ConfigSection() {
 	return (
 		<section className='config-section lg:container mx-auto px-4'>
 			<h2 className='text-xl font-bold underline'>Selecciona una imagen</h2>
-			<ImageGallery className=' grid grid-cols-2 lg:grid-cols-4 gap-3 my-5' />
+			<ImageGallery
+				setImgUrl={setImgUrl}
+				setImgBitMap={setImgBitMap}
+				className=' grid grid-cols-2 lg:grid-cols-4 gap-3 my-5'
+			/>
 			<h2>Cambiar de imagen</h2>
 			<p>
 				State {colorMode}, {divsQty}, {colorTolerance},

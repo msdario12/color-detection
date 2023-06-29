@@ -1,17 +1,13 @@
+import useLoadLocalImage from '../hooks/useLoadLocalImage';
+
 export default function UploadImg(props) {
 	const { setImgUrl, setImgBitMap } = props;
+	const { loadImg } = useLoadLocalImage(setImgBitMap, setImgUrl);
 	const handleChange = (e) => {
 		const selectedFile = e.target.files;
 		if (selectedFile.length > 0) {
 			const [imageFile] = selectedFile;
-			const fileReader = new FileReader();
-			fileReader.onload = () => {
-				const srcData = fileReader.result;
-				createImageBitmap(imageFile)
-					.then((res) => setImgBitMap(res))
-					.then(() => setImgUrl(srcData));
-			};
-			fileReader.readAsDataURL(imageFile);
+			loadImg(imageFile);
 		}
 	};
 

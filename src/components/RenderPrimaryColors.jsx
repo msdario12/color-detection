@@ -1,7 +1,7 @@
 import IndividualPrimaryColor from './IndividualPrimaryColor';
 import useWorkerPrimaryColors from '../hooks/useWorkerPrimaryColors';
 import { useEffect } from 'react';
-import { gsap } from 'gsap';
+import useHoverAnimation from '../hooks/useHoverAnimation';
 
 export default function RenderPrimaryColors(props) {
 	const {
@@ -17,6 +17,7 @@ export default function RenderPrimaryColors(props) {
 		colorMode,
 		colorTolerance
 	);
+	const { onEnter, onLeave } = useHoverAnimation();
 	useEffect(() => {
 		setTimeColorPrimary({
 			start: timeColorPrimary.start,
@@ -24,14 +25,6 @@ export default function RenderPrimaryColors(props) {
 		});
 		setColorPrimaryList(colorList);
 	}, [timeColorPrimary, colorList]);
-
-	const onEnter = ({ currentTarget }) => {
-		gsap.to(currentTarget, { scale: 1.2 });
-	};
-
-	const onLeave = ({ currentTarget }) => {
-		gsap.to(currentTarget, { scale: 1 });
-	};
 
 	return (
 		<div className='my-10'>
