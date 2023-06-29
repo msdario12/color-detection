@@ -64,6 +64,7 @@ export default function ConfigSection() {
 			<UploadImg setImgUrl={setImgUrl} setImgBitMap={setImgBitMap} />
 
 			<FormConfig
+			className='border border-gray-400 p-3 my-3 color text-gray-900 '
 				setColorTolerance={setColorTolerance}
 				setDivsQty={setDivsQty}
 				colorMode={colorMode}

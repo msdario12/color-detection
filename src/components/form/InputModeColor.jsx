@@ -21,6 +21,8 @@ export default function InputModeColor(props) {
 				id='hsl-mode'
 				checked={colorMode === 'HSL'}
 			/>
+
+			<div></div>
 		</div>
 	);
 }

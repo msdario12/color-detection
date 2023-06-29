@@ -3,9 +3,10 @@ import InputModeColor from './InputModeColor';
 import InputToleranceColor from './InputToleranceColor';
 
 function FormConfig(props) {
-	const { setColorMode, setDivsQty, setColorTolerance, colorMode } = props;
+	const { setColorMode, setDivsQty, setColorTolerance, colorMode, className } =
+		props;
 	return (
-		<form className='columns-2'>
+		<form className={className}>
 			<h2>Seleccione el modo de color</h2>
 			<InputModeColor handleChange={setColorMode} colorMode={colorMode} />
 
