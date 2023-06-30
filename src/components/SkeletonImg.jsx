@@ -1,14 +1,16 @@
 export default function SkeletonImg(props) {
-	const { className } = props;
+	const { className, style } = props;
 	return (
 		<div
 			role='status'
 			className={
+				'animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0' +
 				className +
-				' ' +
-				'animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0'
+				' '
 			}>
-			<div className='flex h-48 w-full items-center justify-center rounded bg-gray-300 dark:bg-gray-700 sm:w-96'>
+			<div
+				style={style}
+				className='flex items-center justify-center rounded bg-gray-300 dark:bg-gray-700'>
 				<svg
 					className='h-12 w-12 text-gray-200'
 					xmlns='http://www.w3.org/2000/svg'

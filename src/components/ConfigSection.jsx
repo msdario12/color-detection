@@ -106,9 +106,14 @@ export default function ConfigSection() {
 						imgSizes={imgSizes}
 					/>
 				) : (
-					<SkeletonImg />
+					<SkeletonImg
+						style={{
+							width: imgSizes.renderSize.w,
+							height: imgSizes.renderSize.h,
+						}}
+					/>
 				)}
-				{!isLoading ? (
+				{avgColors.length > 0 ? (
 					<img
 						onLoad={handleLoadImg}
 						src={imgUrl}

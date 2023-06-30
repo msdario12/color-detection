@@ -17,7 +17,7 @@ export default function useImageSize() {
 					naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
 					renderSize: { w: img.width, h: img.height },
 				});
-			}, 275);
+			}, 180);
 		}
 		window.addEventListener('resize', updateSize);
 		return () => window.removeEventListener('resize', updateSize);
