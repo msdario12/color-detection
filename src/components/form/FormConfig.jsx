@@ -16,8 +16,10 @@ function FormConfig(props) {
 				colorMode={colorMode}
 			/>
 
-			<h2>Tolerancia de selección de color</h2>
-			<InputToleranceColor handleChange={setColorTolerance} />
+			<h2 className='mb-2 font-bold dark:text-slate-200'>
+				Tolerancia de selección de color
+			</h2>
+			<InputToleranceColor className='mb-6' handleChange={setColorTolerance} />
 
 			<h2>Cantidad de divisiones</h2>
 			<InputDivQuantity handleChange={setDivsQty} />
