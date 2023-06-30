@@ -43,7 +43,7 @@ export default function ConfigSection() {
 	}, [colorPrimaryList]);
 
 	return (
-		<section className='config-section mx-auto px-4 lg:container dark:bg-slate-900 dark:text-slate-400 '>
+		<section className='config-section relative mx-auto px-4 lg:container dark:bg-slate-900 dark:text-slate-400 '>
 			<h2 className='text-xl font-bold underline dark:text-slate-100'>
 				Selecciona una imagen
 			</h2>
@@ -66,7 +66,7 @@ export default function ConfigSection() {
 			<UploadImg setImgUrl={setImgUrl} setImgBitMap={setImgBitMap} />
 
 			<FormConfig
-				className='color my-3 border border-slate-800 rounded-md px-5 py-3 dark:text-slate-400 '
+				className='color sticky top-0 z-10 my-3 grid gap-4 rounded-md border border-slate-800 px-8 py-5 dark:bg-slate-900 dark:bg-opacity-80 dark:text-slate-400 dark:backdrop-blur-sm md:grid-cols-2'
 				setColorTolerance={setColorTolerance}
 				setDivsQty={setDivsQty}
 				colorMode={colorMode}

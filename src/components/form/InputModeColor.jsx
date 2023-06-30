@@ -3,7 +3,10 @@ export default function InputModeColor(props) {
 
 	return (
 		<div className={className}>
-			<div className='mb-3 flex items-center rounded border border-gray-200 pl-4 dark:border-gray-700'>
+			<h2 className='mb-2 text-sm font-medium dark:text-slate-200'>
+				Seleccione el modo de color
+			</h2>
+			<div className='mb-3 flex cursor-pointer items-center rounded border border-gray-200 pl-4 dark:border-gray-700'>
 				<input
 					onChange={(e) => handleChange(e.target.value)}
 					type='radio'
@@ -15,11 +18,11 @@ export default function InputModeColor(props) {
 				/>
 				<label
 					htmlFor='rgb-mode'
-					className='ml-2 w-full py-4 text-sm font-medium text-gray-900 dark:text-gray-300'>
+					className='ml-2 w-full cursor-pointer py-4 text-sm font-medium text-gray-900 dark:text-gray-300'>
 					RGB Mode
 				</label>
 			</div>
-			<div className='flex items-center rounded border border-gray-200 pl-4 dark:border-gray-700'>
+			<div className='flex cursor-pointer items-center rounded border border-gray-200 pl-4 dark:border-gray-700'>
 				<input
 					onChange={(e) => handleChange(e.target.value)}
 					type='radio'
@@ -31,7 +34,7 @@ export default function InputModeColor(props) {
 				/>
 				<label
 					htmlFor='hsl-mode'
-					className='ml-2 w-full py-4 text-sm font-medium text-gray-900 dark:text-gray-300'>
+					className='ml-2 w-full cursor-pointer py-4 text-sm font-medium text-gray-900 dark:text-gray-300'>
 					HSL Mode
 				</label>
 			</div>

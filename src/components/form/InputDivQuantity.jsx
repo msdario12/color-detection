@@ -3,7 +3,7 @@ export default function InputDivQuantity(props) {
 	return (
 		<div className={className}>
 			<label
-				className='mb-2 block text-sm font-medium text-gray-900 dark:text-slate-400'
+				className='mb-2 block text-sm font-medium text-gray-900 dark:text-slate-200'
 				htmlFor='num-div'>
 				Seleccione la cantidad de divisiones:{' '}
 			</label>

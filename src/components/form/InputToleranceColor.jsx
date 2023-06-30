@@ -3,7 +3,7 @@ export default function InputToleranceColor(props) {
 	return (
 		<div className={className}>
 			<label
-				className='mb-2 block text-sm font-medium text-gray-900 dark:text-slate-400'
+				className='mb-2 block text-sm font-medium text-gray-900 dark:text-slate-200'
 				htmlFor='num-tol'>
 				Seleccione el valor de tolerancia
 			</label>
