@@ -1,4 +1,5 @@
 import useLoadLocalImage from '../hooks/useLoadLocalImage';
+import FileInput from './FileInput';
 
 export default function UploadImg(props) {
 	const { setImgUrl, setImgBitMap } = props;
@@ -14,7 +15,7 @@ export default function UploadImg(props) {
 	return (
 		<div>
 			<h2 className='text-xl font-bold'>Subir una imagen</h2>
-			<input type='file' name='imgFile' id='imgFile' onChange={handleChange} />
+			<FileInput onChange={handleChange} />
 		</div>
 	);
 }
