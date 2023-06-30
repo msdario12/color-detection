@@ -8,6 +8,7 @@ import InformationOfCalculations from './InformationOfCalculations';
 import createStringColor from '../utils/createStringColor';
 import UploadImg from './UploadImg';
 import ImageGallery from './ImageGallery';
+import Button from './Button';
 
 export default function ConfigSection() {
 	const [colorMode, setColorMode] = useState('RGB');
@@ -57,10 +58,13 @@ export default function ConfigSection() {
 				State {colorMode}, {divsQty}, {colorTolerance},
 				{isLoading ? 'CARGANDO' : 'LISTO'},
 			</p>
-			<button id='change-img' onClick={handleChangeImage.func}>
-				Cambiar imagen
-			</button>
 
+			<Button
+				id='change-img'
+				className=''
+				value={'Cambiar Imagen'}
+				onClick={handleChangeImage.func}
+			/>
 			{isLoading ? 'Cargando...' : ''}
 
 			<UploadImg setImgUrl={setImgUrl} setImgBitMap={setImgBitMap} />
