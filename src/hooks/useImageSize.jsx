@@ -10,7 +10,7 @@ export default function useImageSize() {
 	});
 
 	// For change size img when windows is resizing
-	useLayoutEffect(() => {
+	useLayoutEffect(() => {0
 		function updateSize() {
 			setTimeout(() => {
 				setImgSizes({

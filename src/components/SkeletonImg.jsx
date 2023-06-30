@@ -1,7 +1,22 @@
+import { gsap } from 'gsap';
+import { useEffect, useRef } from 'react';
+
 export default function SkeletonImg(props) {
 	const { className, style } = props;
+	const skeletonRef = useRef(null);
+
+	useEffect(() => {
+		gsap.from(skeletonRef.current, {
+			duration: 0.1,
+			autoAlpha: 0,
+			ease: 'none',
+			delay: 0.25,
+		});
+	}, []);
+
 	return (
 		<div
+			ref={skeletonRef}
 			role='status'
 			className={
 				'animate-pulse space-y-8 md:flex md:items-center md:space-x-8 md:space-y-0' +

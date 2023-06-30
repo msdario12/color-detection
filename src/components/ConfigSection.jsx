@@ -71,7 +71,7 @@ export default function ConfigSection() {
 			<UploadImg setImgUrl={setImgUrl} setImgBitMap={setImgBitMap} />
 
 			<FormConfig
-				className='color sticky top-0 z-10 my-3 grid gap-4 rounded-md border border-slate-800 px-8 py-5 dark:bg-slate-900 dark:bg-opacity-80 dark:text-slate-400 dark:backdrop-blur-sm md:grid-cols-2'
+				className='color z-10 my-3 grid gap-4 rounded-md border border-slate-800 px-8 py-5 dark:bg-slate-900 dark:bg-opacity-80 dark:text-slate-400 dark:backdrop-blur-sm md:sticky md:top-0 md:grid-cols-2'
 				setColorTolerance={setColorTolerance}
 				setDivsQty={setDivsQty}
 				colorMode={colorMode}
@@ -104,6 +104,7 @@ export default function ConfigSection() {
 						avgColors={avgColors}
 						colorMode={colorMode}
 						imgSizes={imgSizes}
+						isLoading={isLoading}
 					/>
 				) : (
 					<SkeletonImg

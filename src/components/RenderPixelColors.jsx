@@ -1,4 +1,6 @@
+import { gsap } from 'gsap';
 import Canvas from './Canvas';
+import { useEffect, useRef } from 'react';
 
 export default function RenderPixelColors(props) {
 	const { imgSizes, colorMode, avgColors, style } = props;
@@ -9,8 +11,18 @@ export default function RenderPixelColors(props) {
 	const colorHSLstate = colorMode === 'HSL' ? true : false;
 	const colorRGBstate = colorMode === 'RGB' ? true : false;
 
+	const difRef = useRef(null);
+
+	useEffect(() => {
+		gsap.from(difRef.current, {
+			duration: 0.5,
+			autoAlpha: 0,
+			ease: 'none',
+		});
+	}, []);
+
 	return (
-		<div style={style} id='newCanvas'>
+		<div style={style} ref={difRef} id='newCanvas'>
 			<Canvas
 				avgColors={avgColors}
 				scaleH={scaleH}
