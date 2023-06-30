@@ -9,6 +9,7 @@ import createStringColor from '../utils/createStringColor';
 import UploadImg from './UploadImg';
 import ImageGallery from './ImageGallery';
 import Button from './Button';
+import SkeletonImg from './SkeletonImg';
 
 export default function ConfigSection() {
 	const [colorMode, setColorMode] = useState('RGB');
@@ -98,21 +99,25 @@ export default function ConfigSection() {
 			)}
 
 			<div style={imgStyle} className='p-2 md:columns-2'>
-				{avgColors.length > 0 ? (
+				{!isLoading ? (
 					<RenderPixelColors
 						avgColors={avgColors}
 						colorMode={colorMode}
 						imgSizes={imgSizes}
 					/>
 				) : (
-					'Esperando datos matriz...'
+					<SkeletonImg />
 				)}
-				<img
-					onLoad={handleLoadImg}
-					src={imgUrl}
-					ref={imgRef}
-					alt='Img to get analize'
-				/>
+				{!isLoading ? (
+					<img
+						onLoad={handleLoadImg}
+						src={imgUrl}
+						ref={imgRef}
+						alt='Img to get analize'
+					/>
+				) : (
+					<SkeletonImg />
+				)}
 			</div>
 
 			<div className={isLoading ? 'showLoader' : undefined} id='loader'>
