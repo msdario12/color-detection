@@ -12,7 +12,6 @@ export default function InputToleranceColor(props) {
 				onChange={(e) => handleChange(e.target.value)}
 				name='colorTolerance'
 				id='num-tol'>
-				<option selected>Selecciona un valor</option>
 				<option value='2'>2%</option>
 				<option value='5'>5%</option>
 				<option value='10'>10%</option>

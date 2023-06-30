@@ -21,8 +21,10 @@ function FormConfig(props) {
 			</h2>
 			<InputToleranceColor className='mb-6' handleChange={setColorTolerance} />
 
-			<h2>Cantidad de divisiones</h2>
-			<InputDivQuantity handleChange={setDivsQty} />
+			<h2 className='mb-2 font-bold dark:text-slate-200'>
+				Cantidad de divisiones
+			</h2>
+			<InputDivQuantity className='mb-6' handleChange={setDivsQty} />
 		</form>
 	);
 }
