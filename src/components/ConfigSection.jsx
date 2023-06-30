@@ -43,12 +43,14 @@ export default function ConfigSection() {
 	}, [colorPrimaryList]);
 
 	return (
-		<section className='config-section lg:container mx-auto px-4'>
-			<h2 className='text-xl font-bold underline'>Selecciona una imagen</h2>
+		<section className='config-section mx-auto px-4 lg:container dark:bg-slate-900 dark:text-slate-400 '>
+			<h2 className='text-xl font-bold underline dark:text-slate-100'>
+				Selecciona una imagen
+			</h2>
 			<ImageGallery
 				setImgUrl={setImgUrl}
 				setImgBitMap={setImgBitMap}
-				className=' grid grid-cols-2 lg:grid-cols-4 gap-3 my-5'
+				className=' my-5 grid grid-cols-2 gap-3 lg:grid-cols-4'
 			/>
 			<h2>Cambiar de imagen</h2>
 			<p>
@@ -64,7 +66,7 @@ export default function ConfigSection() {
 			<UploadImg setImgUrl={setImgUrl} setImgBitMap={setImgBitMap} />
 
 			<FormConfig
-			className='border border-gray-400 p-3 my-3 color text-gray-900 '
+				className='color my-3 border border-slate-800 rounded-md px-5 py-3 dark:text-slate-400 '
 				setColorTolerance={setColorTolerance}
 				setDivsQty={setDivsQty}
 				colorMode={colorMode}
@@ -91,7 +93,7 @@ export default function ConfigSection() {
 				'Esperando datos color primario'
 			)}
 
-			<div style={imgStyle} className='md:columns-2 p-2'>
+			<div style={imgStyle} className='p-2 md:columns-2'>
 				{avgColors.length > 0 ? (
 					<RenderPixelColors
 						avgColors={avgColors}

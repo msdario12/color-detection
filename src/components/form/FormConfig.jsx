@@ -7,8 +7,14 @@ function FormConfig(props) {
 		props;
 	return (
 		<form className={className}>
-			<h2>Seleccione el modo de color</h2>
-			<InputModeColor handleChange={setColorMode} colorMode={colorMode} />
+			<h2 className='mb-2 font-bold dark:text-slate-200'>
+				Seleccione el modo de color
+			</h2>
+			<InputModeColor
+				className='mb-6'
+				handleChange={setColorMode}
+				colorMode={colorMode}
+			/>
 
 			<h2>Tolerancia de selección de color</h2>
 			<InputToleranceColor handleChange={setColorTolerance} />
