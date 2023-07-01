@@ -45,7 +45,7 @@ export default function ConfigSection() {
 	}, [colorPrimaryList]);
 
 	return (
-		<section className='config-section relative mx-auto px-4 lg:container dark:bg-slate-900 dark:text-slate-400 '>
+		<section className='config-section relative mx-auto px-4 lg:container'>
 			<h2 className='text-xl font-bold underline dark:text-slate-100'>
 				Selecciona una imagen
 			</h2>
