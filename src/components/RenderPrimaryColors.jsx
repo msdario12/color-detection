@@ -1,7 +1,6 @@
 import IndividualPrimaryColor from './IndividualPrimaryColor';
 import useWorkerPrimaryColors from '../hooks/useWorkerPrimaryColors';
 import { useEffect, useRef, useState } from 'react';
-import useHoverAnimation from '../hooks/useHoverAnimation';
 import PopoverPrimaryColor from './PopoverPrimaryColor';
 
 export default function RenderPrimaryColors(props) {
@@ -22,7 +21,6 @@ export default function RenderPrimaryColors(props) {
 	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 	const [offsetDiv, setOffsetDiv] = useState({ x: 0, y: 0 });
 	const [hoverColor, setHoverColor] = useState({});
-	const { onEnter, onLeave } = useHoverAnimation();
 	const divRef = useRef(null);
 	useEffect(() => {
 		setTimeColorPrimary({
@@ -92,7 +90,7 @@ export default function RenderPrimaryColors(props) {
 		<div ref={divRef} className='my-10'>
 			<h2 className='mb-3 text-4xl text-slate-200'>Colors</h2>
 			<p className='mb-3'>Se seleccionaron {colorList.length} colores</p>
-			<div className='relative flex flex-wrap justify-center'>
+			<div className='relative flex flex-wrap justify-center md:flex-row'>
 				{colorList.length > 0 && !isLoading
 					? colorList.map((color, idx) => (
 							<IndividualPrimaryColor

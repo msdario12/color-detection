@@ -4,7 +4,9 @@ export default function PopoverPrimaryColor(props) {
 	const { style, hoverColor, colorMode, divsQty } = props;
 
 	return (
-		<div style={style} className='absolute rounded-md p-2 dark:bg-slate-200'>
+		<div
+			style={style}
+			className='absolute rounded-md p-2 shadow-xl dark:bg-slate-200'>
 			<div
 				className=' rounded-md'
 				style={{
