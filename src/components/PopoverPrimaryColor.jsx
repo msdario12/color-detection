@@ -6,14 +6,14 @@ export default function PopoverPrimaryColor(props) {
 	return (
 		<div
 			style={style}
-			className='absolute rounded-md p-2 shadow-xl dark:bg-slate-200'>
+			className='absolute overflow-hidden rounded-md p-2 shadow-xl dark:bg-slate-200'>
 			<div
-				className=' rounded-md'
 				style={{
 					width: 200,
 					height: 200,
 				}}>
 				<ContentIndividualColor
+					className='rounded-md'
 					colorMode={colorMode}
 					color={hoverColor}
 					divsQty={divsQty}

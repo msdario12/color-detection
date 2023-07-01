@@ -2,7 +2,7 @@ import createStringColor from '../utils/createStringColor';
 import getColorTextBasedInBackground from '../utils/getColorTextBasedInBackground';
 
 export default function ContentIndividualColor(props) {
-	const { isColorSmall, color, colorMode, divsQty } = props;
+	const { isColorSmall, color, colorMode, divsQty, className } = props;
 	const dimension = '175px';
 	const divStyle = {
 		height: dimension,
@@ -15,7 +15,9 @@ export default function ContentIndividualColor(props) {
 	return (
 		<div
 			style={divStyle}
-			className='flex flex-col items-center justify-center font-semibold'>
+			className={
+				'flex flex-col items-center justify-center font-semibold ' + className
+			}>
 			{!isColorSmall ? (
 				<>
 					<h3>{createStringColor(color, colorMode)}</h3>
