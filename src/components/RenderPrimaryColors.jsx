@@ -40,6 +40,7 @@ export default function RenderPrimaryColors(props) {
 	}, [divRef, colorList]);
 
 	function handleMouseEnter(color) {
+		console.log('enter');
 		setHoverColor(color);
 	}
 	function handleMouseLeave() {
