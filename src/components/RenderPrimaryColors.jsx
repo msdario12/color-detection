@@ -18,9 +18,6 @@ export default function RenderPrimaryColors(props) {
 		colorTolerance
 	);
 	const [colorWidth, setColorWidth] = useState('');
-	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-	const [offsetDiv, setOffsetDiv] = useState({ x: 0, y: 0 });
-	const [hoverColor, setHoverColor] = useState({});
 	const divRef = useRef(null);
 	useEffect(() => {
 		setTimeColorPrimary({
@@ -32,58 +29,12 @@ export default function RenderPrimaryColors(props) {
 
 	useEffect(() => {
 		if (divRef.current.clientWidth && colorList.length > 0) {
-			const clientWidth = divRef.current.clientWidth;
+			const clientWidth = divRef.current.clientWidth - 225;
 			const colorNumber = colorList.length;
 			setColorWidth(Math.floor(clientWidth / colorNumber));
 			console.log(colorWidth);
 		}
 	}, [divRef, colorList]);
-
-	function handleMouseEnter(color) {
-		console.log('enter');
-		setHoverColor(color);
-	}
-	function handleMouseLeave() {
-		setHoverColor({});
-	}
-	function handleMouseMove(e) {
-		setMousePosition({ x: e.clientX, y: e.clientY });
-	}
-	function handleScroll(ref) {
-		const current = ref.current;
-		const boundingDiv = current.getBoundingClientRect();
-
-		setOffsetDiv({
-			x: boundingDiv.x,
-			y: boundingDiv.y,
-			w: boundingDiv.width,
-			h: boundingDiv.height,
-		});
-	}
-
-	const isHoverColor = hoverColor.base;
-
-	useEffect(() => {
-		const current = divRef.current;
-		const boundingDiv = current.getBoundingClientRect();
-
-		setOffsetDiv({
-			x: boundingDiv.x,
-			y: boundingDiv.y,
-			w: boundingDiv.width,
-			h: boundingDiv.height,
-		});
-
-		if (isHoverColor) {
-			document.onscroll = () => handleScroll(divRef);
-			window.onmousemove = handleMouseMove;
-		}
-
-		return () => {
-			window.onmousemove = null;
-			current.onscroll = null;
-		};
-	}, [hoverColor]);
 
 	const isColorSmall = colorWidth < 150;
 
@@ -95,32 +46,17 @@ export default function RenderPrimaryColors(props) {
 				{colorList.length > 0 && !isLoading
 					? colorList.map((color, idx) => (
 							<IndividualPrimaryColor
-								style={{ width: colorWidth }}
 								className={`text-center`}
-								onEnter={handleMouseEnter}
-								onLeave={handleMouseLeave}
 								divsQty={divsQty}
 								key={'C' + idx}
 								colorMode={colorMode}
 								color={color}
+								colorWidth={colorWidth}
 								isColorSmall={isColorSmall}
 							/>
 							// eslint-disable-next-line no-mixed-spaces-and-tabs
 					  ))
 					: 'Cargando datos de los colores primarios...'}
-				{isHoverColor ? (
-					<PopoverPrimaryColor
-						colorMode={colorMode}
-						hoverColor={hoverColor}
-						divsQty={divsQty}
-						style={{
-							top: mousePosition.y - offsetDiv.y - offsetDiv.h / 2,
-							left: mousePosition.x - offsetDiv.x + 25,
-						}}
-					/>
-				) : (
-					''
-				)}
 			</div>
 		</div>
 	);
