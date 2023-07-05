@@ -36,7 +36,7 @@ export default function RenderPrimaryColors(props) {
 		}
 	}, [divRef, colorList]);
 
-	const isColorSmall = colorWidth < 150;
+	const isColorSmall = colorWidth < 175;
 
 	return (
 		<div ref={divRef} className='my-10'>

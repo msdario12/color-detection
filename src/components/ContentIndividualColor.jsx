@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import createStringColor from '../utils/createStringColor';
 import getColorTextBasedInBackground from '../utils/getColorTextBasedInBackground';
-import { motion, useAnimate, useInView } from 'framer-motion';
+import { useAnimate, useInView } from 'framer-motion';
 
 export default function ContentIndividualColor(props) {
 	const { isColorSmall, color, colorMode, divsQty, className, isHoverColor } =
@@ -29,9 +29,8 @@ export default function ContentIndividualColor(props) {
 		backgroundColor: createStringColor(color, colorMode),
 		color: getColorTextBasedInBackground(color, colorMode),
 	};
-	const percentage = Math.round(
-		(Number(color.similarColors.length) / Number(divsQty ** 2)) * 100
-	);
+	const percentage =
+		(Number(color.similarColors.length) / Number(divsQty ** 2)) * 100;
 	return (
 		<div
 			style={divStyle}
@@ -43,7 +42,7 @@ export default function ContentIndividualColor(props) {
 					ref={scope}
 					style={{ rotate: 180, opacity: !isColorSmall ? 1 : 0 }}>
 					<h3>{createStringColor(color, colorMode)}</h3>
-					<p>Participación {percentage}%</p>
+					<p>Participación {percentage.toFixed(2)}%</p>
 				</div>
 			}
 		</div>
