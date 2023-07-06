@@ -3,8 +3,8 @@ import createDataForPixel from '../utils/createDataForPixel';
 // globalVar
 
 // Function to fetch a random img from web
-async function fetchRandomImg() {
-	const response = await fetch('https://source.unsplash.com/random/?$cars');
+async function fetchRandomImg(query = 'house') {
+	const response = await fetch(`https://source.unsplash.com/random/?$${query}`);
 	const arrayBuffer = await response.arrayBuffer();
 	const blob = new Blob([arrayBuffer]);
 	const imgBit = await createImageBitmap(blob);
@@ -76,7 +76,7 @@ async function readImgData(
 // Register a callback to process messages from the parent
 self.onmessage = (e) => {
 	console.log('Received in worker', e.data.msg);
-	const { divsQty, colorMode, imgBitMap } = e.data.params;
+	const { divsQty, colorMode, imgBitMap, query } = e.data.params;
 	let colorHSLstate, colorRGBstate;
 	if (colorMode === 'RGB') {
 		colorHSLstate = false;
@@ -91,7 +91,9 @@ self.onmessage = (e) => {
 		case 'fetch-new-image':
 			{
 				const start = new Date();
-				fetchRandomImg().then(({ res, img }) => {
+
+				console.log(e.data.params);
+				fetchRandomImg(query).then(({ res, img }) => {
 					const end = new Date();
 					self.postMessage({
 						url: res.url,
@@ -104,6 +106,7 @@ self.onmessage = (e) => {
 			break;
 		case 'calculate-pixels':
 			{
+				console.log(e.data.params);
 				const start = new Date();
 				readImgData(
 					imgBitMap,

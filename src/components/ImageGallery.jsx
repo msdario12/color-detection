@@ -20,7 +20,7 @@ export default function ImageGallery(props) {
 					key={img + idx}
 					onMouseEnter={onEnter}
 					onMouseLeave={onLeave}
-					className='p-2 shadow-lg border bg-white cursor-pointer'>
+					className='shadow-lg cursor-pointer'>
 					<img
 						onClick={handleClick}
 						className='object-cover object-center aspect-video'

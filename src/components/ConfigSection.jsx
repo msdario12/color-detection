@@ -10,7 +10,7 @@ import UploadImg from './UploadImg';
 import ImageGallery from './ImageGallery';
 import Button from './Button';
 import SkeletonImg from './SkeletonImg';
-
+import { ImgConfig } from './ImgConfig';
 
 export default function ConfigSection() {
 	const [colorMode, setColorMode] = useState('RGB');
@@ -47,31 +47,16 @@ export default function ConfigSection() {
 
 	return (
 		<section className='config-section relative mx-auto px-4 lg:container'>
-
-			<h2 className='text-xl font-bold underline dark:text-slate-100'>
-				Selecciona una imagen
-			</h2>
-			<ImageGallery
+			<ImgConfig
+				className='rounded-md border border-slate-800 px-8 py-5'
 				setImgUrl={setImgUrl}
 				setImgBitMap={setImgBitMap}
-				className=' my-5 grid grid-cols-2 gap-3 lg:grid-cols-4'
+				colorMode={colorMode}
+				divsQty={divsQty}
+				colorTolerance={colorTolerance}
+				isLoading={isLoading}
+				handleChangeImage={handleChangeImage}
 			/>
-			<h2>Cambiar de imagen</h2>
-			<p>
-				State {colorMode}, {divsQty}, {colorTolerance},
-				{isLoading ? 'CARGANDO' : 'LISTO'},
-			</p>
-
-			<Button
-				id='change-img'
-				className=''
-				value={'Cambiar Imagen'}
-				onClick={handleChangeImage.func}
-			/>
-			{isLoading ? 'Cargando...' : ''}
-
-			<UploadImg setImgUrl={setImgUrl} setImgBitMap={setImgBitMap} />
-
 			<FormConfig
 				className='color z-10 my-3 grid gap-4 rounded-md border border-slate-800 px-8 py-5 dark:bg-slate-900 dark:bg-opacity-80 dark:text-slate-400 dark:backdrop-blur-sm md:sticky md:top-0 md:grid-cols-2'
 				setColorTolerance={setColorTolerance}

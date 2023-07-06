@@ -15,14 +15,19 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 	const workerRef = useRef();
 
 	useEffect(() => {
+		console.log('Entrando al efect 🤖');
 		const worker = new Worker('../src/workers/worker.js', { type: 'module' });
 		workerRef.current = worker;
-		console.log(imgBitMap);
-		const getNewImgFromWorker = () => {
+		const getNewImgFromWorker = (queryParam) => {
+			const workerGetImg = new Worker('../src/workers/worker.js', {
+				type: 'module',
+			});
+
+			console.log(worker);
 			postMessageToWorker(
 				'fetch-new-image',
-				{ colorMode, divsQty },
-				worker
+				{ colorMode, divsQty, query: queryParam },
+				workerGetImg
 			).then((res) => {
 				setTime({
 					...time,
@@ -48,15 +53,16 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 		};
 
 		setHandleChangeImage({
-			func: () => {
+			func: (query) => {
+				console.log(query);
 				setImgUrl();
 				setImgBitMap();
 				console.log('get-new-img');
-				getNewImgFromWorker();
+				getNewImgFromWorker(query);
 			},
 		});
 
-		if (!imgUrl) {
+		if (!imgUrl && !isLoading) {
 			console.log('Getting first image');
 
 			getNewImgFromWorker();
@@ -89,10 +95,12 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 			};
 			intWork.onerror = (e) => {
 				console.log(e);
+				setIsLoading(false);
 				rej(e);
 			};
 			intWork.onmessageerror = (e) => {
 				console.log(e);
+				setIsLoading(false);
 				rej(e);
 			};
 		});
