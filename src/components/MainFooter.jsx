@@ -1,8 +1,8 @@
 import { Footer } from 'flowbite-react';
 
-export const MainFooter = () => {
+export const MainFooter = ({ className }) => {
 	return (
-		<Footer container>
+		<Footer className={className} container>
 			<div className='mx-auto grid w-full justify-between lg:container sm:flex sm:justify-between md:flex md:grid-cols-1'>
 				<Footer.Copyright by='Flowbite™' href='#' year={2022} />
 				<Footer.LinkGroup>

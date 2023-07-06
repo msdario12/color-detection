@@ -1,8 +1,8 @@
 import { DarkThemeToggle, Navbar } from 'flowbite-react';
 
-export const MainNav = () => {
+export const MainNav = ({ className }) => {
 	return (
-		<Navbar rounded>
+		<Navbar className={className} rounded>
 			<Navbar.Brand href='https://flowbite-react.com'>
 				{/* <img
 					alt='Flowbite React Logo'
