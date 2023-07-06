@@ -11,6 +11,7 @@ import ImageGallery from './ImageGallery';
 import Button from './Button';
 import SkeletonImg from './SkeletonImg';
 
+
 export default function ConfigSection() {
 	const [colorMode, setColorMode] = useState('RGB');
 	const [divsQty, setDivsQty] = useState(2);
@@ -46,6 +47,7 @@ export default function ConfigSection() {
 
 	return (
 		<section className='config-section relative mx-auto px-4 lg:container'>
+
 			<h2 className='text-xl font-bold underline dark:text-slate-100'>
 				Selecciona una imagen
 			</h2>

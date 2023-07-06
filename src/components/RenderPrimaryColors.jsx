@@ -18,6 +18,7 @@ export default function RenderPrimaryColors(props) {
 		colorTolerance
 	);
 	const [colorWidth, setColorWidth] = useState('');
+	const [isMobile, setIsMobile] = useState(false);
 	const divRef = useRef(null);
 	useEffect(() => {
 		setTimeColorPrimary({
@@ -31,8 +32,10 @@ export default function RenderPrimaryColors(props) {
 		if (divRef.current.clientWidth && colorList.length > 0) {
 			const clientWidth = divRef.current.clientWidth - 225;
 			const colorNumber = colorList.length;
+			if (clientWidth < 500) {
+				console.log('Mobile!');
+			}
 			setColorWidth(Math.floor(clientWidth / colorNumber));
-			console.log(colorWidth);
 		}
 	}, [divRef, colorList]);
 
