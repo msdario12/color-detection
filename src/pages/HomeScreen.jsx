@@ -1,7 +1,8 @@
-import React from 'react'
+import ConfigSection from "../components/ConfigSection"
+
 
 export const HomeScreen = () => {
   return (
-    <div>HomeScreen</div>
+    <ConfigSection />
   )
 }
