@@ -1,5 +1,4 @@
 import ImageGallery from './ImageGallery';
-import Button from './Button';
 import UploadImg from './UploadImg';
 import { SearchInputWithButton } from './form/SearchInputWithButton';
 
@@ -21,7 +20,7 @@ export const ImgConfig = ({
 			<ImageGallery
 				setImgUrl={setImgUrl}
 				setImgBitMap={setImgBitMap}
-				className=' my-5 grid grid-cols-2 gap-3 lg:grid-cols-4'
+				className=' my-5'
 			/>
 			<h2>Cambiar de imagen</h2>
 			<p>
