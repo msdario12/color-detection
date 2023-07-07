@@ -13,7 +13,6 @@ export const ImgConfig = ({
 	handleChangeImage,
 	className,
 }) => {
-	
 	return (
 		<div className={className}>
 			<h2 className='text-xl font-bold underline dark:text-slate-100'>
@@ -29,14 +28,10 @@ export const ImgConfig = ({
 				State {colorMode}, {divsQty}, {colorTolerance},
 				{isLoading ? 'CARGANDO' : 'LISTO'},
 			</p>
-			<SearchInputWithButton handleChangeImage={handleChangeImage}  />
-			<Button
-				id='change-img'
-				className=''
-				value={'Cambiar Imagen'}
-				onClick={handleChangeImage.func}
+			<SearchInputWithButton
+				handleChangeImage={handleChangeImage}
+				isLoading={isLoading}
 			/>
-			{isLoading ? 'Cargando...' : ''}
 
 			<UploadImg setImgUrl={setImgUrl} setImgBitMap={setImgBitMap} />
 		</div>
