@@ -49,7 +49,7 @@ export default function RenderPrimaryColors(props) {
 				{colorList.length > 0 && !isLoading
 					? colorList.map((color, idx) => (
 							<IndividualPrimaryColor
-								className={`text-center`}
+								className={`relative text-center`}
 								divsQty={divsQty}
 								key={'C' + idx}
 								colorMode={colorMode}

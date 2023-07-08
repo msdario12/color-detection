@@ -18,6 +18,7 @@ export const ImgConfig = ({
 				Selecciona una imagen
 			</h2>
 			<ImageGallery
+				isLoading={isLoading}
 				setImgUrl={setImgUrl}
 				setImgBitMap={setImgBitMap}
 				className=' my-5'

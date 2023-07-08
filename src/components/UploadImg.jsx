@@ -1,4 +1,5 @@
 import useLoadLocalImage from '../hooks/useLoadLocalImage';
+import { addImageLocalStorage } from '../utils/localStorageOperations';
 import FileInput from './FileInput';
 
 export default function UploadImg(props) {
@@ -9,6 +10,7 @@ export default function UploadImg(props) {
 		if (selectedFile.length > 0) {
 			const [imageFile] = selectedFile;
 			loadImg(imageFile);
+			addImageLocalStorage(imageFile);
 		}
 	};
 
