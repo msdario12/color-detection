@@ -46,80 +46,79 @@ export default function ConfigSection() {
 	}, [colorPrimaryList]);
 
 	return (
-		<section className='config-section relative mx-auto px-4 lg:container'>
-			<ImgConfig
-				className='rounded-md border border-slate-800 px-8 py-5'
-				setImgUrl={setImgUrl}
-				setImgBitMap={setImgBitMap}
-				colorMode={colorMode}
-				divsQty={divsQty}
-				colorTolerance={colorTolerance}
-				isLoading={isLoading}
-				handleChangeImage={handleChangeImage}
-			/>
-			<FormConfig
-				className='color z-10 my-3 grid gap-4 rounded-md border border-slate-800 px-8 py-5 dark:bg-slate-900 dark:bg-opacity-80 dark:text-slate-400 dark:backdrop-blur-sm md:sticky md:top-0 md:grid-cols-2'
-				setColorTolerance={setColorTolerance}
-				setDivsQty={setDivsQty}
-				colorMode={colorMode}
-				setColorMode={setColorMode}
-			/>
-
-			<InformationOfCalculations
-				className='grid grid-cols-2 rounded-md border border-slate-800 px-8 py-5'
-				timeColorPrimary={timeColorPrimary}
-				imgSizes={imgSizes}
-				divsQty={divsQty}
-				time={time}
-			/>
-
-			{avgColors.length > 0 ? (
-				<RenderPrimaryColors
-					divsQty={divsQty}
-					avgColors={avgColors}
+		<section className='config-section grid-rows-[minmax(200px, 1fr)] relative mx-auto grid  grid-cols-5 px-5 lg:container'>
+			<div className='sticky top-0 col-span-2 row-span-3 h-[175vh] overflow-y-auto'>
+				<ImgConfig
+					className='col-span-2 col-start-1 row-span-2 row-start-1 rounded-md border border-slate-800 px-8 py-5'
+					setImgUrl={setImgUrl}
+					setImgBitMap={setImgBitMap}
 					colorMode={colorMode}
+					divsQty={divsQty}
 					colorTolerance={colorTolerance}
-					setTimeColorPrimary={setTimeColorPrimary}
-					setColorPrimaryList={setColorPrimaryList}
+					isLoading={isLoading}
+					handleChangeImage={handleChangeImage}
 				/>
-			) : (
-				'Esperando datos color primario'
-			)}
+				<FormConfig
+					className='color z-10 col-span-2 col-start-1 row-span-1 row-start-3 my-3 grid gap-4 rounded-md border border-slate-800 px-8 py-5 dark:bg-slate-900 dark:bg-opacity-80 dark:text-slate-400 dark:backdrop-blur-sm md:grid-cols-2'
+					setColorTolerance={setColorTolerance}
+					setDivsQty={setDivsQty}
+					colorMode={colorMode}
+					setColorMode={setColorMode}
+				/>
+				<InformationOfCalculations
+					className='col-span-2 col-start-1 row-span-1 row-start-4 mb-10 rounded-md border border-slate-800 px-8 py-5'
+					timeColorPrimary={timeColorPrimary}
+					imgSizes={imgSizes}
+					divsQty={divsQty}
+					time={time}
+				/>
+			</div>
 
-			<div style={imgStyle} className='p-2 md:columns-2'>
-				{!isLoading ? (
-					<RenderPixelColors
+			<div className='col-span-3 col-start-3 row-start-1 my-auto'>
+				{avgColors.length > 0 ? (
+					<RenderPrimaryColors
+						divsQty={divsQty}
 						avgColors={avgColors}
 						colorMode={colorMode}
-						imgSizes={imgSizes}
-						isLoading={isLoading}
+						colorTolerance={colorTolerance}
+						setTimeColorPrimary={setTimeColorPrimary}
+						setColorPrimaryList={setColorPrimaryList}
 					/>
 				) : (
-					<SkeletonImg
-						style={{
-							width: imgSizes.renderSize.w,
-							height: imgSizes.renderSize.h,
-						}}
-					/>
-				)}
-				{avgColors.length > 0 ? (
-					<img
-						onLoad={handleLoadImg}
-						src={imgUrl}
-						ref={imgRef}
-						alt='Img to get analize'
-					/>
-				) : (
-					<SkeletonImg />
+					'Esperando datos color primario'
 				)}
 			</div>
 
-			<div className={isLoading ? 'showLoader' : undefined} id='loader'>
-				Cargando...
+			<div className='col-span-3 col-start-3 row-span-3 row-start-2 p-2 md:columns-1'>
+				<div style={imgStyle} className='my-auto'>
+					{avgColors.length > 0 ? (
+						<img
+							onLoad={handleLoadImg}
+							className=' h-auto max-h-screen w-full'
+							src={imgUrl}
+							ref={imgRef}
+							alt='Img to get analize'
+						/>
+					) : (
+						<SkeletonImg />
+					)}
+					{!isLoading ? (
+						<RenderPixelColors
+							avgColors={avgColors}
+							colorMode={colorMode}
+							imgSizes={imgSizes}
+							isLoading={isLoading}
+						/>
+					) : (
+						<SkeletonImg
+							style={{
+								width: imgSizes.renderSize.w,
+								height: imgSizes.renderSize.h,
+							}}
+						/>
+					)}
+				</div>
 			</div>
-			<div id='toShowLoader'></div>
-			<div id='showColor'></div>
-			<div id='img-container'></div>
 		</section>
 	);
 }

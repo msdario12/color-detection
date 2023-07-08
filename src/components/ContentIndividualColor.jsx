@@ -23,7 +23,7 @@ export default function ContentIndividualColor(props) {
 		}
 	}, [isHoverColor]);
 
-	const dimension = '175px';
+	const dimension = '100px';
 	const divStyle = {
 		height: dimension,
 		backgroundColor: createStringColor(color, colorMode),

@@ -11,6 +11,7 @@ export default function RenderPrimaryColors(props) {
 		divsQty,
 		setTimeColorPrimary,
 		setColorPrimaryList,
+		className,
 	} = props;
 	const { colorList, isLoading, timeColorPrimary } = useWorkerPrimaryColors(
 		avgColors,
@@ -42,8 +43,7 @@ export default function RenderPrimaryColors(props) {
 	const isColorSmall = colorWidth < 175;
 
 	return (
-		<div ref={divRef} className='my-10'>
-			<h2 className='mb-3 text-4xl text-slate-200'>Colors</h2>
+		<div ref={divRef} className={className}>
 			<p className='mb-3'>Se seleccionaron {colorList.length} colores</p>
 			<div className='relative flex flex-wrap justify-center md:flex-row'>
 				{colorList.length > 0 && !isLoading
