@@ -66,6 +66,7 @@ export default function ConfigSection() {
 			/>
 
 			<InformationOfCalculations
+				className='grid grid-cols-2 rounded-md border border-slate-800 px-8 py-5'
 				timeColorPrimary={timeColorPrimary}
 				imgSizes={imgSizes}
 				divsQty={divsQty}
