@@ -33,6 +33,7 @@ function convertImgToBase94(img) {
 // Image slider
 
 export function addImageLocalStorage(img) {
+	
 	let imageListCopy = getFromLocalStorage('image-list');
 	convertImgToBase94(img).then((res) => {
 		const newImg = { id: uuidv4(), src: res };

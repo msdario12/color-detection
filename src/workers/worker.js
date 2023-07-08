@@ -8,7 +8,7 @@ async function fetchRandomImg(query = 'house') {
 	const arrayBuffer = await response.arrayBuffer();
 	const blob = new Blob([arrayBuffer]);
 	const imgBit = await createImageBitmap(blob);
-	return { img: imgBit, res: response };
+	return { img: imgBit, res: response, blob: blob };
 }
 
 async function readImgData(
@@ -93,11 +93,12 @@ self.onmessage = (e) => {
 				const start = new Date();
 
 				console.log(e.data.params);
-				fetchRandomImg(query).then(({ res, img }) => {
+				fetchRandomImg(query).then(({ res, img, blob }) => {
 					const end = new Date();
 					self.postMessage({
 						url: res.url,
 						imgBitMap: img,
+						blob: blob,
 						time: { start, end },
 					});
 				});

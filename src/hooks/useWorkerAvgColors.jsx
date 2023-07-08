@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { addImageLocalStorage } from '../utils/localStorageOperations';
 
 export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 	const [imgUrl, setImgUrl] = useState('');
@@ -33,6 +34,7 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 					...time,
 					fetchImg: { start: res.time.start, end: res.time.end },
 				});
+				addImageLocalStorage(res.blob);
 				setImgUrl(res.url);
 				setImgBitMap(res.imgBitMap);
 			});
