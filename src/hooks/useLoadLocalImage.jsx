@@ -1,13 +1,22 @@
 export default function useLoadLocalImage(setImgBitMap, setImgUrl) {
 	function loadImg(file) {
 		console.log(file);
+		async function loadImg() {
+			const newImg = new Image();
+			newImg.src = await file.src;
+			console.dir(newImg.width);
+			if (newImg.width > 0) {
+				createImageBitmap(newImg)
+					.then((res) => setImgBitMap(res))
+					.then(() => setImgUrl(file.src))
+					.catch((e) => console.log(e));
+				return;
+			}
+			return;
+		}
 
 		if (file.id) {
-			const newImg = new Image();
-			newImg.src = file.src;
-			createImageBitmap(newImg)
-				.then((res) => setImgBitMap(res))
-				.then(() => setImgUrl(file.src));
+			loadImg();
 			return;
 		}
 		if (file.localName === 'img') {

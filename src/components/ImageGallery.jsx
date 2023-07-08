@@ -16,6 +16,7 @@ import {
 	removeImageLocalStorage,
 } from '../utils/localStorageOperations';
 import { ButtonHoverImg } from './ButtonHoverImg';
+import { SlideImg } from './SlideImg';
 
 const imgPath = 'src/assets/img/';
 const imgUrls = ['263', '401', '628', '659'];
@@ -30,20 +31,6 @@ export default function ImageGallery(props) {
 		setImageList(localImg);
 	}, [isLoading]);
 
-	function handleClickButtonImg(e, id) {
-		// const selectedFile = e.target;
-		const foundImg = getImageLocalStorageById(id);
-		console.log(foundImg);
-		loadImg(foundImg);
-	}
-	function handleClickOnImg(e) {
-		const selectedFile = e.target;
-		loadImg(selectedFile);
-	}
-	function handleDeleteImg(id) {
-		removeImageLocalStorage(id);
-		setImageList((prev) => prev.filter((img) => img.id !== id));
-	}
 	return (
 		<div className={className}>
 			<Swiper
@@ -53,26 +40,27 @@ export default function ImageGallery(props) {
 				slidesPerView={2}
 				navigation
 				pagination={{ clickable: true }}
-				scrollbar={{ draggable: true }}>
+				scrollbar={{ draggable: true }}
+				breakpoints={{
+					// when window width is >= 640px
+					640: {
+						width: 640,
+						slidesPerView: 3,
+					},
+					// when window width is >= 768px
+					768: {
+						width: 768,
+						slidesPerView: 2,
+					},
+				}}>
 				{imageList.map((img) => (
 					<SwiperSlide key={img.id}>
-						<div className='relative'>
-							<img
-								className='w-42 aspect-video h-full object-cover object-center'
-								src={img.src}
-								alt={`Picture number ${img} for select`}
-							/>
-							<div className='absolute left-1/2 top-1/2 flex  -translate-x-1/2 -translate-y-1/2 transform items-center justify-center gap-3'>
-								<ButtonHoverImg
-									icon={faBolt}
-									onClick={(e) => handleClickButtonImg(e, img.id)}
-								/>
-								<ButtonHoverImg
-									icon={faRemove}
-									onClick={() => handleDeleteImg(img.id)}
-								/>
-							</div>
-						</div>
+						<SlideImg
+							isLoading={isLoading}
+							loadImg={loadImg}
+							img={img}
+							setImageList={setImageList}
+						/>
 					</SwiperSlide>
 				))}
 			</Swiper>

@@ -11,7 +11,7 @@ export default function IndividualPrimaryColor(props) {
 	};
 
 	const variants = {
-		hover: { scale: 1.2, width: 200 },
+		hover: { scale: 1.2, width: 200, zIndex: 10 },
 		not: { scale: 1 },
 	};
 
