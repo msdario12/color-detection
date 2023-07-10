@@ -42,7 +42,7 @@ export const SlideImg = ({ img, setImageList, loadImg }) => {
 				setIsHover(false);
 			}}>
 			<img
-				className='w-42 aspect-video h-full object-cover object-center'
+				className='aspect-video h-auto w-full object-cover object-center'
 				src={img.src}
 				alt={`Picture number ${img} for select`}
 			/>

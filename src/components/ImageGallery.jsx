@@ -1,21 +1,15 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import useLoadLocalImage from '../hooks/useLoadLocalImage';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Navigation, Pagination, Scrollbar, A11y, Grid } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { faBolt, faRemove } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import {
-	getFromLocalStorage,
-	getImageLocalStorageById,
-	removeImageLocalStorage,
-} from '../utils/localStorageOperations';
-import { ButtonHoverImg } from './ButtonHoverImg';
+import { getFromLocalStorage } from '../utils/localStorageOperations';
 import { SlideImg } from './SlideImg';
 
 const imgPath = 'src/assets/img/';
@@ -35,24 +29,16 @@ export default function ImageGallery(props) {
 		<div className={className}>
 			<Swiper
 				// install Swiper modules
-				modules={[Navigation, Pagination, Scrollbar, A11y]}
-				spaceBetween={10}
+				className='select-none'
+				modules={[Navigation, Pagination, Scrollbar, A11y, Grid]}
+				spaceBetween={20}
+				grid={{
+					rows: 2,
+				}}
 				slidesPerView={2}
 				navigation
 				pagination={{ clickable: true }}
-				scrollbar={{ draggable: true }}
-				breakpoints={{
-					// when window width is >= 640px
-					640: {
-						width: 640,
-						slidesPerView: 3,
-					},
-					// when window width is >= 768px
-					768: {
-						width: 768,
-						slidesPerView: 2,
-					},
-				}}>
+				scrollbar={{ draggable: true }}>
 				{imageList.map((img) => (
 					<SwiperSlide key={img.id}>
 						<SlideImg

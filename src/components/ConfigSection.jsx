@@ -47,7 +47,7 @@ export default function ConfigSection() {
 
 	return (
 		<section className='config-section grid-rows-[minmax(200px, 1fr)] relative mx-auto grid  grid-cols-5 px-5 lg:container'>
-			<div className='sticky top-0 col-span-2 row-span-3 h-[175vh] overflow-y-auto'>
+			<div className='sticky top-0 col-span-2 row-span-3 h-[90vh] overflow-y-auto'>
 				<ImgConfig
 					className='col-span-2 col-start-1 row-span-2 row-start-1 rounded-md border border-slate-800 px-8 py-5'
 					setImgUrl={setImgUrl}
