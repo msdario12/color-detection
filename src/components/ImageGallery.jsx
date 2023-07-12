@@ -18,8 +18,15 @@ const imgPath = 'src/assets/img/';
 const imgUrls = ['263', '401', '628', '659'];
 
 export default function ImageGallery(props) {
-	const { className, setImgUrl, setImgBitMap, isLoading } = props;
-	const [imageList, setImageList] = useState([]);
+	const {
+		className,
+		setImgUrl,
+		setImgBitMap,
+		isLoading,
+		setImageList,
+		imageList,
+	} = props;
+
 	const { loadImg } = useLoadLocalImage(setImgBitMap, setImgUrl);
 
 	useEffect(() => {
