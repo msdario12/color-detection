@@ -3,10 +3,12 @@ import useLoadLocalImage from '../hooks/useLoadLocalImage';
 import { Navigation, Pagination, Scrollbar, A11y, Grid } from 'swiper/modules';
 
 // Import Swiper styles
+import 'swiper/css/grid';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import './swiper-style.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { getFromLocalStorage } from '../utils/localStorageOperations';
@@ -31,12 +33,32 @@ export default function ImageGallery(props) {
 				// install Swiper modules
 				className='select-none'
 				modules={[Navigation, Pagination, Scrollbar, A11y, Grid]}
-				spaceBetween={20}
+				spaceBetween={10}
 				grid={{
 					rows: 2,
+					fill: 'row',
 				}}
-				slidesPerView={2}
 				navigation
+				breakpoints={{
+					// when window width is >= 640px
+					640: {
+						slidesPerColumn: 1,
+						slidesPerGroup: 1,
+						slidesPerView: 1,
+						grid: {
+							rows: 2,
+							fill: 'row',
+						},
+					},
+					// when window width is >= 768px
+					768: {
+						slidesPerView: 3,
+						grid: {
+							rows: 2,
+							fill: 'row',
+						},
+					},
+				}}
 				pagination={{ clickable: true }}
 				scrollbar={{ draggable: true }}>
 				{imageList.map((img) => (
