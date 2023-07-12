@@ -11,6 +11,7 @@ import { ImgConfig } from './ImgConfig';
 import { Tabs } from 'flowbite-react';
 import { faPercent } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { clearConfigCache } from 'prettier';
 
 export default function ConfigSection() {
 	const [colorMode, setColorMode] = useState('RGB');
@@ -74,74 +75,77 @@ export default function ConfigSection() {
 		</div>
 	);
 
-	const primaryColorsSection = (
-		<div className='col-span-3 col-start-3 row-start-1 my-auto'>
-			{avgColors.length > 0 ? (
-				<RenderPrimaryColors
-					divsQty={divsQty}
-					avgColors={avgColors}
-					colorMode={colorMode}
-					colorTolerance={colorTolerance}
-					setTimeColorPrimary={setTimeColorPrimary}
-					setColorPrimaryList={setColorPrimaryList}
-				/>
-			) : (
-				'Esperando datos color primario'
-			)}
-		</div>
-	);
+	const primaryColorsSection =
+		avgColors.length > 0 ? (
+			<RenderPrimaryColors
+				divsQty={divsQty}
+				avgColors={avgColors}
+				colorMode={colorMode}
+				colorTolerance={colorTolerance}
+				setTimeColorPrimary={setTimeColorPrimary}
+				setColorPrimaryList={setColorPrimaryList}
+			/>
+		) : (
+			'Esperando datos color primario'
+		);
 
 	const resultSection = (
-		<div className='col-span-3 col-start-3 row-span-3 row-start-2 p-2 md:columns-1'>
-			<div style={imgStyle} className='my-auto md:px-3'>
-				{avgColors.length > 0 ? (
-					<img
-						onLoad={handleLoadImg}
-						className='h-auto max-h-screen w-full'
-						src={imgUrl}
-						ref={imgRef}
-						alt='Img to get analize'
-					/>
-				) : (
-					<SkeletonImg />
-				)}
-				{!isLoading ? (
-					<RenderPixelColors
-						avgColors={avgColors}
-						colorMode={colorMode}
-						imgSizes={imgSizes}
-						isLoading={isLoading}
-					/>
-				) : (
-					<SkeletonImg
-						style={{
-							width: imgSizes.renderSize.w,
-							height: imgSizes.renderSize.h,
-						}}
-					/>
-				)}
-			</div>
+		<div style={imgStyle} className='my-auto md:px-3'>
+			{avgColors.length > 0 ? (
+				<img
+					onLoad={handleLoadImg}
+					className='h-auto max-h-screen w-full'
+					src={imgUrl}
+					ref={imgRef}
+					alt='Img to get analyze'
+				/>
+			) : (
+				<SkeletonImg />
+			)}
+			{!isLoading ? (
+				<RenderPixelColors
+					avgColors={avgColors}
+					colorMode={colorMode}
+					imgSizes={imgSizes}
+					isLoading={isLoading}
+				/>
+			) : (
+				<SkeletonImg
+					style={{
+						width: imgSizes.renderSize.w,
+						height: imgSizes.renderSize.h,
+					}}
+				/>
+			)}
 		</div>
 	);
 
 	return (
 		<>
-			<section className='sm:hidden'>
+			<section className='sticky top-0 sm:hidden'>
 				<Tabs.Group aria-label='Full width tabs' style='fullWidth'>
 					<Tabs.Item active title='Configuración'>
 						{configSection}
 					</Tabs.Item>
 					<Tabs.Item title='Resultado'>
-						{primaryColorsSection}
-						{resultSection}
+						<div className='col-span-3 col-start-3 row-start-1 my-auto'>
+							{primaryColorsSection}
+						</div>
+
+						<div className='p-2'>{resultSection}</div>
 					</Tabs.Item>
 				</Tabs.Group>
 			</section>
 
 			<section className='config-section grid-rows-[minmax(200px, 1fr)] relative mx-auto hidden grid-cols-5  px-5 lg:container sm:grid'>
 				{configSection}
-				{primaryColorsSection}
-				{resultSection}
+				<div className='col-span-3 col-start-3 row-start-1 my-auto'>
+					{primaryColorsSection}
+				</div>
+
+				<div className='col-span-3 col-start-3 row-span-3 row-start-2 p-2 md:columns-1'>
+					{resultSection}
+				</div>
 			</section>
 		</>
 	);

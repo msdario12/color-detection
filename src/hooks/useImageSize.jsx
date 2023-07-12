@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 
 export default function useImageSize() {
-	const imgRef = useRef();
+	const imgRef = useRef(null);
 	const img = imgRef.current;
 
 	const [imgSizes, setImgSizes] = useState({
@@ -25,9 +25,11 @@ export default function useImageSize() {
 	}, [img]);
 
 	function handleLoadImg() {
+		const currentImg = imgRef.current;
+		console.log('🖖');
 		setImgSizes({
-			naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
-			renderSize: { w: img.width, h: img.height },
+			naturalSize: { w: currentImg.naturalWidth, h: currentImg.naturalHeight },
+			renderSize: { w: currentImg.width, h: currentImg.height },
 		});
 	}
 
