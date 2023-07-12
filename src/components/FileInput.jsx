@@ -9,13 +9,13 @@ export default function FileInput(props) {
 			</label>
 			<input
 				onChange={onChange}
-				className='text-grey-900 file:text-grey-700  block
+				className='text-grey-900 file:text-grey-700 h-18 block
             w-full cursor-pointer rounded-lg
-            border border-gray-300 bg-gray-50 text-sm
-            text-gray-300 file:mx-2
-            file:my-2 file:mr-5
-            file:rounded-lg file:border-0
-             file:bg-blue-50 file:px-6  file:py-2 file:text-sm file:font-medium hover:file:cursor-pointer hover:file:bg-blue-50 hover:file:text-blue-700  focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:placeholder-gray-400'
+            border border-gray-300 bg-gray-50 px-5
+            text-sm text-gray-300
+            file:m-2
+			file:rounded-lg
+ 			file:border-0  file:bg-blue-50 file:px-3 file:py-2 file:text-sm hover:file:cursor-pointer  hover:file:bg-blue-50 hover:file:text-blue-400 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:placeholder-gray-400 md:h-auto file:md:font-medium'
 				aria-describedby='file_input_help'
 				id='file_input'
 				type='file'

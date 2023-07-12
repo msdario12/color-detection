@@ -1,8 +1,5 @@
-import ConfigSection from "../components/ConfigSection"
-
+import ConfigSection from '../components/ConfigSection';
 
 export const HomeScreen = () => {
-  return (
-    <ConfigSection />
-  )
-}
+	return <ConfigSection />;
+};

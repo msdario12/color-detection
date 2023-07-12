@@ -6,9 +6,6 @@ import useWorkerAvgColors from '../hooks/useWorkerAvgColors';
 import { useEffect, useState } from 'react';
 import InformationOfCalculations from './InformationOfCalculations';
 import createStringColor from '../utils/createStringColor';
-import UploadImg from './UploadImg';
-import ImageGallery from './ImageGallery';
-import Button from './Button';
 import SkeletonImg from './SkeletonImg';
 import { ImgConfig } from './ImgConfig';
 
@@ -49,7 +46,7 @@ export default function ConfigSection() {
 		<section className='config-section grid-rows-[minmax(200px, 1fr)] relative mx-auto grid  grid-cols-5 px-5 lg:container'>
 			<div className='sticky top-0 col-span-2 row-span-3 h-[90vh] overflow-y-auto'>
 				<ImgConfig
-					className='col-span-2 col-start-1 row-span-2 row-start-1 rounded-md border border-slate-800 px-8 py-5'
+					className='col-span-2 col-start-1 row-span-2 row-start-1 rounded-md border border-slate-800 px-3 py-5 md:px-8'
 					setImgUrl={setImgUrl}
 					setImgBitMap={setImgBitMap}
 					colorMode={colorMode}
@@ -59,14 +56,14 @@ export default function ConfigSection() {
 					handleChangeImage={handleChangeImage}
 				/>
 				<FormConfig
-					className='color z-10 col-span-2 col-start-1 row-span-1 row-start-3 my-3 grid gap-4 rounded-md border border-slate-800 px-8 py-5 dark:bg-slate-900 dark:bg-opacity-80 dark:text-slate-400 dark:backdrop-blur-sm md:grid-cols-2'
+					className='color z-10 col-span-2 col-start-1 row-span-1 row-start-3 my-3 grid gap-4 rounded-md border border-slate-800 px-3 py-5 dark:bg-slate-900 dark:bg-opacity-80 dark:text-slate-400 dark:backdrop-blur-sm md:grid-cols-2 md:px-8'
 					setColorTolerance={setColorTolerance}
 					setDivsQty={setDivsQty}
 					colorMode={colorMode}
 					setColorMode={setColorMode}
 				/>
 				<InformationOfCalculations
-					className='col-span-2 col-start-1 row-span-1 row-start-4 mb-10 rounded-md border border-slate-800 px-8 py-5'
+					className='col-span-2 col-start-1 row-span-1 row-start-4 mb-10 rounded-md border border-slate-800 px-3 py-5 md:px-8'
 					timeColorPrimary={timeColorPrimary}
 					imgSizes={imgSizes}
 					divsQty={divsQty}
@@ -90,11 +87,11 @@ export default function ConfigSection() {
 			</div>
 
 			<div className='col-span-3 col-start-3 row-span-3 row-start-2 p-2 md:columns-1'>
-				<div style={imgStyle} className='my-auto'>
+				<div style={imgStyle} className='my-auto md:px-3'>
 					{avgColors.length > 0 ? (
 						<img
 							onLoad={handleLoadImg}
-							className=' h-auto max-h-screen w-full'
+							className='h-auto max-h-screen w-full'
 							src={imgUrl}
 							ref={imgRef}
 							alt='Img to get analize'

@@ -8,18 +8,18 @@ function FormConfig(props) {
 	return (
 		<form className={className}>
 			<InputModeColor
-				className='mb-6'
+				className='mb-3'
 				handleChange={setColorMode}
 				colorMode={colorMode}
 			/>
 
 			<div>
 				<InputToleranceColor
-					className='mb-6'
+					className='mb-3'
 					handleChange={setColorTolerance}
 				/>
 
-				<InputDivQuantity className='mb-6' handleChange={setDivsQty} />
+				<InputDivQuantity className='mb-3' handleChange={setDivsQty} />
 			</div>
 		</form>
 	);

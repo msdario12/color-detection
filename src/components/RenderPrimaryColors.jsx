@@ -44,8 +44,13 @@ export default function RenderPrimaryColors(props) {
 
 	return (
 		<div ref={divRef} className={className}>
-			<p className='mb-3'>Se seleccionaron {colorList.length} colores</p>
-			<div className='relative flex flex-wrap justify-center md:flex-row'>
+			<p className='mb-3 text-center'>
+				<span className='text-lg font-bold dark:text-slate-200'>
+					{colorList.length}
+				</span>{' '}
+				colores primarios
+			</p>
+			<div className='relative mb-3 flex flex-wrap justify-center md:flex-row'>
 				{colorList.length > 0 && !isLoading
 					? colorList.map((color, idx) => (
 							<IndividualPrimaryColor
