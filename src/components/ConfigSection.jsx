@@ -27,6 +27,11 @@ export default function ConfigSection() {
 
 	const { imgSizes, handleLoadImg, imgRef } = useImageSize();
 	const {
+		imgSizes: imgSizesMobile,
+		handleLoadImg: handleLoadImgMobile,
+		imgRef: imgRefMobile,
+	} = useImageSize();
+	const {
 		avgColors,
 		isLoading,
 		handleChangeImage,
@@ -35,6 +40,7 @@ export default function ConfigSection() {
 		time,
 		setImgBitMap,
 	} = useWorkerAvgColors(colorMode, divsQty, imgSizes);
+	const [isMobile, setIsMobile] = useState(false);
 
 	useEffect(() => {
 		if (colorPrimaryList.length > 0) {
@@ -45,6 +51,16 @@ export default function ConfigSection() {
 			setImgStyle(imgStyle);
 		}
 	}, [colorPrimaryList]);
+	const width = window.outerWidth;
+
+	useEffect(() => {
+		if (width < 650) {
+			setIsMobile(true);
+			console.log('📷', width, 'CHICO');
+		} else {
+			setIsMobile(false)
+		}
+	}, [width]);
 
 	const configSection = (
 		<div className='sticky top-0 col-span-2 row-span-3 h-[90vh] overflow-y-auto'>
@@ -88,6 +104,36 @@ export default function ConfigSection() {
 		) : (
 			'Esperando datos color primario'
 		);
+	const resultSectionMobile = (
+		<div style={imgStyle} className='my-auto md:px-3'>
+			{avgColors.length > 0 ? (
+				<img
+					onLoad={handleLoadImgMobile}
+					className='h-auto max-h-screen w-full'
+					src={imgUrl}
+					ref={imgRefMobile}
+					alt='Img to get analyze'
+				/>
+			) : (
+				<SkeletonImg />
+			)}
+			{!isLoading ? (
+				<RenderPixelColors
+					avgColors={avgColors}
+					colorMode={colorMode}
+					imgSizes={imgSizesMobile}
+					isLoading={isLoading}
+				/>
+			) : (
+				<SkeletonImg
+					style={{
+						width: imgSizes.renderSize.w,
+						height: imgSizes.renderSize.h,
+					}}
+				/>
+			)}
+		</div>
+	);
 
 	const resultSection = (
 		<div style={imgStyle} className='my-auto md:px-3'>
@@ -132,7 +178,7 @@ export default function ConfigSection() {
 							{primaryColorsSection}
 						</div>
 
-						<div className='p-2'>{resultSection}</div>
+						<div className='p-2'>{resultSectionMobile}</div>
 					</Tabs.Item>
 				</Tabs.Group>
 			</section>
