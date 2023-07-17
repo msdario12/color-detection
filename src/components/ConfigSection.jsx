@@ -45,80 +45,6 @@ export default function ConfigSection() {
 		}
 	}, [colorPrimaryList]);
 
-	const configSection = (
-		<>
-			<ImgConfig
-				className='col-span-2 col-start-1 row-span-2 row-start-1 rounded-md border border-slate-800 px-3 py-5 md:px-8'
-				setImgUrl={setImgUrl}
-				setImgBitMap={setImgBitMap}
-				colorMode={colorMode}
-				divsQty={divsQty}
-				colorTolerance={colorTolerance}
-				isLoading={isLoading}
-				handleChangeImage={handleChangeImage}
-			/>
-			<FormConfig
-				className='color z-10 col-span-2 col-start-1 row-span-1 row-start-3 my-3 grid gap-4 rounded-md border border-slate-800 px-3 py-5 dark:bg-slate-900 dark:bg-opacity-80 dark:text-slate-400 dark:backdrop-blur-sm md:grid-cols-2 md:px-8'
-				setColorTolerance={setColorTolerance}
-				setDivsQty={setDivsQty}
-				colorMode={colorMode}
-				setColorMode={setColorMode}
-			/>
-			<InformationOfCalculations
-				className='col-span-2 col-start-1 row-span-1 row-start-4 mb-10 rounded-md border border-slate-800 px-3 py-5 md:px-8'
-				timeColorPrimary={timeColorPrimary}
-				imgSizes={imgSizes}
-				divsQty={divsQty}
-				time={time}
-			/>
-		</>
-	);
-
-	const primaryColorsSection =
-		avgColors.length > 0 ? (
-			<RenderPrimaryColors
-				divsQty={divsQty}
-				avgColors={avgColors}
-				colorMode={colorMode}
-				colorTolerance={colorTolerance}
-				setTimeColorPrimary={setTimeColorPrimary}
-				setColorPrimaryList={setColorPrimaryList}
-			/>
-		) : (
-			'Esperando datos color primario'
-		);
-
-	const resultSection = (
-		<div style={imgStyle} className='my-auto md:px-3'>
-			{avgColors.length > 0 ? (
-				<img
-					onLoad={handleLoadImg}
-					className='h-auto max-h-screen w-full'
-					src={imgUrl}
-					ref={imgRef}
-					alt='Img to get analyze'
-				/>
-			) : (
-				<SkeletonImg />
-			)}
-			{!isLoading ? (
-				<RenderPixelColors
-					avgColors={avgColors}
-					colorMode={colorMode}
-					imgSizes={imgSizes}
-					isLoading={isLoading}
-				/>
-			) : (
-				<SkeletonImg
-					style={{
-						width: imgSizes.renderSize.w,
-						height: imgSizes.renderSize.h,
-					}}
-				/>
-			)}
-		</div>
-	);
-
 	return (
 		<>
 			<TabsConfig
@@ -131,20 +57,81 @@ export default function ConfigSection() {
 					className={`col-start-0 sticky top-0 col-span-5 row-span-3 h-[90vh] overflow-y-auto sm:col-span-2 ${
 						sectionActive === 'config' ? 'max-sm:block' : 'max-sm:hidden'
 					}`}>
-					{configSection}
+					<ImgConfig
+						className='col-span-2 col-start-1 row-span-2 row-start-1 rounded-md border border-slate-800 px-3 py-5 md:px-8'
+						setImgUrl={setImgUrl}
+						setImgBitMap={setImgBitMap}
+						colorMode={colorMode}
+						divsQty={divsQty}
+						colorTolerance={colorTolerance}
+						isLoading={isLoading}
+						handleChangeImage={handleChangeImage}
+					/>
+					<FormConfig
+						className='color z-10 col-span-2 col-start-1 row-span-1 row-start-3 my-3 grid gap-4 rounded-md border border-slate-800 px-3 py-5 dark:bg-slate-900 dark:bg-opacity-80 dark:text-slate-400 dark:backdrop-blur-sm md:grid-cols-2 md:px-8'
+						setColorTolerance={setColorTolerance}
+						setDivsQty={setDivsQty}
+						colorMode={colorMode}
+						setColorMode={setColorMode}
+					/>
+					<InformationOfCalculations
+						className='col-span-2 col-start-1 row-span-1 row-start-4 mb-10 rounded-md border border-slate-800 px-3 py-5 md:px-8'
+						timeColorPrimary={timeColorPrimary}
+						imgSizes={imgSizes}
+						divsQty={divsQty}
+						time={time}
+					/>
 				</div>
 				<div
 					className={`col-start-0 col-span-5 row-start-1 my-auto sm:col-span-3 sm:col-start-3 ${
 						sectionActive === 'results' ? 'max-sm:block' : 'max-sm:hidden'
 					}`}>
-					{primaryColorsSection}
+					{avgColors.length > 0 ? (
+						<RenderPrimaryColors
+							divsQty={divsQty}
+							avgColors={avgColors}
+							colorMode={colorMode}
+							colorTolerance={colorTolerance}
+							setTimeColorPrimary={setTimeColorPrimary}
+							setColorPrimaryList={setColorPrimaryList}
+						/>
+					) : (
+						'Esperando datos color primario'
+					)}
 				</div>
 
 				<div
 					className={`col-start-0 col-span-5 row-span-3 row-start-2 p-2 sm:col-span-3 sm:col-start-3 md:columns-1 ${
 						sectionActive === 'results' ? 'max-sm:block' : 'max-sm:hidden'
 					}`}>
-					{resultSection}
+					<div style={imgStyle} className='my-auto md:px-3'>
+						{avgColors.length > 0 ? (
+							<img
+								onLoad={handleLoadImg}
+								className='h-auto max-h-screen w-full'
+								src={imgUrl}
+								ref={imgRef}
+								alt='Img to get analyze'
+							/>
+						) : (
+							<SkeletonImg />
+						)}
+						{!isLoading ? (
+							<RenderPixelColors
+								avgColors={avgColors}
+								colorMode={colorMode}
+								imgSizes={imgSizes}
+								isLoading={isLoading}
+							/>
+						) : (
+							<SkeletonImg
+								style={{
+									width: imgSizes.renderSize.w,
+									height: imgSizes.renderSize.h,
+								}}
+							/>
+						)}
+					</div>
 				</div>
 			</section>
 		</>

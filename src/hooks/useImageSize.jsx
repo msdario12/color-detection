@@ -28,7 +28,7 @@ export default function useImageSize() {
 		console.dir(img);
 		console.log('🖖');
 
-		updateSize(775);
+		updateSize(900);
 	}
 
 	return {
