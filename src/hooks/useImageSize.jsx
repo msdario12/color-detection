@@ -8,29 +8,26 @@ export default function useImageSize() {
 		naturalSize: { w: 0, h: 0 },
 		renderSize: { w: 0, h: 0 },
 	});
+	function updateSize(time = 250) {
+		console.log(img.width, img.naturalWidth);
+		setTimeout(() => {
+			setImgSizes({
+				naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
+				renderSize: { w: img.width, h: img.height },
+			});
+		}, time);
+	}
 
 	// For change size img when windows is resizing
 	useLayoutEffect(() => {
-		0;
-		function updateSize() {
-			setTimeout(() => {
-				setImgSizes({
-					naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
-					renderSize: { w: img.width, h: img.height },
-				});
-			}, 180);
-		}
 		window.addEventListener('resize', updateSize);
 		return () => window.removeEventListener('resize', updateSize);
 	}, [img]);
 
 	function handleLoadImg() {
-		const currentImg = imgRef.current;
+		console.dir(img);
 		console.log('🖖');
-		setImgSizes({
-			naturalSize: { w: currentImg.naturalWidth, h: currentImg.naturalHeight },
-			renderSize: { w: currentImg.width, h: currentImg.height },
-		});
+		updateSize(750);
 	}
 
 	return {

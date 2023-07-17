@@ -8,10 +8,7 @@ import InformationOfCalculations from './InformationOfCalculations';
 import createStringColor from '../utils/createStringColor';
 import SkeletonImg from './SkeletonImg';
 import { ImgConfig } from './ImgConfig';
-import { Tabs } from 'flowbite-react';
-import { faPercent } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clearConfigCache } from 'prettier';
+import { TabsConfig } from './TabsConfig';
 
 export default function ConfigSection() {
 	const [colorMode, setColorMode] = useState('RGB');
@@ -26,11 +23,7 @@ export default function ConfigSection() {
 	const [imgStyle, setImgStyle] = useState({});
 
 	const { imgSizes, handleLoadImg, imgRef } = useImageSize();
-	const {
-		imgSizes: imgSizesMobile,
-		handleLoadImg: handleLoadImgMobile,
-		imgRef: imgRefMobile,
-	} = useImageSize();
+
 	const {
 		avgColors,
 		isLoading,
@@ -40,7 +33,7 @@ export default function ConfigSection() {
 		time,
 		setImgBitMap,
 	} = useWorkerAvgColors(colorMode, divsQty, imgSizes);
-	const [isMobile, setIsMobile] = useState(false);
+	const [sectionActive, setSectionActive] = useState('config');
 
 	useEffect(() => {
 		if (colorPrimaryList.length > 0) {
@@ -51,19 +44,9 @@ export default function ConfigSection() {
 			setImgStyle(imgStyle);
 		}
 	}, [colorPrimaryList]);
-	const width = window.outerWidth;
-
-	useEffect(() => {
-		if (width < 650) {
-			setIsMobile(true);
-			console.log('📷', width, 'CHICO');
-		} else {
-			setIsMobile(false)
-		}
-	}, [width]);
 
 	const configSection = (
-		<div className='sticky top-0 col-span-2 row-span-3 h-[90vh] overflow-y-auto'>
+		<>
 			<ImgConfig
 				className='col-span-2 col-start-1 row-span-2 row-start-1 rounded-md border border-slate-800 px-3 py-5 md:px-8'
 				setImgUrl={setImgUrl}
@@ -88,7 +71,7 @@ export default function ConfigSection() {
 				divsQty={divsQty}
 				time={time}
 			/>
-		</div>
+		</>
 	);
 
 	const primaryColorsSection =
@@ -104,41 +87,12 @@ export default function ConfigSection() {
 		) : (
 			'Esperando datos color primario'
 		);
-	const resultSectionMobile = (
-		<div style={imgStyle} className='my-auto md:px-3'>
-			{avgColors.length > 0 ? (
-				<img
-					onLoad={handleLoadImgMobile}
-					className='h-auto max-h-screen w-full'
-					src={imgUrl}
-					ref={imgRefMobile}
-					alt='Img to get analyze'
-				/>
-			) : (
-				<SkeletonImg />
-			)}
-			{!isLoading ? (
-				<RenderPixelColors
-					avgColors={avgColors}
-					colorMode={colorMode}
-					imgSizes={imgSizesMobile}
-					isLoading={isLoading}
-				/>
-			) : (
-				<SkeletonImg
-					style={{
-						width: imgSizes.renderSize.w,
-						height: imgSizes.renderSize.h,
-					}}
-				/>
-			)}
-		</div>
-	);
 
 	const resultSection = (
 		<div style={imgStyle} className='my-auto md:px-3'>
 			{avgColors.length > 0 ? (
 				<img
+					on={() => console.log('PRINTING COMPLETE')}
 					onLoad={handleLoadImg}
 					className='h-auto max-h-screen w-full'
 					src={imgUrl}
@@ -168,28 +122,29 @@ export default function ConfigSection() {
 
 	return (
 		<>
-			<section className='sticky top-0 sm:hidden'>
-				<Tabs.Group aria-label='Full width tabs' style='fullWidth'>
-					<Tabs.Item active title='Configuración'>
-						{configSection}
-					</Tabs.Item>
-					<Tabs.Item title='Resultado'>
-						<div className='col-span-3 col-start-3 row-start-1 my-auto'>
-							{primaryColorsSection}
-						</div>
-
-						<div className='p-2'>{resultSectionMobile}</div>
-					</Tabs.Item>
-				</Tabs.Group>
-			</section>
-
-			<section className='config-section grid-rows-[minmax(200px, 1fr)] relative mx-auto hidden grid-cols-5  px-5 lg:container sm:grid'>
-				{configSection}
-				<div className='col-span-3 col-start-3 row-start-1 my-auto'>
+			<TabsConfig
+				sectionActive={sectionActive}
+				setSectionActive={setSectionActive}
+			/>
+			{/* Desktop design */}
+			<section className='config-section grid-rows-[minmax(200px, 1fr)] relative mx-auto grid grid-cols-5 px-5 lg:container'>
+				<div
+					className={`col-start-0 sticky top-0 col-span-5 row-span-3 h-[90vh] overflow-y-auto sm:col-span-2 ${
+						sectionActive === 'config' ? 'max-sm:block' : 'max-sm:hidden'
+					}`}>
+					{configSection}
+				</div>
+				<div
+					className={`col-start-0 col-span-5 row-start-1 my-auto sm:col-span-3 sm:col-start-3 ${
+						sectionActive === 'results' ? 'max-sm:block' : 'max-sm:hidden'
+					}`}>
 					{primaryColorsSection}
 				</div>
 
-				<div className='col-span-3 col-start-3 row-span-3 row-start-2 p-2 md:columns-1'>
+				<div
+					className={`col-start-0 col-span-5 row-span-3 row-start-2 p-2 sm:col-span-3 sm:col-start-3 md:columns-1 ${
+						sectionActive === 'results' ? 'max-sm:block' : 'max-sm:hidden'
+					}`}>
 					{resultSection}
 				</div>
 			</section>
