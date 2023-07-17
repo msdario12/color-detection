@@ -9,7 +9,7 @@ export default function useImageSize() {
 		renderSize: { w: 0, h: 0 },
 	});
 	function updateSize(time = 250) {
-		console.log(img.width, img.naturalWidth);
+		console.log('Actualizando tamaño 🉐');
 		setTimeout(() => {
 			setImgSizes({
 				naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
@@ -27,7 +27,8 @@ export default function useImageSize() {
 	function handleLoadImg() {
 		console.dir(img);
 		console.log('🖖');
-		updateSize(750);
+
+		updateSize(775);
 	}
 
 	return {

@@ -25,6 +25,9 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 			});
 
 			console.log(worker);
+			setAvgColors([]);
+			setImgUrl();
+			setImgBitMap();
 			postMessageToWorker(
 				'fetch-new-image',
 				{ colorMode, divsQty, query: queryParam },
@@ -41,28 +44,32 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 		};
 
 		const getCalculationsFromWorker = () => {
+			console.log('Calculating avg colors');
+
 			postMessageToWorker(
 				'calculate-pixels',
 				{ colorMode, divsQty, imgBitMap },
 				worker
 			).then((res) => {
+				setAvgColors(res.avgColors);
 				setTime({
 					...time,
 					getAvgColors: { start: res.time.start, end: res.time.end },
 				});
-				setAvgColors(res.avgColors);
 			});
 		};
 
 		setHandleChangeImage({
 			func: (query) => {
 				console.log(query);
+				setAvgColors([]);
 				setImgUrl();
 				setImgBitMap();
 				console.log('get-new-img');
 				getNewImgFromWorker(query);
 			},
 		});
+		console.log('loading? 🥌', isLoading, avgColors);
 
 		if (!imgUrl && !isLoading) {
 			console.log('Getting first image');
@@ -71,8 +78,6 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 
 			return;
 		}
-
-		console.log('loading?', isLoading);
 
 		if (imgBitMap && !isLoading) {
 			getCalculationsFromWorker();
@@ -90,7 +95,7 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 		setIsLoading(true);
 		return new Promise((res, rej) => {
 			intWork.onmessage = (e) => {
-				console.log('Mensaje recibido de intWork de promesa');
+				console.log('Mensaje recibido de intWork de promesa', e);
 				setIsLoading(false);
 				res(e.data);
 				intWork.terminate();

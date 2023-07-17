@@ -92,7 +92,6 @@ export default function ConfigSection() {
 		<div style={imgStyle} className='my-auto md:px-3'>
 			{avgColors.length > 0 ? (
 				<img
-					on={() => console.log('PRINTING COMPLETE')}
 					onLoad={handleLoadImg}
 					className='h-auto max-h-screen w-full'
 					src={imgUrl}
