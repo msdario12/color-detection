@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { addImageLocalStorage } from '../utils/localStorageOperations';
+
+import {
+	addImageLocalStorage,
+	getFromLocalStorage,
+} from '../utils/localStorageOperations';
+import useLoadLocalImage from './useLoadLocalImage';
 
 export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 	const [imgUrl, setImgUrl] = useState('');
@@ -10,7 +15,7 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 		fetchImg: { start: 0, end: 0 },
 		getAvgColors: { start: 0, end: 0 },
 	});
-
+	const { loadImg } = useLoadLocalImage(setImgBitMap, setImgUrl);
 	const [isLoading, setIsLoading] = useState(false);
 	// Reference for worker
 	const workerRef = useRef();
@@ -73,9 +78,15 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 
 		if (!imgUrl && !isLoading) {
 			console.log('Getting first image');
-
-			getNewImgFromWorker();
-
+			const localImg = getFromLocalStorage('image-list');
+			console.log(localImg);
+			if (localImg.length === 0) {
+				getNewImgFromWorker();
+				return;
+			}
+			setTimeout(() => {
+				loadImg(localImg[0]);
+			}, 200);
 			return;
 		}
 

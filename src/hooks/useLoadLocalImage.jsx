@@ -3,7 +3,7 @@ export default function useLoadLocalImage(setImgBitMap, setImgUrl) {
 		console.log(file);
 		async function loadImg() {
 			const newImg = new Image();
-			newImg.src = await file.src;
+			newImg.src = file.src;
 			console.dir(newImg.width);
 			if (newImg.width > 0) {
 				createImageBitmap(newImg)

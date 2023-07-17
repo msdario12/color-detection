@@ -9,11 +9,15 @@ export default function useImageSize() {
 		renderSize: { w: 0, h: 0 },
 	});
 	function updateSize(time = 250) {
-		console.log('Actualizando tamaño 🉐');
+		const currentImg = imgRef.current;
+		console.log('Actualizando tamaño 🉐', currentImg);
 		setTimeout(() => {
 			setImgSizes({
-				naturalSize: { w: img.naturalWidth, h: img.naturalHeight },
-				renderSize: { w: img.width, h: img.height },
+				naturalSize: {
+					w: currentImg.naturalWidth,
+					h: currentImg.naturalHeight,
+				},
+				renderSize: { w: currentImg.width, h: currentImg.height },
 			});
 		}, time);
 	}
