@@ -20,7 +20,7 @@ export const SearchInputWithButton = ({
 				Search
 			</label>
 			<div className='relative'>
-				<div className='pointer-events-none absolute top-4 flex items-center pl-3 md:inset-y-0 md:left-0'>
+				<div className='pointer-events-none absolute top-4 flex items-center pl-3 lg:inset-y-0 lg:left-0'>
 					<svg
 						className='h-4 w-4 text-gray-500 dark:text-gray-400'
 						aria-hidden='true'
@@ -41,13 +41,13 @@ export const SearchInputWithButton = ({
 					value={searchTerm}
 					type='search'
 					id='default-search'
-					className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 md:py-4'
+					className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 pl-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 lg:py-4'
 					placeholder='Busca imágenes...'
 				/>
 				<Button
 					isProcessing={isLoading}
 					disabled={searchTerm ? false : true}
-					className='mx-auto my-3 h-10 w-32 rounded-lg bg-blue-700 font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 md:absolute md:bottom-1.5 md:right-2.5 md:my-0'
+					className='mx-auto my-3 h-10 w-32 rounded-lg bg-blue-700 font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 lg:absolute lg:bottom-1.5 lg:right-2.5 lg:my-0'
 					type='submit'>
 					Buscar
 				</Button>

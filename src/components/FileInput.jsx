@@ -19,6 +19,7 @@ export default function FileInput(props) {
 				aria-describedby='file_input_help'
 				id='file_input'
 				type='file'
+				accept='image/*'
 			/>
 			<p
 				className='mt-1 text-sm text-gray-500 dark:text-gray-300'

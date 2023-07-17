@@ -9,7 +9,6 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import './swiper-style.css';
-import { useState } from 'react';
 import { useEffect } from 'react';
 import { getFromLocalStorage } from '../utils/localStorageOperations';
 import { SlideImg } from './SlideImg';
@@ -58,8 +57,8 @@ export default function ImageGallery(props) {
 						},
 					},
 					// when window width is >= 768px
-					768: {
-						slidesPerView: 3,
+					1024: {
+						slidesPerView: 2,
 						grid: {
 							rows: 2,
 							fill: 'row',

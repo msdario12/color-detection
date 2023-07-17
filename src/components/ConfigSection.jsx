@@ -68,7 +68,7 @@ export default function ConfigSection() {
 						handleChangeImage={handleChangeImage}
 					/>
 					<FormConfig
-						className='color z-10 col-span-2 col-start-1 row-span-1 row-start-3 my-3 grid gap-4 rounded-md border border-slate-800 px-3 py-5 dark:bg-slate-900 dark:bg-opacity-80 dark:text-slate-400 dark:backdrop-blur-sm md:grid-cols-2 md:px-8'
+						className='color z-10 col-span-2 col-start-1 row-span-1 row-start-3 my-3 grid gap-4 rounded-md border border-slate-800 px-3 py-5 dark:bg-slate-900 dark:bg-opacity-80 dark:text-slate-400 dark:backdrop-blur-sm lg:grid-cols-2 lg:px-8'
 						setColorTolerance={setColorTolerance}
 						setDivsQty={setDivsQty}
 						colorMode={colorMode}
