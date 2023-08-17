@@ -5,7 +5,7 @@ export default function FileInput(props) {
 			<label
 				className='mb-2 block text-sm font-medium text-gray-900 dark:text-white'
 				htmlFor='file_input'>
-				Upload file
+				Carga una imagen para analizarla.
 			</label>
 			<input
 				onChange={onChange}

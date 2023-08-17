@@ -1,3 +1,5 @@
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Footer } from 'flowbite-react';
 
 export const MainFooter = ({ className }) => {
@@ -6,10 +8,12 @@ export const MainFooter = ({ className }) => {
 			<div className='mx-auto grid w-full justify-between lg:container sm:flex sm:justify-between md:flex md:grid-cols-1'>
 				<Footer.Copyright by='by Dario Mansilla' href='#' year={2023} />
 				<Footer.LinkGroup>
-					<Footer.Link href='#'>About</Footer.Link>
-					<Footer.Link href='#'>Privacy Policy</Footer.Link>
-					<Footer.Link href='#'>Licensing</Footer.Link>
-					<Footer.Link href='#'>Contact</Footer.Link>
+					<Footer.Link href='#'>
+						<FontAwesomeIcon icon={faLinkedin} size='lg' />
+					</Footer.Link>
+					<Footer.Link href='#'>
+						<FontAwesomeIcon icon={faGithub} size='lg' />
+					</Footer.Link>
 				</Footer.LinkGroup>
 			</div>
 		</Footer>

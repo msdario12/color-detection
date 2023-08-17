@@ -16,7 +16,9 @@ export default function UploadImg(props) {
 
 	return (
 		<div>
-			<h2 className='text-xl font-bold'>Subir una imagen</h2>
+			<h2 className='mb-3 text-2xl font-bold dark:text-slate-100'>
+				Subir una imagen
+			</h2>
 			<FileInput onChange={handleChange} />
 		</div>
 	);

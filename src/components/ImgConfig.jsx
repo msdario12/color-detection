@@ -34,11 +34,9 @@ export const ImgConfig = ({
 				setImgBitMap={setImgBitMap}
 				className=' my-5'
 			/>
-			<h2>Cambiar de imagen</h2>
-			<p>
-				State {colorMode}, {divsQty}, {colorTolerance},
-				{isLoading ? 'CARGANDO' : 'LISTO'},
-			</p>
+			<h2 className='text-2xl font-bold dark:text-slate-100 mb-3'>
+				Cambiar de imagen
+			</h2>
 			<SearchInputWithButton
 				handleChangeImage={handleChangeImage}
 				isLoading={isLoading}
