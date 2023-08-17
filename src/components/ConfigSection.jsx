@@ -104,11 +104,11 @@ export default function ConfigSection() {
 					className={`col-start-0 col-span-5 row-span-3 row-start-2 p-2 sm:col-span-3 sm:col-start-3 md:columns-1 ${
 						sectionActive === 'results' ? 'max-sm:block' : 'max-sm:hidden'
 					}`}>
-					<div style={imgStyle} className='my-auto md:px-3'>
+					<div style={imgStyle} className='my-auto'>
 						{avgColors.length > 0 ? (
 							<img
 								onLoad={handleLoadImg}
-								className='h-auto max-h-screen w-full'
+								className='h-auto max-h-screen w-full object-cover'
 								src={imgUrl}
 								ref={imgRef}
 								alt='Img to get analyze'
