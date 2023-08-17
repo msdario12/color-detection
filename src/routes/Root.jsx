@@ -6,9 +6,11 @@ import { MainFooter } from '../components/MainFooter';
 export const Root = () => {
 	return (
 		<Flowbite>
-			<MainNav className={'mb-7'} />
-			<Outlet />
-			<MainFooter className={'mt-7'} />
+			<main className='flex min-h-screen flex-col justify-between'>
+				<MainNav className={'mb-7'} />
+				<Outlet />
+				<MainFooter className={'mt-7'} />
+			</main>
 		</Flowbite>
 	);
 };

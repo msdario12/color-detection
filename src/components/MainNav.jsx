@@ -42,7 +42,7 @@ export const MainNav = ({ className }) => {
 					href='#'>
 					Acerca del proyecto
 				</Navbar.Link>
-				<Navbar.Link href='#'>Contacto</Navbar.Link>
+				{/* <Navbar.Link href='#'>Contacto</Navbar.Link> */}
 			</Navbar.Collapse>
 		</Navbar>
 	);
