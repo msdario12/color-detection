@@ -34,8 +34,8 @@ export const ImgConfig = ({
 				setImgBitMap={setImgBitMap}
 				className=' my-5'
 			/>
-			<h2 className='text-2xl font-bold dark:text-slate-100 mb-3'>
-				Cambiar de imagen
+			<h2 className='mb-3 text-2xl font-bold dark:text-slate-100'>
+				Busca una imagen online
 			</h2>
 			<SearchInputWithButton
 				handleChangeImage={handleChangeImage}
