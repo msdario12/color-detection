@@ -13,7 +13,7 @@ export const MainNav = ({ className }) => {
 					DM
 				</span>
 				<span className='self-center whitespace-nowrap text-xl font-semibold dark:text-white'>
-					Flowbite React
+					Detección de colores
 				</span>
 			</Navbar.Brand>
 			<div className='flex justify-end gap-3'>
@@ -24,14 +24,10 @@ export const MainNav = ({ className }) => {
 				<DarkThemeToggle className='absolute -left-6 -top-2 hidden lg:block' />
 
 				<Navbar.Link active href='#'>
-					<p>Home</p>
+					<p>Aplicación</p>
 				</Navbar.Link>
-				<Navbar.Link href='#'>
-					<p>About</p>
-				</Navbar.Link>
-				<Navbar.Link href='#'>Services</Navbar.Link>
-				<Navbar.Link href='#'>Pricing</Navbar.Link>
-				<Navbar.Link href='#'>Contact</Navbar.Link>
+				<Navbar.Link href='#'>Acerca del proyecto</Navbar.Link>
+				<Navbar.Link href='#'>Contacto</Navbar.Link>
 			</Navbar.Collapse>
 		</Navbar>
 	);

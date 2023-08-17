@@ -108,7 +108,7 @@ export default function ConfigSection() {
 						{avgColors.length > 0 ? (
 							<img
 								onLoad={handleLoadImg}
-								className='h-auto max-h-screen w-full object-cover'
+								className='max-h-screen w-full object-cover'
 								src={imgUrl}
 								ref={imgRef}
 								alt='Img to get analyze'
