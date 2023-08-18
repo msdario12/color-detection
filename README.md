@@ -1,5 +1,11 @@
 # Detección de colores
 
+![image](https://github.com/msdario12/color-detection/assets/31823835/9999898a-4ca0-4c8e-bfd2-dd1abcab2c04)
+
+   
+[Link deploy última version con react](https://color-detection-v2-react.netlify.app)
+
+
 Se trata de una aplicación en la que se analizan los pixeles de una imagen, se los agrupa según un criterio y se define lo que serían los colores mas representativos de la misma.
     <p align="center">
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
