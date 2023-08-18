@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import PrimaryColorsWorker from '../workers/workerPrimaryColors?worker';
 
 export default function useWorkerPrimaryColors(
 	avgColors,
@@ -17,9 +18,7 @@ export default function useWorkerPrimaryColors(
 	// Get the current state of worker, and save in a variable
 
 	useEffect(() => {
-		const worker = new Worker('../src/workers/workerPrimaryColors.js', {
-			type: 'module',
-		});
+		const worker = new PrimaryColorsWorker();
 		workerRef.current = worker;
 
 		setIsLoading(true);

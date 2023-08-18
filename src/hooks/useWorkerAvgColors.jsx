@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import AvgColorsWorker from '../workers/worker?worker';
 
 import {
 	addImageLocalStorage,
@@ -22,12 +23,10 @@ export default function useWorkerAvgColors(colorMode, divsQty, imgSizes) {
 
 	useEffect(() => {
 		console.log('Entrando al efect 🤖');
-		const worker = new Worker('../src/workers/worker.js', { type: 'module' });
+		const worker = new AvgColorsWorker();
 		workerRef.current = worker;
 		const getNewImgFromWorker = (queryParam) => {
-			const workerGetImg = new Worker('../src/workers/worker.js', {
-				type: 'module',
-			});
+			const workerGetImg = new AvgColorsWorker();
 
 			console.log(worker);
 			setAvgColors([]);
