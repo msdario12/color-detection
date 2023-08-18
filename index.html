@@ -1,76 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<link rel="icon" type="image/png" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Color Detection</title>
-		<link rel="stylesheet" href="./css/style.css" />
+		<link rel="stylesheet" href="/dist/output.css" />
+		<title>Color Detection App</title>
 	</head>
-	<body>
-		<h1>Detección de colores</h1>
-		<section class="config-section">
-			<h2>Cambiar de imagen</h2>
-			<button id="change-img">Cambiar imagen</button>
-			<h2>Seleccione el modo de color</h2>
-
-			<form action="">
-				<label for="rgb-mode">RGB</label>
-				<input type="radio" name="color-mode" id="rgb-mode" checked />
-				<label for="rgb-mode">HSL</label>
-				<input type="radio" name="color-mode" id="hsl-mode" />
-			</form>
-			<h2>Tolerancia de seleccion de color</h2>
-			<label for="num-tol">Seleccione el valor de tolerancia</label>
-			<select name="num-tol" id="num-tol">
-				<option value="2">2%</option>
-				<option value="5">5%</option>
-				<option value="10">10%</option>
-				<option value="12">12%</option>
-				<option value="15" selected>15%</option>
-				<option value="20">20%</option>
-				<option value="25">25%</option>
-				<option value="30">30%</option>
-				<option value="40">40%</option>
-			</select>
-			<h2>Cantidad de divisiones</h2>
-
-			<label for="num-div">Seleccione la cantidad de divisiones: </label>
-			<select name="num-div" id="num-div">
-				<option value="2">2</option>
-				<option value="5">5</option>
-				<option value="10">10</option>
-				<option value="12">12</option>
-				<option value="15">15</option>
-				<option value="20">20</option>
-				<option value="25">25</option>
-				<option value="75">75</option>
-			</select>
-		</section>
-		<div id="loader">Cargando Imagen...</div>
-		<div id="toShowLoader"></div>
-		<div id="showColor">
-			<!-- Mostramos color promedio -->
-		</div>
-		<!-- <img
-			id="img-1"
-			src="https://source.unsplash.com/random/?city,night"
-			alt="Random img from uplash"
-			crossorigin="anonymous" /> -->
-		<div id="img-container"></div>
-		<img id="worker-img" data-src="" alt="" />
-		<div id="newCanvas">
-			<!-- insert canva -->
-			<canvas id="canvas-color"></canvas>
-		</div>
-
-		<script src="/scripts/iterate-over-canvas-worker.js"></script>
-		<script src="/scripts/rgb-to-hsl.js"></script>
-		<script src="/scripts/worker.js"></script>
-		<script src="/scripts/app.js"></script>
-		<script src="/scripts/iterate-over-canvas.js"></script>
-		<script src="/scripts/get-avg-color.js"></script>
-		<script src="/scripts/get-primary-color.js"></script>
-		<script src="/scripts/image-rotation.js"></script>
+	<body class="dark:bg-slate-900 dark:text-slate-400">
+		<div id="root"></div>
+		<script type="module" src="/src/main.jsx"></script>
 	</body>
 </html>

@@ -1,3 +1,10 @@
+// Importo modulos
+import { getAvgColor, getAvgColorHSL } from './get-avg-color.js';
+import {
+	createDivWithBgColor,
+	getPrimaryColor,
+	getPrimaryColorHSL,
+} from './get-primary-color.js';
 // Defino estados iniciales de inputs
 let colorRGBstate = true;
 let colorHSLstate = false;
