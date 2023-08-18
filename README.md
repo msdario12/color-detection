@@ -11,6 +11,7 @@ Se trata de una aplicación en la que se analizan los pixeles de una imagen, se 
 ## Características
 
 - Uso de la API de javascript de web-workers.
+- Modo noche.
 - Diseño responsive.
 - Funcionamiento totalmente ejecutado del lado del cliente (sin conexion con un backend)
 - Posibilidad de subir imagenes locales.
@@ -36,7 +37,6 @@ Se trata de una aplicación en la que se analizan los pixeles de una imagen, se 
 		"flowbite-react": "^0.4.10",
 		"framer-motion": "^10.12.18",
 		"gsap": "^3.12.1",
-		"localforage": "^1.10.0",
 		"match-sorter": "^6.3.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
