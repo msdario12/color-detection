@@ -45,13 +45,13 @@ async function createDataForPixel(
 	};
 	// Insertar string del color en cada cuadrado del canvas
 	let drawText;
-	if (divisionQtyState <= 5) {
-		drawText = {
-			textColor: colorRGBstate ? colorRGBString : colorHSLString,
-			wPos: w * deltaWScale + deltaWScale / 2,
-			hPos: h * deltaHScale + deltaHScale / 2,
-		};
-	}
+	// if (divisionQtyState <= 5) {
+	// 	drawText = {
+	// 		textColor: colorRGBstate ? colorRGBString : colorHSLString,
+	// 		wPos: w * scaleW,
+	// 		hPos: h * scaleH,
+	// 	};
+	// }
 
 	return { fillColor, drawRectangle, drawText };
 }
